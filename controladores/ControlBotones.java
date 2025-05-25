@@ -3,6 +3,7 @@ package HotelProyectoFinal.controladores;
 import HotelProyectoFinal.modelos.DatosUsuario;
 import HotelProyectoFinal.modelos.DatosUsuarioTableModel;
 import HotelProyectoFinal.vistas.VistaModificarUsuario;
+import HotelProyectoFinal.vistas.VistaPaginaPrincipal;
 import HotelProyectoFinal.vistas.VistaRegistrarse;
 import HotelProyectoFinal.vistas.VistaVerUsuarios;
 import com.itextpdf.io.font.constants.StandardFonts;
@@ -39,20 +40,23 @@ public class ControlBotones implements ActionListener {
     VistaRegistrarse vistaRegistrarse;
     VistaVerUsuarios vistaVerUsuarios;
     VistaModificarUsuario vistaModificarUsuario;
+    VistaPaginaPrincipal vistaPaginaPrincipal;
     ArrayList<DatosUsuario> datosGuardados;
     DatosUsuarioTableModel table;
     JFrame ventanaModificar;
     JFrame ventanaMostrarDatos;
     int filaSeleccionada;
     private static final String RUTA_ARCHIVO = "ultimaRuta";
-    public ControlBotones(VistaRegistrarse panel, DatosUsuario datos, VistaVerUsuarios panel2, VistaModificarUsuario panel3) {
+    public ControlBotones(VistaRegistrarse panel, DatosUsuario datos, VistaVerUsuarios panel2, VistaModificarUsuario panel3, VistaPaginaPrincipal paginaPrincipal) {
         vistaRegistrarse = panel;
         vistaVerUsuarios = panel2;
         vistaModificarUsuario = panel3;
+        vistaPaginaPrincipal = paginaPrincipal;
         table = vistaVerUsuarios.getTable();
         vistaRegistrarse.setListeners(this);
         vistaVerUsuarios.setListeners(this);
         vistaModificarUsuario.setListeners(this);
+        vistaPaginaPrincipal.setListeners(this);
         datosGuardados = new ArrayList<>();
     }
 
