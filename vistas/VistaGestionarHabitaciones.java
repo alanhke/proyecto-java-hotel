@@ -1,0 +1,36 @@
+package HotelProyectoFinal.vistas;
+
+import HotelProyectoFinal.modelos.HabitacionesTableModel;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+
+public class VistaGestionarHabitaciones extends JPanel {
+    JButton limpiar;
+    JButton pdf;
+    JButton modificar;
+    JButton eliminar;
+    JTable table;
+    DefaultTableModel tableModel;
+    HabitacionesTableModel habitacionesTableModel;
+    JScrollPane scrollPane;
+    public VistaGestionarHabitaciones() {
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        String[] datos = {"Numero de habitacion", "Tipo", "Estado", "Precio"};
+        limpiar = new JButton("Limpiar Tabla Habitaciones");
+        pdf = new JButton("Exportar habitaciones a PDF");
+        modificar = new JButton("Modificar habitacion");
+        eliminar = new JButton("Eliminar habitacion");
+        habitacionesTableModel = new HabitacionesTableModel();
+        table = new JTable(habitacionesTableModel);
+        scrollPane = new JScrollPane(table);
+        JPanel botones = new JPanel();
+        botones.add(limpiar);
+        botones.add(pdf);
+        botones.add(modificar);
+        botones.add(eliminar);
+        botones.setLayout(new BoxLayout(botones, BoxLayout.X_AXIS));
+        add(scrollPane);
+        add(botones);
+    }
+}
