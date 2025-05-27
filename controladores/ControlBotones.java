@@ -430,10 +430,10 @@ public class ControlBotones implements ActionListener {
     }
 
     public void mostrarVentanaReportes(){
-        ventanaReportes = new JFrame("Gestionar Huespedes");
-        ventanaReportes.setSize(1000,500);
+        ventanaReportes = new JFrame("Reportes");
+        ventanaReportes.setSize(500,500);
         ventanaReportes.add(vistaReportes);
-        ventanaReportes.pack();
+        //ventanaReportes.pack();
         ventanaReportes.setLocationRelativeTo(null);
         ventanaReportes.setVisible(true);
     }
