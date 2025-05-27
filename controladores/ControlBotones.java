@@ -36,6 +36,7 @@ import java.util.ArrayList;
 import java.util.prefs.Preferences;
 
 public class ControlBotones implements ActionListener {
+    VistaInicioSesion vistaInicioSesion;
     VistaRegistrarse vistaRegistrarse;
     VistaVerUsuarios vistaVerUsuarios;
     VistaModificarUsuario vistaModificarUsuario;
@@ -50,6 +51,7 @@ public class ControlBotones implements ActionListener {
     ArrayList<DatosUsuario> datosGuardados;
     DatosUsuarioTableModel table;
 
+    JFrame ventanaInicioSesion;
     JFrame ventanaModificar;
     JFrame ventanaMostrarDatos;
     JFrame ventanaPrincipal;
@@ -62,7 +64,7 @@ public class ControlBotones implements ActionListener {
 
     int filaSeleccionada;
     private static final String RUTA_ARCHIVO = "ultimaRuta";
-    public ControlBotones(VistaRegistrarse panel, DatosUsuario datos, VistaVerUsuarios panel2, VistaModificarUsuario panel3, VistaPaginaPrincipal paginaPrincipal, VistaGestionarHabitaciones vistaGestionarHabitaciones1, VistaGestionarReservas vistaGestionarReservas1, VistaGestionarHuespedes vistaGestionarHuespedes1, VistaReportes vistaReportes1, VistaPersonalizar vistaPersonalizar1, Estilo estilo1) {
+    public ControlBotones(VistaRegistrarse panel, DatosUsuario datos, VistaVerUsuarios panel2, VistaModificarUsuario panel3, VistaPaginaPrincipal paginaPrincipal, VistaGestionarHabitaciones vistaGestionarHabitaciones1, VistaGestionarReservas vistaGestionarReservas1, VistaGestionarHuespedes vistaGestionarHuespedes1, VistaReportes vistaReportes1, VistaPersonalizar vistaPersonalizar1, Estilo estilo1, VistaInicioSesion vistaInicioSesion1) {
         vistaRegistrarse = panel;
         vistaVerUsuarios = panel2;
         vistaModificarUsuario = panel3;
@@ -73,6 +75,7 @@ public class ControlBotones implements ActionListener {
         vistaReportes = vistaReportes1;
         vistaPersonalizar = vistaPersonalizar1;
         estilo = estilo1;
+        vistaInicioSesion = vistaInicioSesion1;
 
         table = vistaVerUsuarios.getTable();
         vistaRegistrarse.setListeners(this);
@@ -84,6 +87,7 @@ public class ControlBotones implements ActionListener {
         vistaGestionarHuespedes.setListeners(this);
         vistaReportes.setListeners(this);
         vistaPersonalizar.setListeners(this);
+        vistaInicioSesion.setListeners(this);
 
         datosGuardados = new ArrayList<>();
 
@@ -196,6 +200,13 @@ public class ControlBotones implements ActionListener {
             mostrarVentanaPersonalizar();
          } else if (textoBotonPresionado.equals("Aplicar Cambios")) {
              aplicarPersonalizacion();
+         } else if (textoBotonPresionado.equals("Iniciar Sesión")) {
+             ventanaPrincipal.add(vistaPaginaPrincipal);
+             ventanaPrincipal.setSize(1000,500);
+             //ventanaPrincipal.pack();
+             ventanaPrincipal.setLocationRelativeTo(null);
+             ventanaPrincipal.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+             ventanaPrincipal.setVisible(true);
          }
     }
 
@@ -502,15 +513,16 @@ public class ControlBotones implements ActionListener {
     }
 
     public void cargarVentanas(){
-        ventanaPrincipal = new JFrame("Hotel Proyecto");
-        ventanaPrincipal.add(vistaPaginaPrincipal);
-        ventanaPrincipal.setSize(1000,500);
+        ventanaInicioSesion = new JFrame("Inicio Sesion");
+        ventanaInicioSesion.add(vistaInicioSesion);
+        ventanaInicioSesion.setSize(1000,500);
         //ventanaPrincipal.pack();
-        ventanaPrincipal.setLocationRelativeTo(null);
-        ventanaPrincipal.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ventanaPrincipal.setVisible(true);
+        ventanaInicioSesion.setLocationRelativeTo(null);
+        ventanaInicioSesion.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        ventanaInicioSesion.setVisible(true);
 
         //Demas ventanas
+        ventanaPrincipal = new JFrame("Hotel Proyecto");
         ventanaGestionarHabitaciones = new JFrame("Gestionar Habitaciones");
         ventanaGestionarReservas = new JFrame("Gestionar Reservas");
         ventanaGestionarHuespedes = new JFrame("Gestionar Huespedes");

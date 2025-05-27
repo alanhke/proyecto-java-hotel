@@ -20,9 +20,10 @@ public class Main {
         VistaReportes vistaReportes = new VistaReportes();
         VistaPersonalizar VistaPersonalizar = new VistaPersonalizar();
         Estilo estilo = new Estilo();
+        VistaInicioSesion vistaInicioSesion = new VistaInicioSesion();
 
 
         new ControlBotones(vistaRegistrarse,modeloDatos,vistaVerUsuarios,vistaModificarUsuario, vistaPaginaPrincipal, gestionarHabitaciones,vistaGestionarRes
-        , vistaGestionarHuespedes, vistaReportes, VistaPersonalizar, estilo);
+        , vistaGestionarHuespedes, vistaReportes, VistaPersonalizar, estilo, vistaInicioSesion);
     }
 }
