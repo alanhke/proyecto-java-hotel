@@ -10,7 +10,6 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class VistaPaginaPrincipal extends JPanel {
-    JButton btnEstadisticas;
     JButton btnHistorial;
     JButton btnPerfil;
     JButton btnCerrarSesion;
@@ -41,14 +40,12 @@ public class VistaPaginaPrincipal extends JPanel {
         panelIzquierdo.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 10));
         panelIzquierdo.setBackground(new Color(245, 245, 250));
 
-        btnEstadisticas = new JButton("Ver Estadísticas");
         btnHistorial = new JButton("Ver Historial");
         btnPerfil = new JButton("Ver Perfil");
 
         btnCerrarSesion = new JButton("Cerrar Sesión");
         btnCerrarSesion.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        panelIzquierdo.add(btnEstadisticas);
         panelIzquierdo.add(Box.createVerticalStrut(10));
         panelIzquierdo.add(btnHistorial);
         panelIzquierdo.add(Box.createVerticalStrut(10));
@@ -110,7 +107,6 @@ public class VistaPaginaPrincipal extends JPanel {
     }
 
     public void setListeners(ActionListener listener) {
-        btnEstadisticas.addActionListener(listener);
         btnHistorial.addActionListener(listener);
         btnPerfil.addActionListener(listener);
         btnCerrarSesion.addActionListener(listener);
