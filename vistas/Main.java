@@ -20,7 +20,7 @@ public class Main {
         JFrame ventana = new JFrame("Hotel Proyecto");
         ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         ventana.setSize(1000,500);
-        VistaGestionarReservas ventanaPrincipal = new VistaGestionarReservas();
+        VistaInicioSesion ventanaPrincipal = new VistaInicioSesion();
         ventanaPrincipal.setVisible(true);
         ventana.add(ventanaPrincipal);
         ventana.setLocationRelativeTo(null);

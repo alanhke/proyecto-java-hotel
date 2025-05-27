@@ -3,7 +3,7 @@ package HotelProyectoFinal.vistas;
 import javax.swing.*;
 import java.awt.*;
 
-public class VistaInicioSesion extends JFrame {
+public class VistaInicioSesion extends JPanel {
 
     private JTextField campoUsuario;
     private JPasswordField campoContrasena;
@@ -11,29 +11,20 @@ public class VistaInicioSesion extends JFrame {
     private JButton botonRegistrarse;
 
     public VistaInicioSesion() {
-        setTitle("HotelSys - Inicio de Sesión");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setResizable(false);
-
-        initComponentes();
-
-        pack(); // Ajusta tamaño al contenido
-        setLocationRelativeTo(null); // Centrar ventana
+        initComponentes(); // Ya no usas setTitle, pack, etc.
     }
 
     private void initComponentes() {
-        Color colorLinea = Color.GRAY; // Línea visible
+        Color colorLinea = Color.GRAY;
         Color fondo = Color.WHITE;
 
         JPanel panelPrincipal = new JPanel(new BorderLayout());
         panelPrincipal.setBackground(fondo);
 
-        // Panel izquierdo: login
         JPanel panelLogin = new JPanel(null);
         panelLogin.setBackground(fondo);
         panelLogin.setPreferredSize(new Dimension(400, 400));
 
-        // Posiciones ajustadas un poco más a la izquierda
         JLabel etiquetaTitulo = new JLabel("Inicio de Sesión");
         etiquetaTitulo.setFont(new Font("SansSerif", Font.BOLD, 22));
         etiquetaTitulo.setBounds(50, 30, 250, 30);
@@ -62,28 +53,21 @@ public class VistaInicioSesion extends JFrame {
         botonIniciar.setFocusPainted(false);
         panelLogin.add(botonIniciar);
 
-        // Línea divisoria visible y fina
         JSeparator linea = new JSeparator(SwingConstants.VERTICAL);
         linea.setPreferredSize(new Dimension(2, 400));
         linea.setForeground(colorLinea);
 
-        // Panel derecho
         JPanel panelDerecho = new JPanel(new BorderLayout());
         panelDerecho.setBackground(fondo);
         panelDerecho.setPreferredSize(new Dimension(400, 400));
 
-        JLabel textoRegistro = new JLabel();
-        textoRegistro.setText("<html><div style='text-align: left;'>¿Aún no eres usuario de nuestro hotel?</div></html>");
+        JLabel textoRegistro = new JLabel("<html><div style='text-align: left;'>¿Aún no eres usuario de nuestro hotel?</div></html>");
         textoRegistro.setFont(new Font("SansSerif", Font.PLAIN, 16));
         textoRegistro.setBorder(BorderFactory.createEmptyBorder(20, 40, 10, 40));
-        textoRegistro.setMaximumSize(new Dimension(Integer.MAX_VALUE, textoRegistro.getPreferredSize().height));
-
 
         ImageIcon icono = new ImageIcon("img/hotel.png");
         Image imagenEscalada = icono.getImage().getScaledInstance(320, 180, Image.SCALE_SMOOTH);
         JLabel etiquetaImagen = new JLabel(new ImageIcon(imagenEscalada));
-        etiquetaImagen.setAlignmentX(Component.CENTER_ALIGNMENT);
-        etiquetaImagen.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 20));
 
         botonRegistrarse = new JButton("Registrarse");
         botonRegistrarse.setBackground(new Color(80, 180, 120));
@@ -91,9 +75,8 @@ public class VistaInicioSesion extends JFrame {
         botonRegistrarse.setFocusPainted(false);
         botonRegistrarse.setPreferredSize(new Dimension(160, 40));
 
-        JPanel contenedorBoton = new JPanel();
+        JPanel contenedorBoton = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
         contenedorBoton.setBackground(fondo);
-        contenedorBoton.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
         contenedorBoton.add(botonRegistrarse);
 
         JPanel panelContenido = new JPanel();
@@ -111,7 +94,8 @@ public class VistaInicioSesion extends JFrame {
         panelPrincipal.add(linea, BorderLayout.CENTER);
         panelPrincipal.add(panelDerecho, BorderLayout.EAST);
 
-        getContentPane().add(panelPrincipal);
+        setLayout(new BorderLayout());
+        add(panelPrincipal, BorderLayout.CENTER);
     }
 
     // Getters
@@ -131,3 +115,4 @@ public class VistaInicioSesion extends JFrame {
         return botonRegistrarse;
     }
 }
+
