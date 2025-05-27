@@ -87,12 +87,7 @@ public class ControlBotones implements ActionListener {
 
         datosGuardados = new ArrayList<>();
 
-        ventanaPrincipal = new JFrame("Hotel Proyecto");
-        ventanaPrincipal.add(vistaPaginaPrincipal);
-        ventanaPrincipal.pack();
-        ventanaPrincipal.setLocationRelativeTo(null);
-        ventanaPrincipal.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ventanaPrincipal.setVisible(true);
+        cargarVentanas();
 
     }
 
@@ -161,7 +156,6 @@ public class ControlBotones implements ActionListener {
             vistaModificarUsuario.setBgGender(usuarioSeleccionado.getGenero1());
             vistaModificarUsuario.setOpcion(usuarioSeleccionado.getTipo());
 
-            ventanaModificar = new JFrame("Modificar usuario");
             ventanaModificar.add(vistaModificarUsuario);
             ventanaModificar.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             ventanaModificar.setLocationRelativeTo(null);
@@ -215,7 +209,6 @@ public class ControlBotones implements ActionListener {
     }
 
     public void mostrarDatos(){
-        ventanaMostrarDatos = new JFrame();
         ventanaMostrarDatos.add(vistaVerUsuarios);
         ventanaMostrarDatos.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         ventanaMostrarDatos.setLocationRelativeTo(null);
@@ -427,62 +420,58 @@ public class ControlBotones implements ActionListener {
     }
 
     public void mostrarVentanaGestionar(){
-        ventanaGestionarHabitaciones = new JFrame("Gestionar Habitaciones");
         ventanaGestionarHabitaciones.add(vistaGestionarHabitaciones);
         ventanaGestionarHabitaciones.setSize(1000,500);
         ventanaGestionarHabitaciones.pack();
         ventanaGestionarHabitaciones.setLocationRelativeTo(null);
         ventanaGestionarHabitaciones.setVisible(true);
         ventanaActual = ventanaGestionarHabitaciones;
-        ventanaPrincipal.setVisible(false);
+        ventanaPrincipal.dispose();
     }
 
     public void mostrarVentanaReservas(){
-        ventanaGestionarReservas = new JFrame("Gestionar Reservas");
         ventanaGestionarReservas.add(vistaGestionarReservas);
         ventanaGestionarReservas.setSize(1000,500);
         ventanaGestionarReservas.pack();
         ventanaGestionarReservas.setLocationRelativeTo(null);
         ventanaGestionarReservas.setVisible(true);
         ventanaActual = ventanaGestionarReservas;
-        ventanaPrincipal.setVisible(false);
+        ventanaPrincipal.dispose();
     }
 
     public void mostrarVentanaHuespedes(){
-        ventanaGestionarHuespedes = new JFrame("Gestionar Huespedes");
         ventanaGestionarHuespedes.add(vistaGestionarHuespedes);
         ventanaGestionarHuespedes.setSize(1000,500);
         ventanaGestionarHuespedes.pack();
         ventanaGestionarHuespedes.setLocationRelativeTo(null);
         ventanaGestionarHuespedes.setVisible(true);
-        ventanaPrincipal.setVisible(false);
+        ventanaActual = ventanaGestionarHuespedes;
+        ventanaPrincipal.dispose();
     }
 
     public void mostrarVentanaReportes(){
-        ventanaReportes = new JFrame("Reportes");
         ventanaReportes.setSize(500,500);
         ventanaReportes.add(vistaReportes);
         //ventanaReportes.pack();
         ventanaReportes.setLocationRelativeTo(null);
         ventanaReportes.setVisible(true);
         ventanaActual = ventanaReportes;
-        ventanaPrincipal.setVisible(false);
+        ventanaPrincipal.dispose();
     }
 
     public void mostrarVentanaPersonalizar(){
-        ventanaPersonalizar = new JFrame("Personalizar");
         ventanaPersonalizar.setSize(500,500);
         ventanaPersonalizar.add(vistaPersonalizar);
         //ventanaReportes.pack();
         ventanaPersonalizar.setLocationRelativeTo(null);
         ventanaPersonalizar.setVisible(true);
         ventanaActual = ventanaPersonalizar;
-        ventanaPrincipal.setVisible(false);
+        ventanaPrincipal.dispose();
     }
 
     public void volverAPaginaPrincipal(){
         ventanaPrincipal.setVisible(true);
-        ventanaActual.setVisible(false);
+        ventanaActual.dispose();
     }
 
     public void aplicarPersonalizacion() {
@@ -510,6 +499,24 @@ public class ControlBotones implements ActionListener {
         SwingUtilities.updateComponentTreeUI(ventanaMostrarDatos);
         SwingUtilities.updateComponentTreeUI(ventanaModificar);
         SwingUtilities.updateComponentTreeUI(ventanaPersonalizar);
+    }
+
+    public void cargarVentanas(){
+        ventanaPrincipal = new JFrame("Hotel Proyecto");
+        ventanaPrincipal.add(vistaPaginaPrincipal);
+        ventanaPrincipal.pack();
+        ventanaPrincipal.setLocationRelativeTo(null);
+        ventanaPrincipal.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        ventanaPrincipal.setVisible(true);
+
+        //Demas ventanas
+        ventanaGestionarHabitaciones = new JFrame("Gestionar Habitaciones");
+        ventanaGestionarReservas = new JFrame("Gestionar Reservas");
+        ventanaGestionarHuespedes = new JFrame("Gestionar Huespedes");
+        ventanaReportes = new JFrame("Reportes");
+        ventanaPersonalizar = new JFrame("Personalizar");
+        ventanaModificar = new JFrame("Modificar usuario");
+        ventanaMostrarDatos = new JFrame();
     }
 }
 
