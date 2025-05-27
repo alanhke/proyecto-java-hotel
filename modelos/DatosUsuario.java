@@ -3,6 +3,7 @@ package HotelProyectoFinal.modelos;
 import HotelProyectoFinal.utilities.MySQLConnection;
 import HotelProyectoFinal.vistas.VistaModificarUsuario;
 import HotelProyectoFinal.vistas.VistaRegistrarse;
+import com.fasterxml.jackson.databind.JsonNode;
 import java.sql.*;
 import java.util.ArrayList;
 
