@@ -108,7 +108,7 @@ public class Habitaciones {
     }
 
     public static boolean actualizarHabitaciones(Habitaciones habitacion, int id){
-        String query = "UPDATE registro_habitaciones SET numero = ?, tipo = ?, estado = ?, precio = ? WHERE idhabitaciones = " + id;
+        String query = "UPDATE registro_habitaciones SET numero = ?, tipo = ?, estado = ?, precio = ? WHERE numeroHabitaciones = " + id;
         int actualizados = 0;
         try (
                 Connection conexion = MySQLConnection.connect();
