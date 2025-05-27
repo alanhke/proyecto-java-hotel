@@ -100,6 +100,7 @@ public class ControlBotones implements ActionListener {
         datosGuardados = new ArrayList<>();
 
         habitaciones = new ArrayList<>();
+        //habitacionesTableModel = vistaGestionarHabitaciones.getTa
         huespedes = new ArrayList<>();
         reservas = new ArrayList<>();
 
