@@ -542,13 +542,7 @@ public class ControlBotones implements ActionListener {
 
         //Demas ventanas
         ventanaPrincipal = new JFrame("Hotel Proyecto");
-        ventanaPrincipal.add(vistaPaginaPrincipal);
-        ventanaPrincipal.setSize(1000,500);
-        //ventanaPrincipal.pack();
-        ventanaPrincipal.setLocationRelativeTo(null);
-        ventanaPrincipal.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ventanaPrincipal.setVisible(true);
-
+        mostrarVentanaPrincipal();
         ventanaGestionarHabitaciones = new JFrame("Gestionar Habitaciones");
         ventanaGestionarReservas = new JFrame("Gestionar Reservas");
         ventanaGestionarHuespedes = new JFrame("Gestionar Huespedes");
@@ -556,6 +550,30 @@ public class ControlBotones implements ActionListener {
         ventanaPersonalizar = new JFrame("Personalizar");
         ventanaModificar = new JFrame("Modificar usuario");
         ventanaMostrarDatos = new JFrame();
+    }
+
+    public void mostrarVentanaPrincipal(){
+        habitaciones = Habitaciones.obtenerHabitaciones();
+        int ocupadas = 0;
+        int disponibles = 0;
+        int enLimpieza = 0;
+        for (Habitaciones h : habitaciones) {
+            String estado = h.getEstado();
+            if (estado.equalsIgnoreCase("ocupado")) {
+                ocupadas++;
+            }else if (estado.equalsIgnoreCase("disponible")) {
+                disponibles++;
+            }else if (estado.equalsIgnoreCase("enLimpieza")) {
+                enLimpieza++;
+            }
+        }
+        vistaPaginaPrincipal.cargarGrafica(ocupadas, disponibles, enLimpieza);
+        ventanaPrincipal.add(vistaPaginaPrincipal);
+        ventanaPrincipal.setSize(1000,500);
+        //ventanaPrincipal.pack();
+        ventanaPrincipal.setLocationRelativeTo(null);
+        ventanaPrincipal.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        ventanaPrincipal.setVisible(true);
     }
 
     public void cargarHabitaciones(){

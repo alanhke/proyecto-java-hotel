@@ -18,6 +18,7 @@ public class VistaPaginaPrincipal extends JPanel {
     JButton btnHuespedes;
     JButton btnReportes;
     DefaultPieDataset graficaPie;
+    JFreeChart chart;
 
     public VistaPaginaPrincipal() {
         setLayout(new BorderLayout());
@@ -79,17 +80,13 @@ public class VistaPaginaPrincipal extends JPanel {
         panelCentro.add(panelDerecho, BorderLayout.EAST);
 
         graficaPie = new DefaultPieDataset();
-        graficaPie.setValue("Ocupadas", 12);
-        graficaPie.setValue("Disponibles", 8);
-
-        JFreeChart chart = ChartFactory.createPieChart(
+        chart = ChartFactory.createPieChart(
                 "Estado de Habitaciones",
                 graficaPie,
                 true,
                 true,
                 false
         );
-
         ChartPanel chartPanel = new ChartPanel(chart);
         chartPanel.setBackground(new Color(245, 245, 250));
         panelCentro.add(chartPanel, BorderLayout.CENTER);
@@ -108,5 +105,11 @@ public class VistaPaginaPrincipal extends JPanel {
         btnReservas.addActionListener(listener);
         btnHuespedes.addActionListener(listener);
         btnReportes.addActionListener(listener);
+    }
+
+    public void cargarGrafica(int ocupadas, int disponibles, int enLimpieza) {
+        graficaPie.setValue("Ocupadas", ocupadas);
+        graficaPie.setValue("Disponibles", disponibles);
+        graficaPie.setValue("En Limpieza", enLimpieza);
     }
 }
