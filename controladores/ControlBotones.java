@@ -79,6 +79,14 @@ public class ControlBotones implements ActionListener {
         vistaReportes.setListeners(this);
 
         datosGuardados = new ArrayList<>();
+
+        ventanaPrincipal = new JFrame("Hotel Proyecto");
+        ventanaPrincipal.add(vistaPaginaPrincipal);
+        ventanaPrincipal.pack();
+        ventanaPrincipal.setLocationRelativeTo(null);
+        ventanaPrincipal.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        ventanaPrincipal.setVisible(true); // esto inicia tu app con la ventana principal
+
     }
 
     @Override
@@ -450,7 +458,7 @@ public class ControlBotones implements ActionListener {
     }
 
     public void volverAPaginaPrincipal(){
-        //ventanaPrincipal.setVisible(true);
+        ventanaPrincipal.setVisible(true);
         ventanaActual.setVisible(false);
     }
 

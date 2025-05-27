@@ -29,6 +29,7 @@ public class VistaGestionarReservas extends JPanel {
         botones.add(limpiar);
         botones.add(modificar);
         botones.add(eliminar);
+        botones.add(volver);
         botones.setLayout(new BoxLayout(botones, BoxLayout.X_AXIS));
         add(scrollPane);
         add(botones);
