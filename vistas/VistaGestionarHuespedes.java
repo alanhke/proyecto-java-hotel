@@ -5,6 +5,7 @@ import HotelProyectoFinal.modelos.HuespedesTableModel;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.ActionListener;
 
 public class VistaGestionarHuespedes extends JPanel {
     JButton limpiar;
@@ -33,5 +34,12 @@ public class VistaGestionarHuespedes extends JPanel {
         botones.setLayout(new BoxLayout(botones, BoxLayout.X_AXIS));
         add(scrollPane);
         add(botones);
+    }
+
+    public void setListeners(ActionListener listener) {
+        limpiar.addActionListener(listener);
+        pdf.addActionListener(listener);
+        modificar.addActionListener(listener);
+        eliminar.addActionListener(listener);
     }
 }

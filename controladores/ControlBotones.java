@@ -2,10 +2,7 @@ package HotelProyectoFinal.controladores;
 
 import HotelProyectoFinal.modelos.DatosUsuario;
 import HotelProyectoFinal.modelos.DatosUsuarioTableModel;
-import HotelProyectoFinal.vistas.VistaModificarUsuario;
-import HotelProyectoFinal.vistas.VistaPaginaPrincipal;
-import HotelProyectoFinal.vistas.VistaRegistrarse;
-import HotelProyectoFinal.vistas.VistaVerUsuarios;
+import HotelProyectoFinal.vistas.*;
 import com.itextpdf.io.font.constants.StandardFonts;
 import com.itextpdf.io.image.ImageData;
 import com.itextpdf.io.image.ImageDataFactory;
@@ -41,22 +38,40 @@ public class ControlBotones implements ActionListener {
     VistaVerUsuarios vistaVerUsuarios;
     VistaModificarUsuario vistaModificarUsuario;
     VistaPaginaPrincipal vistaPaginaPrincipal;
+    VistaGestionarHabitaciones vistaGestionarHabitaciones;
+    VistaGestionarReservas vistaGestionarReservas;
+    VistaGestionarHuespedes vistaGestionarHuespedes;
+
     ArrayList<DatosUsuario> datosGuardados;
     DatosUsuarioTableModel table;
+
     JFrame ventanaModificar;
     JFrame ventanaMostrarDatos;
+    JFrame ventanaPrincipal;
+    JFrame ventanaGestionarHabitaciones;
+    JFrame ventanaGestionarReservas;
+    JFrame ventanaGestionarHuespedes;
+
     int filaSeleccionada;
     private static final String RUTA_ARCHIVO = "ultimaRuta";
-    public ControlBotones(VistaRegistrarse panel, DatosUsuario datos, VistaVerUsuarios panel2, VistaModificarUsuario panel3, VistaPaginaPrincipal paginaPrincipal) {
+    public ControlBotones(VistaRegistrarse panel, DatosUsuario datos, VistaVerUsuarios panel2, VistaModificarUsuario panel3, VistaPaginaPrincipal paginaPrincipal, VistaGestionarHabitaciones vistaGestionarHabitaciones1, VistaGestionarReservas vistaGestionarReservas1, VistaGestionarHuespedes vistaGestionarHuespedes1) {
         vistaRegistrarse = panel;
         vistaVerUsuarios = panel2;
         vistaModificarUsuario = panel3;
         vistaPaginaPrincipal = paginaPrincipal;
+        vistaGestionarHabitaciones = vistaGestionarHabitaciones1;
+        vistaGestionarReservas = vistaGestionarReservas1;
+        vistaGestionarHuespedes = vistaGestionarHuespedes1;
+
         table = vistaVerUsuarios.getTable();
         vistaRegistrarse.setListeners(this);
         vistaVerUsuarios.setListeners(this);
         vistaModificarUsuario.setListeners(this);
         vistaPaginaPrincipal.setListeners(this);
+        vistaGestionarHabitaciones.setListeners(this);
+        vistaGestionarReservas.setListeners(this);
+        vistaGestionarHuespedes.setListeners(this);
+
         datosGuardados = new ArrayList<>();
     }
 
@@ -133,7 +148,13 @@ public class ControlBotones implements ActionListener {
             ventanaModificar.setVisible(true);
         }else if (textoBotonPresionado.equals("Aceptar")){
             modificarUsuario();
-        }
+        }else if (textoBotonPresionado.equals("Gestionar Habitaciones")) {
+             mostrarVentanaGestionar();
+         } else if (textoBotonPresionado.equals("Gestionar Reservas")) {
+            mostrarVentanaReservas();
+         } else if (textoBotonPresionado.equals("Gestión de Huéspedes")) {
+             mostrarVentanaHuespedes();
+         }
     }
     public void guardarDatos(DatosUsuario registroDatos2) {
         DatosUsuario.agregarUsuario(registroDatos2);
@@ -354,4 +375,29 @@ public class ControlBotones implements ActionListener {
             JOptionPane.showMessageDialog(vistaModificarUsuario, "El campo " + vacio + " esta vacio.", "Error", JOptionPane.WARNING_MESSAGE);
         }
     }
+
+    public void mostrarVentanaGestionar(){
+        ventanaGestionarHabitaciones = new JFrame("Gestionar Habitaciones");
+        ventanaGestionarHabitaciones.add(vistaGestionarHabitaciones);
+        ventanaGestionarHabitaciones.pack();
+        ventanaGestionarHabitaciones.setLocationRelativeTo(null);
+        ventanaGestionarHabitaciones.setVisible(true);
+    }
+
+    public void mostrarVentanaReservas(){
+        ventanaGestionarReservas = new JFrame("Gestionar Reservas");
+        ventanaGestionarReservas.add(vistaGestionarReservas);
+        ventanaGestionarReservas.pack();
+        ventanaGestionarReservas.setLocationRelativeTo(null);
+        ventanaGestionarReservas.setVisible(true);
+    }
+
+    public void mostrarVentanaHuespedes(){
+        ventanaGestionarHuespedes = new JFrame("Gestionar Huespedes");
+        ventanaGestionarHuespedes.add(vistaGestionarHuespedes);
+        ventanaGestionarHuespedes.pack();
+        ventanaGestionarHuespedes.setLocationRelativeTo(null);
+        ventanaGestionarHuespedes.setVisible(true);
+    }
+
 }
