@@ -448,8 +448,9 @@ public class ControlBotones implements ActionListener {
     public void mostrarVentanaGestionar(){
         ventanaGestionarHabitaciones.add(vistaGestionarHabitaciones);
         ventanaGestionarHabitaciones.setSize(1000,500);
-        ventanaGestionarHabitaciones.pack();
+        //ventanaGestionarHabitaciones.pack();
         ventanaGestionarHabitaciones.setLocationRelativeTo(null);
+        //ventanaGestionarHabitaciones.setDefaultCloseOperation();
         ventanaGestionarHabitaciones.setVisible(true);
         ventanaActual = ventanaGestionarHabitaciones;
         ventanaPrincipal.dispose();
@@ -459,7 +460,7 @@ public class ControlBotones implements ActionListener {
     public void mostrarVentanaReservas(){
         ventanaGestionarReservas.add(vistaGestionarReservas);
         ventanaGestionarReservas.setSize(1000,500);
-        ventanaGestionarReservas.pack();
+        //ventanaGestionarReservas.pack();
         ventanaGestionarReservas.setLocationRelativeTo(null);
         ventanaGestionarReservas.setVisible(true);
         ventanaActual = ventanaGestionarReservas;
@@ -470,7 +471,7 @@ public class ControlBotones implements ActionListener {
     public void mostrarVentanaHuespedes(){
         ventanaGestionarHuespedes.add(vistaGestionarHuespedes);
         ventanaGestionarHuespedes.setSize(1000,500);
-        ventanaGestionarHuespedes.pack();
+        //ventanaGestionarHuespedes.pack();
         ventanaGestionarHuespedes.setLocationRelativeTo(null);
         ventanaGestionarHuespedes.setVisible(true);
         ventanaActual = ventanaGestionarHuespedes;
@@ -479,7 +480,7 @@ public class ControlBotones implements ActionListener {
     }
 
     public void mostrarVentanaReportes(){
-        ventanaReportes.setSize(500,500);
+        ventanaReportes.setSize(1000,500);
         ventanaReportes.add(vistaReportes);
         //ventanaReportes.pack();
         ventanaReportes.setLocationRelativeTo(null);
@@ -489,7 +490,7 @@ public class ControlBotones implements ActionListener {
     }
 
     public void mostrarVentanaPersonalizar(){
-        ventanaPersonalizar.setSize(500,500);
+        ventanaPersonalizar.setSize(1000,500);
         ventanaPersonalizar.add(vistaPersonalizar);
         //ventanaReportes.pack();
         ventanaPersonalizar.setLocationRelativeTo(null);
