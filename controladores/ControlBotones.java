@@ -543,5 +543,9 @@ public class ControlBotones implements ActionListener {
         ventanaModificar = new JFrame("Modificar usuario");
         ventanaMostrarDatos = new JFrame();
     }
+
+    public void mostrarHabitaciones(){
+
+    }
 }
 
