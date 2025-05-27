@@ -45,6 +45,7 @@ public class ControlBotones implements ActionListener {
     VistaGestionarHuespedes vistaGestionarHuespedes;
     VistaReportes vistaReportes;
     VistaPersonalizar vistaPersonalizar;
+    VistaCrearModificarHabitacion vistaCrearModificarHabitacion;
     Estilo estilo;
 
     ArrayList<DatosUsuario> datosGuardados;
@@ -69,10 +70,11 @@ public class ControlBotones implements ActionListener {
     JFrame ventanaReportes;
     JFrame ventanaActual;
     JFrame ventanaPersonalizar;
+    JFrame ventanaCrearModificarHabitacion;
 
     int filaSeleccionada;
     private static final String RUTA_ARCHIVO = "ultimaRuta";
-    public ControlBotones(VistaRegistrarse panel, DatosUsuario datos, VistaVerUsuarios panel2, VistaModificarUsuario panel3, VistaPaginaPrincipal paginaPrincipal, VistaGestionarHabitaciones vistaGestionarHabitaciones1, VistaGestionarReservas vistaGestionarReservas1, VistaGestionarHuespedes vistaGestionarHuespedes1, VistaReportes vistaReportes1, VistaPersonalizar vistaPersonalizar1, Estilo estilo1, VistaInicioSesion vistaInicioSesion1) {
+    public ControlBotones(VistaRegistrarse panel, DatosUsuario datos, VistaVerUsuarios panel2, VistaModificarUsuario panel3, VistaPaginaPrincipal paginaPrincipal, VistaGestionarHabitaciones vistaGestionarHabitaciones1, VistaGestionarReservas vistaGestionarReservas1, VistaGestionarHuespedes vistaGestionarHuespedes1, VistaReportes vistaReportes1, VistaPersonalizar vistaPersonalizar1, Estilo estilo1, VistaInicioSesion vistaInicioSesion1, VistaCrearModificarHabitacion vistaCrearModificarHabitacion1) {
         vistaRegistrarse = panel;
         vistaVerUsuarios = panel2;
         vistaModificarUsuario = panel3;
@@ -84,6 +86,7 @@ public class ControlBotones implements ActionListener {
         vistaPersonalizar = vistaPersonalizar1;
         estilo = estilo1;
         vistaInicioSesion = vistaInicioSesion1;
+        vistaCrearModificarHabitacion = vistaCrearModificarHabitacion1;
 
         table = vistaVerUsuarios.getTable();
         vistaRegistrarse.setListeners(this);
@@ -139,26 +142,26 @@ public class ControlBotones implements ActionListener {
                 //throw new Errores("El campo " + vacio + " esta vacio.");
                 JOptionPane.showMessageDialog(vistaRegistrarse, "El campo " + vacio + " esta vacio.", "Error", JOptionPane.WARNING_MESSAGE);
             }
-        }else if (textoBotonPresionado.equals("limpiar")){
+         }else if (textoBotonPresionado.equals("limpiar")){
             vistaRegistrarse.getTfUserName().setText("");
             vistaRegistrarse.getTfContra().setText("");
             vistaRegistrarse.getTfFinalPassword().setText("");
             vistaRegistrarse.getTfName().setText("");
             vistaRegistrarse.getTfLastName().setText("");
-        }else if (textoBotonPresionado.equals("Ver guardados")){
+         }else if (textoBotonPresionado.equals("Ver guardados")){
             verDatos();
-        } else if (textoBotonPresionado.equals("Limpiar")) {
+         } else if (textoBotonPresionado.equals("Limpiar")) {
             table.clear();
-        } else if (textoBotonPresionado.equals("Exportar a PDF")) {
+         } else if (textoBotonPresionado.equals("Exportar a PDF")) {
             generarPDF();
-        } else if (textoBotonPresionado.equals("Eliminar Usuario")) {
+         } else if (textoBotonPresionado.equals("Eliminar Usuario")) {
             boolean eliminado = eliminarUsuario();
             if (eliminado) {
                 JOptionPane.showMessageDialog(vistaRegistrarse, "El usuario se ha eliminado", "Usuario eliminado", JOptionPane.OK_OPTION);
             }else {
                 JOptionPane.showMessageDialog(vistaRegistrarse, "El usuario no se ha eliminado", "Error", JOptionPane.WARNING_MESSAGE);
             }
-        }else if (textoBotonPresionado.equals("Modificar Usuario")) {
+         }else if (textoBotonPresionado.equals("Modificar Usuario")) {
             filaSeleccionada = vistaVerUsuarios.getTableView().getSelectedRow();
             if (filaSeleccionada == -1) {
                 JOptionPane.showMessageDialog(vistaVerUsuarios, "Debes seleccionar un usuario de la tabla.", "Advertencia", JOptionPane.WARNING_MESSAGE);
@@ -180,9 +183,9 @@ public class ControlBotones implements ActionListener {
             ventanaModificar.setLocationRelativeTo(null);
             ventanaModificar.setSize(500,500);
             ventanaModificar.setVisible(true);
-        }else if (textoBotonPresionado.equals("Aceptar")){
+         }else if (textoBotonPresionado.equals("Aceptar")){
             modificarUsuario();
-        }else if (textoBotonPresionado.equals("Gestionar Habitaciones")) {
+         }else if (textoBotonPresionado.equals("Gestionar Habitaciones")) {
              mostrarVentanaGestionar();
          } else if (textoBotonPresionado.equals("Gestionar Reservas")) {
             mostrarVentanaReservas();
@@ -222,6 +225,13 @@ public class ControlBotones implements ActionListener {
              ventanaPrincipal.setLocationRelativeTo(null);
              ventanaPrincipal.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
              ventanaPrincipal.setVisible(true);
+         }//Botones vista habitaciones
+         else if (textoBotonPresionado.equals("Limpiar Tabla Habitaciones")) {
+             habitacionesTableModel.clear();
+         } else if (textoBotonPresionado.equals("Modificar habitacion")) {
+             mostrarVentanaCrearModificarHabitacion();
+         } else if (textoBotonPresionado.equals("Eliminar habitacion")) {
+             
          }
     }
 
@@ -499,6 +509,14 @@ public class ControlBotones implements ActionListener {
         ventanaPrincipal.dispose();
     }
 
+    public void mostrarVentanaCrearModificarHabitacion(){
+        ventanaCrearModificarHabitacion.setSize(500,500);
+        ventanaCrearModificarHabitacion.add(vistaCrearModificarHabitacion);
+        ventanaCrearModificarHabitacion.setLocationRelativeTo(null);
+        ventanaCrearModificarHabitacion.setVisible(true);
+        ventanaActual = ventanaCrearModificarHabitacion;
+    }
+
     public void volverAPaginaPrincipal(){
         ventanaPrincipal.setVisible(true);
         ventanaActual.dispose();
@@ -550,6 +568,7 @@ public class ControlBotones implements ActionListener {
         ventanaPersonalizar = new JFrame("Personalizar");
         ventanaModificar = new JFrame("Modificar usuario");
         ventanaMostrarDatos = new JFrame();
+        ventanaCrearModificarHabitacion = new JFrame("Habitacion");
     }
 
     public void mostrarVentanaPrincipal(){

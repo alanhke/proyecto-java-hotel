@@ -21,9 +21,10 @@ public class Main {
         VistaPersonalizar VistaPersonalizar = new VistaPersonalizar();
         Estilo estilo = new Estilo();
         VistaInicioSesion vistaInicioSesion = new VistaInicioSesion();
+        VistaCrearModificarHabitacion vistaCrearModificarHabitacion = new VistaCrearModificarHabitacion();
 
 
         new ControlBotones(vistaRegistrarse,modeloDatos,vistaVerUsuarios,vistaModificarUsuario, vistaPaginaPrincipal, gestionarHabitaciones,vistaGestionarRes
-        , vistaGestionarHuespedes, vistaReportes, VistaPersonalizar, estilo, vistaInicioSesion);
+        , vistaGestionarHuespedes, vistaReportes, VistaPersonalizar, estilo, vistaInicioSesion, vistaCrearModificarHabitacion);
     }
 }
