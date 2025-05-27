@@ -10,8 +10,7 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class VistaPaginaPrincipal extends JPanel {
-    JButton btnEstadisticas;
-    JButton btnHistorial;
+    JButton btnPersonalizar;
     JButton btnPerfil;
     JButton btnCerrarSesion;
     JButton btnGestionar;
@@ -21,38 +20,41 @@ public class VistaPaginaPrincipal extends JPanel {
     DefaultPieDataset graficaPie;
 
     public VistaPaginaPrincipal() {
-        setLayout(null);
-        setBackground(new Color(245, 245, 250)); // Fondo suave
+        setLayout(new BorderLayout());
+        setBackground(new Color(245, 245, 250));
 
-        // Título
         JLabel titulo = new JLabel("Sistema de Gestión Hotelera", JLabel.CENTER);
         titulo.setFont(new Font("SansSerif", Font.BOLD, 28));
-        titulo.setBounds(200, 20, 600, 40);
-        add(titulo);
+        titulo.setBorder(BorderFactory.createEmptyBorder(20, 10, 10, 10));
+        add(titulo, BorderLayout.NORTH);
 
-        // Panel Izquierdo con botones de navegación
-        JPanel panelIzquierdo = new JPanel(new GridLayout(3, 1, 10, 10));
-        panelIzquierdo.setBounds(50, 120, 160, 140);
+        JPanel panelCentro = new JPanel(new BorderLayout());
+        panelCentro.setBackground(new Color(245, 245, 250));
+        add(panelCentro, BorderLayout.CENTER);
+
+        JPanel panelIzquierdo = new JPanel();
+        panelIzquierdo.setLayout(new BoxLayout(panelIzquierdo, BoxLayout.Y_AXIS));
+        panelIzquierdo.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 10));
         panelIzquierdo.setBackground(new Color(245, 245, 250));
 
-        btnEstadisticas = new JButton("Ver Estadísticas");
-        btnHistorial = new JButton("Ver Historial");
+        btnPersonalizar = new JButton("Personalizar");
         btnPerfil = new JButton("Ver Perfil");
 
-        panelIzquierdo.add(btnEstadisticas);
-        panelIzquierdo.add(btnHistorial);
-        panelIzquierdo.add(btnPerfil);
-
-        add(panelIzquierdo);
-
-        // Botón de cerrar sesión abajo a la izquierda
         btnCerrarSesion = new JButton("Cerrar Sesión");
-        btnCerrarSesion.setBounds(50, 300, 160, 30);
-        add(btnCerrarSesion);
+        btnCerrarSesion.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        // Panel Derecho con 4 botones verticales
-        JPanel panelDerecho = new JPanel(new GridLayout(4, 1, 10, 10));
-        panelDerecho.setBounds(760, 120, 200, 180);
+        panelIzquierdo.add(Box.createVerticalStrut(10));
+        panelIzquierdo.add(btnPersonalizar);
+        panelIzquierdo.add(Box.createVerticalStrut(10));
+        panelIzquierdo.add(btnPerfil);
+        panelIzquierdo.add(Box.createVerticalGlue());
+        panelIzquierdo.add(btnCerrarSesion);
+
+        panelCentro.add(panelIzquierdo, BorderLayout.WEST);
+
+        JPanel panelDerecho = new JPanel();
+        panelDerecho.setLayout(new BoxLayout(panelDerecho, BoxLayout.Y_AXIS));
+        panelDerecho.setBorder(BorderFactory.createEmptyBorder(20, 10, 20, 20));
         panelDerecho.setBackground(new Color(245, 245, 250));
 
         btnGestionar = new JButton("Gestionar Habitaciones");
@@ -67,19 +69,15 @@ public class VistaPaginaPrincipal extends JPanel {
         btnReportes.setFont(btnFont);
 
         panelDerecho.add(btnGestionar);
+        panelDerecho.add(Box.createVerticalStrut(10));
         panelDerecho.add(btnReservas);
+        panelDerecho.add(Box.createVerticalStrut(10));
         panelDerecho.add(btnHuespedes);
+        panelDerecho.add(Box.createVerticalStrut(10));
         panelDerecho.add(btnReportes);
 
-        add(panelDerecho);
+        panelCentro.add(panelDerecho, BorderLayout.EAST);
 
-        // Pie de página
-        JLabel pie = new JLabel("© 2025 HotelSuite - Todos los derechos reservados", JLabel.CENTER);
-        pie.setFont(new Font("SansSerif", Font.ITALIC, 12));
-        pie.setBounds(250, 340, 500, 30);
-        add(pie);
-
-        // Crear gráfica de pastel
         graficaPie = new DefaultPieDataset();
         graficaPie.setValue("Ocupadas", 12);
         graficaPie.setValue("Disponibles", 8);
@@ -93,14 +91,17 @@ public class VistaPaginaPrincipal extends JPanel {
         );
 
         ChartPanel chartPanel = new ChartPanel(chart);
-        chartPanel.setBounds(250, 100, 500, 220);
         chartPanel.setBackground(new Color(245, 245, 250));
-        add(chartPanel);
+        panelCentro.add(chartPanel, BorderLayout.CENTER);
+
+        JLabel pie = new JLabel("© 2025 HotelSuite - Todos los derechos reservados", JLabel.CENTER);
+        pie.setFont(new Font("SansSerif", Font.ITALIC, 12));
+        pie.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        add(pie, BorderLayout.SOUTH);
     }
 
     public void setListeners(ActionListener listener) {
-        btnEstadisticas.addActionListener(listener);
-        btnHistorial.addActionListener(listener);
+        btnPersonalizar.addActionListener(listener);
         btnPerfil.addActionListener(listener);
         btnCerrarSesion.addActionListener(listener);
         btnGestionar.addActionListener(listener);
