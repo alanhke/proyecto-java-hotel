@@ -100,9 +100,11 @@ public class ControlBotones implements ActionListener {
         datosGuardados = new ArrayList<>();
 
         habitaciones = new ArrayList<>();
-        //habitacionesTableModel = vistaGestionarHabitaciones.getTa
+        habitacionesTableModel = vistaGestionarHabitaciones.getTable();
         huespedes = new ArrayList<>();
+        huespedesTableModel = vistaGestionarHuespedes.getTable();
         reservas = new ArrayList<>();
+        reservasTableModel = vistaGestionarReservas.getTable();
 
         cargarVentanas();
 
@@ -451,6 +453,7 @@ public class ControlBotones implements ActionListener {
         ventanaGestionarHabitaciones.setVisible(true);
         ventanaActual = ventanaGestionarHabitaciones;
         ventanaPrincipal.dispose();
+        cargarHabitaciones();
     }
 
     public void mostrarVentanaReservas(){
@@ -461,6 +464,7 @@ public class ControlBotones implements ActionListener {
         ventanaGestionarReservas.setVisible(true);
         ventanaActual = ventanaGestionarReservas;
         ventanaPrincipal.dispose();
+        cargarReservas();
     }
 
     public void mostrarVentanaHuespedes(){
@@ -471,6 +475,7 @@ public class ControlBotones implements ActionListener {
         ventanaGestionarHuespedes.setVisible(true);
         ventanaActual = ventanaGestionarHuespedes;
         ventanaPrincipal.dispose();
+        cargarHuespedes();
     }
 
     public void mostrarVentanaReportes(){
@@ -526,16 +531,23 @@ public class ControlBotones implements ActionListener {
     }
 
     public void cargarVentanas(){
-        ventanaInicioSesion = new JFrame("Inicio Sesion");
+        /*ventanaInicioSesion = new JFrame("Inicio Sesion");
         ventanaInicioSesion.add(vistaInicioSesion);
         ventanaInicioSesion.setSize(1000,500);
         //ventanaPrincipal.pack();
         ventanaInicioSesion.setLocationRelativeTo(null);
         ventanaInicioSesion.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ventanaInicioSesion.setVisible(true);
+        ventanaInicioSesion.setVisible(true);*/
 
         //Demas ventanas
         ventanaPrincipal = new JFrame("Hotel Proyecto");
+        ventanaPrincipal.add(vistaPaginaPrincipal);
+        ventanaPrincipal.setSize(1000,500);
+        //ventanaPrincipal.pack();
+        ventanaPrincipal.setLocationRelativeTo(null);
+        ventanaPrincipal.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        ventanaPrincipal.setVisible(true);
+
         ventanaGestionarHabitaciones = new JFrame("Gestionar Habitaciones");
         ventanaGestionarReservas = new JFrame("Gestionar Reservas");
         ventanaGestionarHuespedes = new JFrame("Gestionar Huespedes");
@@ -545,8 +557,28 @@ public class ControlBotones implements ActionListener {
         ventanaMostrarDatos = new JFrame();
     }
 
-    public void mostrarHabitaciones(){
+    public void cargarHabitaciones(){
+        habitaciones = Habitaciones.obtenerHabitaciones();
+        habitacionesTableModel.clear();
+        for (Habitaciones h : habitaciones) {
+            habitacionesTableModel.addRow(h);
+        }
+    }
 
+    public void cargarReservas(){
+        reservas = Reservas.obtenerReservas();
+        reservasTableModel.clear();
+        for (Reservas r : reservas) {
+            reservasTableModel.addRow(r);
+        }
+    }
+
+    public void cargarHuespedes(){
+        huespedes = Huespedes.obtenerHuespedes();
+        huespedesTableModel.clear();
+        for (Huespedes hu : huespedes) {
+            huespedesTableModel.addRow(hu);
+        }
     }
 }
 
