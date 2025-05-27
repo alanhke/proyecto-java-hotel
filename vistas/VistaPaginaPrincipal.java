@@ -23,18 +23,15 @@ public class VistaPaginaPrincipal extends JPanel {
         setLayout(new BorderLayout());
         setBackground(new Color(245, 245, 250));
 
-        // ---------- Título superior ----------
         JLabel titulo = new JLabel("Sistema de Gestión Hotelera", JLabel.CENTER);
         titulo.setFont(new Font("SansSerif", Font.BOLD, 28));
         titulo.setBorder(BorderFactory.createEmptyBorder(20, 10, 10, 10));
         add(titulo, BorderLayout.NORTH);
 
-        // ---------- Panel central ----------
         JPanel panelCentro = new JPanel(new BorderLayout());
         panelCentro.setBackground(new Color(245, 245, 250));
         add(panelCentro, BorderLayout.CENTER);
 
-        // ---------- Panel izquierdo (navegación) ----------
         JPanel panelIzquierdo = new JPanel();
         panelIzquierdo.setLayout(new BoxLayout(panelIzquierdo, BoxLayout.Y_AXIS));
         panelIzquierdo.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 10));
@@ -55,7 +52,6 @@ public class VistaPaginaPrincipal extends JPanel {
 
         panelCentro.add(panelIzquierdo, BorderLayout.WEST);
 
-        // ---------- Panel derecho (botones de gestión) ----------
         JPanel panelDerecho = new JPanel();
         panelDerecho.setLayout(new BoxLayout(panelDerecho, BoxLayout.Y_AXIS));
         panelDerecho.setBorder(BorderFactory.createEmptyBorder(20, 10, 20, 20));
@@ -82,7 +78,6 @@ public class VistaPaginaPrincipal extends JPanel {
 
         panelCentro.add(panelDerecho, BorderLayout.EAST);
 
-        // ---------- Panel gráfico al centro ----------
         graficaPie = new DefaultPieDataset();
         graficaPie.setValue("Ocupadas", 12);
         graficaPie.setValue("Disponibles", 8);
@@ -98,8 +93,7 @@ public class VistaPaginaPrincipal extends JPanel {
         ChartPanel chartPanel = new ChartPanel(chart);
         chartPanel.setBackground(new Color(245, 245, 250));
         panelCentro.add(chartPanel, BorderLayout.CENTER);
-
-        // ---------- Pie ----------
+        
         JLabel pie = new JLabel("© 2025 HotelSuite - Todos los derechos reservados", JLabel.CENTER);
         pie.setFont(new Font("SansSerif", Font.ITALIC, 12));
         pie.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
