@@ -4,12 +4,13 @@ import HotelProyectoFinal.modelos.HabitacionesTableModel;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.ActionListener;
 
 public class VistaGestionarHabitaciones extends JPanel {
     JButton limpiar;
-    JButton pdf;
     JButton modificar;
     JButton eliminar;
+    JButton volver;
     JTable table;
     DefaultTableModel tableModel;
     HabitacionesTableModel habitacionesTableModel;
@@ -18,19 +19,26 @@ public class VistaGestionarHabitaciones extends JPanel {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         String[] datos = {"Numero de habitacion", "Tipo", "Estado", "Precio"};
         limpiar = new JButton("Limpiar Tabla Habitaciones");
-        pdf = new JButton("Exportar habitaciones a PDF");
         modificar = new JButton("Modificar habitacion");
         eliminar = new JButton("Eliminar habitacion");
+        volver = new JButton("Volver");
         habitacionesTableModel = new HabitacionesTableModel();
         table = new JTable(habitacionesTableModel);
         scrollPane = new JScrollPane(table);
         JPanel botones = new JPanel();
         botones.add(limpiar);
-        botones.add(pdf);
         botones.add(modificar);
         botones.add(eliminar);
+        botones.add(volver);
         botones.setLayout(new BoxLayout(botones, BoxLayout.X_AXIS));
         add(scrollPane);
         add(botones);
+    }
+
+    public void setListeners(ActionListener listener){
+        limpiar.addActionListener(listener);
+        modificar.addActionListener(listener);
+        eliminar.addActionListener(listener);
+        volver.addActionListener(listener);
     }
 }

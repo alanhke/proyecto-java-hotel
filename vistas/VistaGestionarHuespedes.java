@@ -5,12 +5,13 @@ import HotelProyectoFinal.modelos.HuespedesTableModel;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.ActionListener;
 
 public class VistaGestionarHuespedes extends JPanel {
     JButton limpiar;
-    JButton pdf;
     JButton modificar;
     JButton eliminar;
+    JButton volver;
     JTable table;
     DefaultTableModel tableModel;
     HuespedesTableModel habitacionesTableModel;
@@ -19,19 +20,26 @@ public class VistaGestionarHuespedes extends JPanel {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         String[] datos = {"Nombre", "Correo", "Direccion", "Telefono", "Documento de identidad"};
         limpiar = new JButton("Limpiar Tabla Huespedes");
-        pdf = new JButton("Exportar huespedes a PDF");
         modificar = new JButton("Modificar huespedes");
         eliminar = new JButton("Eliminar huespedes");
+        volver = new JButton("Volver");
         habitacionesTableModel = new HuespedesTableModel();
         table = new JTable(habitacionesTableModel);
         scrollPane = new JScrollPane(table);
         JPanel botones = new JPanel();
         botones.add(limpiar);
-        botones.add(pdf);
         botones.add(modificar);
         botones.add(eliminar);
+        botones.add(volver);
         botones.setLayout(new BoxLayout(botones, BoxLayout.X_AXIS));
         add(scrollPane);
         add(botones);
+    }
+
+    public void setListeners(ActionListener listener) {
+        limpiar.addActionListener(listener);
+        modificar.addActionListener(listener);
+        eliminar.addActionListener(listener);
+        volver.addActionListener(listener);
     }
 }
