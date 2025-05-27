@@ -2,6 +2,7 @@ package HotelProyectoFinal.vistas;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class VistaInicioSesion extends JPanel {
 
@@ -113,6 +114,11 @@ public class VistaInicioSesion extends JPanel {
 
     public JButton getBotonRegistrarse() {
         return botonRegistrarse;
+    }
+
+    public void setListeners(ActionListener listener) {
+        botonIniciar.addActionListener(listener);
+        botonRegistrarse.addActionListener(listener);
     }
 }
 

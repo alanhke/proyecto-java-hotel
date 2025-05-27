@@ -2,6 +2,7 @@ package HotelProyectoFinal.vistas;
 
 
 import HotelProyectoFinal.modelos.HuespedesTableModel;
+import HotelProyectoFinal.modelos.ReservasTableModel;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -14,7 +15,7 @@ public class VistaGestionarHuespedes extends JPanel {
     JButton volver;
     JTable table;
     DefaultTableModel tableModel;
-    HuespedesTableModel habitacionesTableModel;
+    HuespedesTableModel huespedesTableModel;
     JScrollPane scrollPane;
     public VistaGestionarHuespedes() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -23,8 +24,8 @@ public class VistaGestionarHuespedes extends JPanel {
         modificar = new JButton("Modificar huespedes");
         eliminar = new JButton("Eliminar huespedes");
         volver = new JButton("Volver");
-        habitacionesTableModel = new HuespedesTableModel();
-        table = new JTable(habitacionesTableModel);
+        huespedesTableModel = new HuespedesTableModel();
+        table = new JTable(huespedesTableModel);
         scrollPane = new JScrollPane(table);
         JPanel botones = new JPanel();
         botones.add(limpiar);
@@ -41,5 +42,12 @@ public class VistaGestionarHuespedes extends JPanel {
         modificar.addActionListener(listener);
         eliminar.addActionListener(listener);
         volver.addActionListener(listener);
+    }
+
+    public HuespedesTableModel getTable(){
+        return huespedesTableModel;
+    }
+    public JTable getTableView(){
+        return table;
     }
 }

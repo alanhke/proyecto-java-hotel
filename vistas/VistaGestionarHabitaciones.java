@@ -1,6 +1,7 @@
 package HotelProyectoFinal.vistas;
 
 import HotelProyectoFinal.modelos.HabitacionesTableModel;
+import HotelProyectoFinal.modelos.HuespedesTableModel;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -40,5 +41,12 @@ public class VistaGestionarHabitaciones extends JPanel {
         modificar.addActionListener(listener);
         eliminar.addActionListener(listener);
         volver.addActionListener(listener);
+    }
+
+    public HabitacionesTableModel getTable(){
+        return habitacionesTableModel;
+    }
+    public JTable getTableView(){
+        return table;
     }
 }
