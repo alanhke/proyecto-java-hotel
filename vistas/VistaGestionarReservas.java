@@ -8,7 +8,6 @@ import java.awt.event.ActionListener;
 
 public class VistaGestionarReservas extends JPanel {
     JButton limpiar;
-    JButton pdf;
     JButton modificar;
     JButton eliminar;
     JTable table;
@@ -19,7 +18,6 @@ public class VistaGestionarReservas extends JPanel {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         String[] datos = {"Id", "Huesped", "Fecha entrada", "Fecha salida"};
         limpiar = new JButton("Limpiar Tabla Reservas");
-        pdf = new JButton("Exportar reservas a PDF");
         modificar = new JButton("Modificar reservas");
         eliminar = new JButton("Eliminar reservas");
         habitacionesTableModel = new ReservasTableModel();
@@ -27,7 +25,6 @@ public class VistaGestionarReservas extends JPanel {
         scrollPane = new JScrollPane(table);
         JPanel botones = new JPanel();
         botones.add(limpiar);
-        botones.add(pdf);
         botones.add(modificar);
         botones.add(eliminar);
         botones.setLayout(new BoxLayout(botones, BoxLayout.X_AXIS));
@@ -37,7 +34,6 @@ public class VistaGestionarReservas extends JPanel {
 
     public void setListeners(ActionListener listener) {
         limpiar.addActionListener(listener);
-        pdf.addActionListener(listener);
         modificar.addActionListener(listener);
         eliminar.addActionListener(listener);
     }

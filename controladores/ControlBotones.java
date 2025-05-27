@@ -26,6 +26,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
@@ -41,6 +42,7 @@ public class ControlBotones implements ActionListener {
     VistaGestionarHabitaciones vistaGestionarHabitaciones;
     VistaGestionarReservas vistaGestionarReservas;
     VistaGestionarHuespedes vistaGestionarHuespedes;
+    VistaReportes vistaReportes;
 
     ArrayList<DatosUsuario> datosGuardados;
     DatosUsuarioTableModel table;
@@ -51,10 +53,11 @@ public class ControlBotones implements ActionListener {
     JFrame ventanaGestionarHabitaciones;
     JFrame ventanaGestionarReservas;
     JFrame ventanaGestionarHuespedes;
+    JFrame ventanaReportes;
 
     int filaSeleccionada;
     private static final String RUTA_ARCHIVO = "ultimaRuta";
-    public ControlBotones(VistaRegistrarse panel, DatosUsuario datos, VistaVerUsuarios panel2, VistaModificarUsuario panel3, VistaPaginaPrincipal paginaPrincipal, VistaGestionarHabitaciones vistaGestionarHabitaciones1, VistaGestionarReservas vistaGestionarReservas1, VistaGestionarHuespedes vistaGestionarHuespedes1) {
+    public ControlBotones(VistaRegistrarse panel, DatosUsuario datos, VistaVerUsuarios panel2, VistaModificarUsuario panel3, VistaPaginaPrincipal paginaPrincipal, VistaGestionarHabitaciones vistaGestionarHabitaciones1, VistaGestionarReservas vistaGestionarReservas1, VistaGestionarHuespedes vistaGestionarHuespedes1, VistaReportes vistaReportes1) {
         vistaRegistrarse = panel;
         vistaVerUsuarios = panel2;
         vistaModificarUsuario = panel3;
@@ -62,6 +65,7 @@ public class ControlBotones implements ActionListener {
         vistaGestionarHabitaciones = vistaGestionarHabitaciones1;
         vistaGestionarReservas = vistaGestionarReservas1;
         vistaGestionarHuespedes = vistaGestionarHuespedes1;
+        vistaReportes = vistaReportes1;
 
         table = vistaVerUsuarios.getTable();
         vistaRegistrarse.setListeners(this);
@@ -71,6 +75,7 @@ public class ControlBotones implements ActionListener {
         vistaGestionarHabitaciones.setListeners(this);
         vistaGestionarReservas.setListeners(this);
         vistaGestionarHuespedes.setListeners(this);
+        vistaReportes.setListeners(this);
 
         datosGuardados = new ArrayList<>();
     }
@@ -154,6 +159,27 @@ public class ControlBotones implements ActionListener {
             mostrarVentanaReservas();
          } else if (textoBotonPresionado.equals("Gestión de Huéspedes")) {
              mostrarVentanaHuespedes();
+         } else if (textoBotonPresionado.equals("Ver Reportes")) {
+            mostrarVentanaReportes();
+         } else if (textoBotonPresionado.equals("Generar Reporte")) {
+             String tipo = vistaReportes.getTipoReporteSeleccionado();
+             if (tipo.equals("Ingresos por Mes")) {
+                 vistaReportes.mostrarGraficaIngresos();
+             } else if (tipo.equals("Ocupación de Habitaciones")) {
+                 vistaReportes.mostrarGraficaOcupacion();
+             }
+         } else if (textoBotonPresionado.equals("Exportar a PDF")) {
+             JFileChooser selector = new JFileChooser();
+             selector.setDialogTitle("Guardar Reporte como PDF");
+             int resultado = selector.showSaveDialog(null);
+             if (resultado == JFileChooser.APPROVE_OPTION) {
+                 File archivo = selector.getSelectedFile();
+                 String rutaPDF = archivo.getAbsolutePath();
+                 if (!rutaPDF.toLowerCase().endsWith(".pdf")) {
+                     rutaPDF += ".pdf";
+                 }
+                 vistaReportes.exportarGraficaAPDF(rutaPDF);
+             }
          }
     }
     public void guardarDatos(DatosUsuario registroDatos2) {
@@ -379,6 +405,7 @@ public class ControlBotones implements ActionListener {
     public void mostrarVentanaGestionar(){
         ventanaGestionarHabitaciones = new JFrame("Gestionar Habitaciones");
         ventanaGestionarHabitaciones.add(vistaGestionarHabitaciones);
+        ventanaGestionarHabitaciones.setSize(1000,500);
         ventanaGestionarHabitaciones.pack();
         ventanaGestionarHabitaciones.setLocationRelativeTo(null);
         ventanaGestionarHabitaciones.setVisible(true);
@@ -387,6 +414,7 @@ public class ControlBotones implements ActionListener {
     public void mostrarVentanaReservas(){
         ventanaGestionarReservas = new JFrame("Gestionar Reservas");
         ventanaGestionarReservas.add(vistaGestionarReservas);
+        ventanaGestionarReservas.setSize(1000,500);
         ventanaGestionarReservas.pack();
         ventanaGestionarReservas.setLocationRelativeTo(null);
         ventanaGestionarReservas.setVisible(true);
@@ -395,9 +423,20 @@ public class ControlBotones implements ActionListener {
     public void mostrarVentanaHuespedes(){
         ventanaGestionarHuespedes = new JFrame("Gestionar Huespedes");
         ventanaGestionarHuespedes.add(vistaGestionarHuespedes);
+        ventanaGestionarHuespedes.setSize(1000,500);
         ventanaGestionarHuespedes.pack();
         ventanaGestionarHuespedes.setLocationRelativeTo(null);
         ventanaGestionarHuespedes.setVisible(true);
     }
+
+    public void mostrarVentanaReportes(){
+        ventanaReportes = new JFrame("Gestionar Huespedes");
+        ventanaReportes.setSize(1000,500);
+        ventanaReportes.add(vistaReportes);
+        ventanaReportes.pack();
+        ventanaReportes.setLocationRelativeTo(null);
+        ventanaReportes.setVisible(true);
+    }
+
 
 }

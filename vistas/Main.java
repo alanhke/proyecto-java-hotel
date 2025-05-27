@@ -19,8 +19,9 @@ public class Main {
         VistaGestionarHabitaciones vistaGestionarHabitaciones = new VistaGestionarHabitaciones();
         VistaGestionarReservas vistaGestionarReservas = new VistaGestionarReservas();
         VistaGestionarHuespedes vistaGestionarHuespedes = new VistaGestionarHuespedes();
+        VistaReportes vistaReportes = new VistaReportes();
 
-        new ControlBotones(vistaRegistrarse,modeloDatos,vistaVerUsuarios,vistaModificarUsuario, vistaPaginaPrincipal,vistaGestionarHabitaciones, vistaGestionarReservas,vistaGestionarHuespedes);
+        new ControlBotones(vistaRegistrarse,modeloDatos,vistaVerUsuarios,vistaModificarUsuario, vistaPaginaPrincipal,vistaGestionarHabitaciones, vistaGestionarReservas,vistaGestionarHuespedes, vistaReportes);
         ventana.add(vistaPaginaPrincipal);
         ventana.setLocationRelativeTo(null);
         ventana.setVisible(true);
