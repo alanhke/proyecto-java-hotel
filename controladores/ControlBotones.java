@@ -43,6 +43,7 @@ public class ControlBotones implements ActionListener {
     VistaGestionarReservas vistaGestionarReservas;
     VistaGestionarHuespedes vistaGestionarHuespedes;
     VistaReportes vistaReportes;
+    VistaPersonalizar vistaPersonalizar;
 
     ArrayList<DatosUsuario> datosGuardados;
     DatosUsuarioTableModel table;
@@ -55,10 +56,11 @@ public class ControlBotones implements ActionListener {
     JFrame ventanaGestionarHuespedes;
     JFrame ventanaReportes;
     JFrame ventanaActual;
+    JFrame ventanaPersonalizar;
 
     int filaSeleccionada;
     private static final String RUTA_ARCHIVO = "ultimaRuta";
-    public ControlBotones(VistaRegistrarse panel, DatosUsuario datos, VistaVerUsuarios panel2, VistaModificarUsuario panel3, VistaPaginaPrincipal paginaPrincipal, VistaGestionarHabitaciones vistaGestionarHabitaciones1, VistaGestionarReservas vistaGestionarReservas1, VistaGestionarHuespedes vistaGestionarHuespedes1, VistaReportes vistaReportes1) {
+    public ControlBotones(VistaRegistrarse panel, DatosUsuario datos, VistaVerUsuarios panel2, VistaModificarUsuario panel3, VistaPaginaPrincipal paginaPrincipal, VistaGestionarHabitaciones vistaGestionarHabitaciones1, VistaGestionarReservas vistaGestionarReservas1, VistaGestionarHuespedes vistaGestionarHuespedes1, VistaReportes vistaReportes1, VistaPersonalizar vistaPersonalizar1) {
         vistaRegistrarse = panel;
         vistaVerUsuarios = panel2;
         vistaModificarUsuario = panel3;
@@ -67,6 +69,7 @@ public class ControlBotones implements ActionListener {
         vistaGestionarReservas = vistaGestionarReservas1;
         vistaGestionarHuespedes = vistaGestionarHuespedes1;
         vistaReportes = vistaReportes1;
+        vistaPersonalizar = vistaPersonalizar1;
 
         table = vistaVerUsuarios.getTable();
         vistaRegistrarse.setListeners(this);
@@ -77,6 +80,7 @@ public class ControlBotones implements ActionListener {
         vistaGestionarReservas.setListeners(this);
         vistaGestionarHuespedes.setListeners(this);
         vistaReportes.setListeners(this);
+        vistaPersonalizar.setListeners(this);
 
         datosGuardados = new ArrayList<>();
 
@@ -85,7 +89,7 @@ public class ControlBotones implements ActionListener {
         ventanaPrincipal.pack();
         ventanaPrincipal.setLocationRelativeTo(null);
         ventanaPrincipal.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ventanaPrincipal.setVisible(true); // esto inicia tu app con la ventana principal
+        ventanaPrincipal.setVisible(true);
 
     }
 
@@ -191,8 +195,11 @@ public class ControlBotones implements ActionListener {
              }
          } else if (textoBotonPresionado.equals("Volver")) {
              volverAPaginaPrincipal();
+         } else if (textoBotonPresionado.equals("Personalizar")) {
+            mostrarVentanaPersonalizar();
          }
     }
+
     public void guardarDatos(DatosUsuario registroDatos2) {
         DatosUsuario.agregarUsuario(registroDatos2);
     }
@@ -454,6 +461,17 @@ public class ControlBotones implements ActionListener {
         ventanaReportes.setLocationRelativeTo(null);
         ventanaReportes.setVisible(true);
         ventanaActual = ventanaReportes;
+        ventanaPrincipal.setVisible(false);
+    }
+
+    public void mostrarVentanaPersonalizar(){
+        ventanaPersonalizar = new JFrame("Personalizar");
+        ventanaPersonalizar.setSize(500,500);
+        ventanaPersonalizar.add(vistaPersonalizar);
+        //ventanaReportes.pack();
+        ventanaPersonalizar.setLocationRelativeTo(null);
+        ventanaPersonalizar.setVisible(true);
+        ventanaActual = ventanaPersonalizar;
         ventanaPrincipal.setVisible(false);
     }
 

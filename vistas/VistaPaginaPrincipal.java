@@ -10,7 +10,7 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class VistaPaginaPrincipal extends JPanel {
-    JButton btnHistorial;
+    JButton btnPersonalizar;
     JButton btnPerfil;
     JButton btnCerrarSesion;
     JButton btnGestionar;
@@ -37,14 +37,14 @@ public class VistaPaginaPrincipal extends JPanel {
         panelIzquierdo.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 10));
         panelIzquierdo.setBackground(new Color(245, 245, 250));
 
-        btnHistorial = new JButton("Ver Historial");
+        btnPersonalizar = new JButton("Personalizar");
         btnPerfil = new JButton("Ver Perfil");
 
         btnCerrarSesion = new JButton("Cerrar Sesión");
         btnCerrarSesion.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         panelIzquierdo.add(Box.createVerticalStrut(10));
-        panelIzquierdo.add(btnHistorial);
+        panelIzquierdo.add(btnPersonalizar);
         panelIzquierdo.add(Box.createVerticalStrut(10));
         panelIzquierdo.add(btnPerfil);
         panelIzquierdo.add(Box.createVerticalGlue());
@@ -93,7 +93,7 @@ public class VistaPaginaPrincipal extends JPanel {
         ChartPanel chartPanel = new ChartPanel(chart);
         chartPanel.setBackground(new Color(245, 245, 250));
         panelCentro.add(chartPanel, BorderLayout.CENTER);
-        
+
         JLabel pie = new JLabel("© 2025 HotelSuite - Todos los derechos reservados", JLabel.CENTER);
         pie.setFont(new Font("SansSerif", Font.ITALIC, 12));
         pie.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -101,7 +101,7 @@ public class VistaPaginaPrincipal extends JPanel {
     }
 
     public void setListeners(ActionListener listener) {
-        btnHistorial.addActionListener(listener);
+        btnPersonalizar.addActionListener(listener);
         btnPerfil.addActionListener(listener);
         btnCerrarSesion.addActionListener(listener);
         btnGestionar.addActionListener(listener);
