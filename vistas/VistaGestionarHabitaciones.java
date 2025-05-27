@@ -10,6 +10,7 @@ public class VistaGestionarHabitaciones extends JPanel {
     JButton limpiar;
     JButton modificar;
     JButton eliminar;
+    JButton volver;
     JTable table;
     DefaultTableModel tableModel;
     HabitacionesTableModel habitacionesTableModel;
@@ -20,6 +21,7 @@ public class VistaGestionarHabitaciones extends JPanel {
         limpiar = new JButton("Limpiar Tabla Habitaciones");
         modificar = new JButton("Modificar habitacion");
         eliminar = new JButton("Eliminar habitacion");
+        volver = new JButton("Volver");
         habitacionesTableModel = new HabitacionesTableModel();
         table = new JTable(habitacionesTableModel);
         scrollPane = new JScrollPane(table);
@@ -27,6 +29,7 @@ public class VistaGestionarHabitaciones extends JPanel {
         botones.add(limpiar);
         botones.add(modificar);
         botones.add(eliminar);
+        botones.add(volver);
         botones.setLayout(new BoxLayout(botones, BoxLayout.X_AXIS));
         add(scrollPane);
         add(botones);
@@ -36,5 +39,6 @@ public class VistaGestionarHabitaciones extends JPanel {
         limpiar.addActionListener(listener);
         modificar.addActionListener(listener);
         eliminar.addActionListener(listener);
+        volver.addActionListener(listener);
     }
 }

@@ -54,6 +54,7 @@ public class ControlBotones implements ActionListener {
     JFrame ventanaGestionarReservas;
     JFrame ventanaGestionarHuespedes;
     JFrame ventanaReportes;
+    JFrame ventanaActual;
 
     int filaSeleccionada;
     private static final String RUTA_ARCHIVO = "ultimaRuta";
@@ -180,6 +181,8 @@ public class ControlBotones implements ActionListener {
                  }
                  vistaReportes.exportarGraficaAPDF(rutaPDF);
              }
+         } else if (textoBotonPresionado.equals("Volver")) {
+             volverAPaginaPrincipal();
          }
     }
     public void guardarDatos(DatosUsuario registroDatos2) {
@@ -198,6 +201,7 @@ public class ControlBotones implements ActionListener {
         ventanaMostrarDatos.setLocationRelativeTo(null);
         ventanaMostrarDatos.pack();
         ventanaMostrarDatos.setVisible(true);
+        ventanaActual = ventanaMostrarDatos;
         table.clear();
         for (DatosUsuario v : datosGuardados) {
             table.addRow(v);
@@ -409,6 +413,8 @@ public class ControlBotones implements ActionListener {
         ventanaGestionarHabitaciones.pack();
         ventanaGestionarHabitaciones.setLocationRelativeTo(null);
         ventanaGestionarHabitaciones.setVisible(true);
+        ventanaActual = ventanaGestionarHabitaciones;
+        ventanaPrincipal.setVisible(false);
     }
 
     public void mostrarVentanaReservas(){
@@ -418,6 +424,8 @@ public class ControlBotones implements ActionListener {
         ventanaGestionarReservas.pack();
         ventanaGestionarReservas.setLocationRelativeTo(null);
         ventanaGestionarReservas.setVisible(true);
+        ventanaActual = ventanaGestionarReservas;
+        ventanaPrincipal.setVisible(false);
     }
 
     public void mostrarVentanaHuespedes(){
@@ -427,6 +435,7 @@ public class ControlBotones implements ActionListener {
         ventanaGestionarHuespedes.pack();
         ventanaGestionarHuespedes.setLocationRelativeTo(null);
         ventanaGestionarHuespedes.setVisible(true);
+        ventanaPrincipal.setVisible(false);
     }
 
     public void mostrarVentanaReportes(){
@@ -436,7 +445,13 @@ public class ControlBotones implements ActionListener {
         //ventanaReportes.pack();
         ventanaReportes.setLocationRelativeTo(null);
         ventanaReportes.setVisible(true);
+        ventanaActual = ventanaReportes;
+        ventanaPrincipal.setVisible(false);
     }
 
+    public void volverAPaginaPrincipal(){
+        //ventanaPrincipal.setVisible(true);
+        ventanaActual.setVisible(false);
+    }
 
 }
