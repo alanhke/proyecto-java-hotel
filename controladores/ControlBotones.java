@@ -504,7 +504,8 @@ public class ControlBotones implements ActionListener {
     public void cargarVentanas(){
         ventanaPrincipal = new JFrame("Hotel Proyecto");
         ventanaPrincipal.add(vistaPaginaPrincipal);
-        ventanaPrincipal.pack();
+        ventanaPrincipal.setSize(1000,500);
+        //ventanaPrincipal.pack();
         ventanaPrincipal.setLocationRelativeTo(null);
         ventanaPrincipal.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         ventanaPrincipal.setVisible(true);
