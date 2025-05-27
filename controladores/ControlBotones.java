@@ -2,6 +2,7 @@ package HotelProyectoFinal.controladores;
 
 import HotelProyectoFinal.modelos.DatosUsuario;
 import HotelProyectoFinal.modelos.DatosUsuarioTableModel;
+import HotelProyectoFinal.utilities.Estilo;
 import HotelProyectoFinal.vistas.*;
 import com.itextpdf.io.font.constants.StandardFonts;
 import com.itextpdf.io.image.ImageData;
@@ -44,6 +45,7 @@ public class ControlBotones implements ActionListener {
     VistaGestionarHuespedes vistaGestionarHuespedes;
     VistaReportes vistaReportes;
     VistaPersonalizar vistaPersonalizar;
+    Estilo estilo;
 
     ArrayList<DatosUsuario> datosGuardados;
     DatosUsuarioTableModel table;
@@ -60,7 +62,7 @@ public class ControlBotones implements ActionListener {
 
     int filaSeleccionada;
     private static final String RUTA_ARCHIVO = "ultimaRuta";
-    public ControlBotones(VistaRegistrarse panel, DatosUsuario datos, VistaVerUsuarios panel2, VistaModificarUsuario panel3, VistaPaginaPrincipal paginaPrincipal, VistaGestionarHabitaciones vistaGestionarHabitaciones1, VistaGestionarReservas vistaGestionarReservas1, VistaGestionarHuespedes vistaGestionarHuespedes1, VistaReportes vistaReportes1, VistaPersonalizar vistaPersonalizar1) {
+    public ControlBotones(VistaRegistrarse panel, DatosUsuario datos, VistaVerUsuarios panel2, VistaModificarUsuario panel3, VistaPaginaPrincipal paginaPrincipal, VistaGestionarHabitaciones vistaGestionarHabitaciones1, VistaGestionarReservas vistaGestionarReservas1, VistaGestionarHuespedes vistaGestionarHuespedes1, VistaReportes vistaReportes1, VistaPersonalizar vistaPersonalizar1, Estilo estilo1) {
         vistaRegistrarse = panel;
         vistaVerUsuarios = panel2;
         vistaModificarUsuario = panel3;
@@ -70,6 +72,7 @@ public class ControlBotones implements ActionListener {
         vistaGestionarHuespedes = vistaGestionarHuespedes1;
         vistaReportes = vistaReportes1;
         vistaPersonalizar = vistaPersonalizar1;
+        estilo = estilo1;
 
         table = vistaVerUsuarios.getTable();
         vistaRegistrarse.setListeners(this);
@@ -197,6 +200,8 @@ public class ControlBotones implements ActionListener {
              volverAPaginaPrincipal();
          } else if (textoBotonPresionado.equals("Personalizar")) {
             mostrarVentanaPersonalizar();
+         } else if (textoBotonPresionado.equals("Aplicar Cambios")) {
+             aplicarPersonalizacion();
          }
     }
 
@@ -480,4 +485,31 @@ public class ControlBotones implements ActionListener {
         ventanaActual.setVisible(false);
     }
 
+    public void aplicarPersonalizacion() {
+        String tema = vistaPersonalizar.getTemaSeleccionado();
+        String fuente = vistaPersonalizar.getFuenteSeleccionada();
+        int tamano = vistaPersonalizar.getTamanoFuenteSeleccionado();
+        ArrayList<Component> vistas = new ArrayList<>();
+        vistas.add(vistaRegistrarse);
+        vistas.add(vistaVerUsuarios);
+        vistas.add(vistaModificarUsuario);
+        vistas.add(vistaPaginaPrincipal);
+        vistas.add(vistaGestionarHabitaciones);
+        vistas.add(vistaGestionarReservas);
+        vistas.add(vistaGestionarHuespedes);
+        vistas.add(vistaReportes);
+        vistas.add(vistaPersonalizar);
+        for (Component vist : vistas) {
+            Estilo.aplicarEstiloGlobal(vist, fuente, tamano, tema);
+        }
+        SwingUtilities.updateComponentTreeUI(ventanaPrincipal);
+        SwingUtilities.updateComponentTreeUI(ventanaGestionarHabitaciones);
+        SwingUtilities.updateComponentTreeUI(ventanaGestionarReservas);
+        SwingUtilities.updateComponentTreeUI(ventanaGestionarHuespedes);
+        SwingUtilities.updateComponentTreeUI(ventanaReportes);
+        SwingUtilities.updateComponentTreeUI(ventanaMostrarDatos);
+        SwingUtilities.updateComponentTreeUI(ventanaModificar);
+        SwingUtilities.updateComponentTreeUI(ventanaPersonalizar);
+    }
 }
+

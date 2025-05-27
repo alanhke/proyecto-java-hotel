@@ -2,6 +2,8 @@ package HotelProyectoFinal.vistas;
 
 import HotelProyectoFinal.controladores.ControlBotones;
 import HotelProyectoFinal.modelos.DatosUsuario;
+import HotelProyectoFinal.utilities.Estilo;
+
 import javax.swing.*;
 
 public class Main {
@@ -21,8 +23,9 @@ public class Main {
         VistaGestionarHuespedes vistaGestionarHuespedes = new VistaGestionarHuespedes();
         VistaReportes vistaReportes = new VistaReportes();
         VistaPersonalizar VistaPersonalizar = new VistaPersonalizar();
+        Estilo estilo = new Estilo();
 
-        new ControlBotones(vistaRegistrarse,modeloDatos,vistaVerUsuarios,vistaModificarUsuario, vistaPaginaPrincipal,vistaGestionarHabitaciones, vistaGestionarReservas,vistaGestionarHuespedes, vistaReportes, VistaPersonalizar);
+        new ControlBotones(vistaRegistrarse,modeloDatos,vistaVerUsuarios,vistaModificarUsuario, vistaPaginaPrincipal,vistaGestionarHabitaciones, vistaGestionarReservas,vistaGestionarHuespedes, vistaReportes, VistaPersonalizar, estilo);
         /*ventana.add(vistaPaginaPrincipal);
         ventana.setLocationRelativeTo(null);
         ventana.setVisible(true);*/
