@@ -1,7 +1,6 @@
 package HotelProyectoFinal.controladores;
 
-import HotelProyectoFinal.modelos.DatosUsuario;
-import HotelProyectoFinal.modelos.DatosUsuarioTableModel;
+import HotelProyectoFinal.modelos.*;
 import HotelProyectoFinal.utilities.Estilo;
 import HotelProyectoFinal.vistas.*;
 import com.itextpdf.io.font.constants.StandardFonts;
@@ -51,6 +50,15 @@ public class ControlBotones implements ActionListener {
     ArrayList<DatosUsuario> datosGuardados;
     DatosUsuarioTableModel table;
 
+    ArrayList<Habitaciones> habitaciones;
+    HabitacionesTableModel habitacionesTableModel;
+
+    ArrayList<Huespedes> huespedes;
+    HuespedesTableModel huespedesTableModel;
+
+    ArrayList<Reservas> reservas;
+    ReservasTableModel reservasTableModel;
+
     JFrame ventanaInicioSesion;
     JFrame ventanaModificar;
     JFrame ventanaMostrarDatos;
@@ -90,6 +98,10 @@ public class ControlBotones implements ActionListener {
         vistaInicioSesion.setListeners(this);
 
         datosGuardados = new ArrayList<>();
+
+        habitaciones = new ArrayList<>();
+        huespedes = new ArrayList<>();
+        reservas = new ArrayList<>();
 
         cargarVentanas();
 
