@@ -31,7 +31,7 @@ public class HabitacionesTableModel extends AbstractTableModel {
         } else if (columnIndex == 1) {
             return String.class;
         } else if (columnIndex == 2) {
-            return Boolean.class;
+            return String.class;
         } else if (columnIndex == 3) {
             return Double.class;
         }

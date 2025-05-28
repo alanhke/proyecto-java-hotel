@@ -1,6 +1,7 @@
 package HotelProyectoFinal.modelos;
 
 import HotelProyectoFinal.utilities.MySQLConnection;
+import HotelProyectoFinal.vistas.VistaCrearModificarHabitacion;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -15,6 +16,21 @@ public class Habitaciones {
         this.tipo = tipo;
         this.estado = estado;
         this.precio = precio;
+    }
+
+    public Habitaciones(VistaCrearModificarHabitacion vista, int numeroH) {
+        numero = numeroH;
+        tipo = vista.getTipoText();
+        estado = vista.getEstadoText();
+        precio = Double.parseDouble(vista.getPrecioText());
+
+    }
+
+    public Habitaciones(VistaCrearModificarHabitacion vista) {
+        tipo = vista.getTipoText();
+        estado = vista.getEstadoText();
+        precio = Double.parseDouble(vista.getPrecioText());
+
     }
 
     public int getNumero() {
@@ -76,7 +92,7 @@ public class Habitaciones {
     }
 
     public static boolean eliminarHabitacion(int numeroHabitacion){
-        String consulta = "Delete from registro_habitaciones where idhabitaciones = " + numeroHabitacion;
+        String consulta = "Delete from registro_habitaciones where numeroHabitaciones = " + numeroHabitacion;
         int eliminados = 0;
 
         try (Connection con = MySQLConnection.connect();
@@ -91,7 +107,7 @@ public class Habitaciones {
     }
 
     public static boolean agregarHabitacion(Habitaciones habitacion){
-        String query = "INSERT INTO registro_habitaciones " + "(numero, tipo, estado, precio) " + "VALUES(?, ?, ?, ?)";
+        String query = "INSERT INTO registro_habitaciones " + "(numeroHabitaciones, tipo, estado, precio) " + "VALUES(?, ?, ?, ?)";
         int creados = 0;
         try (Connection conexion = MySQLConnection.connect();
              PreparedStatement pst = conexion.prepareStatement(query);
@@ -108,7 +124,7 @@ public class Habitaciones {
     }
 
     public static boolean actualizarHabitaciones(Habitaciones habitacion, int id){
-        String query = "UPDATE registro_habitaciones SET numero = ?, tipo = ?, estado = ?, precio = ? WHERE numeroHabitaciones = " + id;
+        String query = "UPDATE registro_habitaciones SET numeroHabitaciones = ?, tipo = ?, estado = ?, precio = ? WHERE numeroHabitaciones = " + id;
         int actualizados = 0;
         try (
                 Connection conexion = MySQLConnection.connect();
