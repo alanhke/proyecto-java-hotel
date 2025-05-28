@@ -586,17 +586,16 @@ public class ControlBotones implements ActionListener {
     }
 
     public void cargarVentanas(){
-        /*ventanaInicioSesion = new JFrame("Inicio Sesion");
+        ventanaInicioSesion = new JFrame("Inicio Sesion");
         ventanaInicioSesion.add(vistaInicioSesion);
         ventanaInicioSesion.setSize(1000,500);
         //ventanaPrincipal.pack();
         ventanaInicioSesion.setLocationRelativeTo(null);
         ventanaInicioSesion.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ventanaInicioSesion.setVisible(true);*/
+        ventanaInicioSesion.setVisible(true);
 
         //Demas ventanas
         ventanaPrincipal = new JFrame("Hotel Proyecto");
-        mostrarVentanaPrincipal();
         ventanaGestionarHabitaciones = new JFrame("Gestionar Habitaciones");
         ventanaGestionarReservas = new JFrame("Gestionar Reservas");
         ventanaGestionarHuespedes = new JFrame("Gestionar Huespedes");
