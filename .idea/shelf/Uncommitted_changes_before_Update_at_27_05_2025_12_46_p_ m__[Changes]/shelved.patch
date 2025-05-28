@@ -1,0 +1,512 @@
+Index: vistas/VistaInicioSesion.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package HotelProyectoFinal.vistas;\r\n\r\nimport javax.swing.*;\r\nimport java.awt.*;\r\n\r\npublic class VistaInicioSesion extends JFrame {\r\n\r\n    private JTextField campoUsuario;\r\n    private JPasswordField campoContrasena;\r\n    private JButton botonIniciar;\r\n    private JButton botonRegistrarse;\r\n\r\n    public VistaInicioSesion() {\r\n        setTitle(\"HotelSys - Inicio de Sesión\");\r\n        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);\r\n        setResizable(false);\r\n\r\n        initComponentes();\r\n\r\n        pack(); // Ajusta tamaño al contenido\r\n        setLocationRelativeTo(null); // Centrar ventana\r\n    }\r\n\r\n    private void initComponentes() {\r\n        Color colorLinea = Color.GRAY; // Línea visible\r\n        Color fondo = Color.WHITE;\r\n\r\n        JPanel panelPrincipal = new JPanel(new BorderLayout());\r\n        panelPrincipal.setBackground(fondo);\r\n\r\n        // Panel izquierdo: login\r\n        JPanel panelLogin = new JPanel(null);\r\n        panelLogin.setBackground(fondo);\r\n        panelLogin.setPreferredSize(new Dimension(400, 400));\r\n\r\n        // Posiciones ajustadas un poco más a la izquierda\r\n        JLabel etiquetaTitulo = new JLabel(\"Inicio de Sesión\");\r\n        etiquetaTitulo.setFont(new Font(\"SansSerif\", Font.BOLD, 22));\r\n        etiquetaTitulo.setBounds(50, 30, 250, 30);\r\n        panelLogin.add(etiquetaTitulo);\r\n\r\n        JLabel etiquetaUsuario = new JLabel(\"Usuario:\");\r\n        etiquetaUsuario.setBounds(20, 100, 80, 25);\r\n        panelLogin.add(etiquetaUsuario);\r\n\r\n        campoUsuario = new JTextField();\r\n        campoUsuario.setBounds(110, 100, 200, 25);\r\n        panelLogin.add(campoUsuario);\r\n\r\n        JLabel etiquetaContrasena = new JLabel(\"Contraseña:\");\r\n        etiquetaContrasena.setBounds(20, 140, 80, 25);\r\n        panelLogin.add(etiquetaContrasena);\r\n\r\n        campoContrasena = new JPasswordField();\r\n        campoContrasena.setBounds(110, 140, 200, 25);\r\n        panelLogin.add(campoContrasena);\r\n\r\n        botonIniciar = new JButton(\"Iniciar Sesión\");\r\n        botonIniciar.setBounds(110, 190, 200, 30);\r\n        botonIniciar.setBackground(new Color(60, 120, 200));\r\n        botonIniciar.setForeground(Color.WHITE);\r\n        botonIniciar.setFocusPainted(false);\r\n        panelLogin.add(botonIniciar);\r\n\r\n        // Línea divisoria visible y fina\r\n        JSeparator linea = new JSeparator(SwingConstants.VERTICAL);\r\n        linea.setPreferredSize(new Dimension(2, 400));\r\n        linea.setForeground(colorLinea);\r\n\r\n        // Panel derecho\r\n        JPanel panelDerecho = new JPanel(new BorderLayout());\r\n        panelDerecho.setBackground(fondo);\r\n        panelDerecho.setPreferredSize(new Dimension(400, 400));\r\n\r\n        JLabel textoRegistro = new JLabel();\r\n        textoRegistro.setText(\"<html><div style='text-align: left;'>¿Aún no eres usuario de nuestro hotel?</div></html>\");\r\n        textoRegistro.setFont(new Font(\"SansSerif\", Font.PLAIN, 16));\r\n        textoRegistro.setBorder(BorderFactory.createEmptyBorder(20, 40, 10, 40));\r\n        textoRegistro.setMaximumSize(new Dimension(Integer.MAX_VALUE, textoRegistro.getPreferredSize().height));\r\n\r\n\r\n        ImageIcon icono = new ImageIcon(\"img/hotel.png\");\r\n        Image imagenEscalada = icono.getImage().getScaledInstance(320, 180, Image.SCALE_SMOOTH);\r\n        JLabel etiquetaImagen = new JLabel(new ImageIcon(imagenEscalada));\r\n        etiquetaImagen.setAlignmentX(Component.CENTER_ALIGNMENT);\r\n        etiquetaImagen.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 20));\r\n\r\n        botonRegistrarse = new JButton(\"Registrarse\");\r\n        botonRegistrarse.setBackground(new Color(80, 180, 120));\r\n        botonRegistrarse.setForeground(Color.WHITE);\r\n        botonRegistrarse.setFocusPainted(false);\r\n        botonRegistrarse.setPreferredSize(new Dimension(160, 40));\r\n\r\n        JPanel contenedorBoton = new JPanel();\r\n        contenedorBoton.setBackground(fondo);\r\n        contenedorBoton.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));\r\n        contenedorBoton.add(botonRegistrarse);\r\n\r\n        JPanel panelContenido = new JPanel();\r\n        panelContenido.setBackground(fondo);\r\n        panelContenido.setLayout(new BoxLayout(panelContenido, BoxLayout.Y_AXIS));\r\n        panelContenido.add(textoRegistro);\r\n        panelContenido.add(Box.createVerticalStrut(20));\r\n        panelContenido.add(etiquetaImagen);\r\n        panelContenido.add(Box.createVerticalStrut(20));\r\n        panelContenido.add(contenedorBoton);\r\n\r\n        panelDerecho.add(panelContenido, BorderLayout.CENTER);\r\n\r\n        panelPrincipal.add(panelLogin, BorderLayout.WEST);\r\n        panelPrincipal.add(linea, BorderLayout.CENTER);\r\n        panelPrincipal.add(panelDerecho, BorderLayout.EAST);\r\n\r\n        getContentPane().add(panelPrincipal);\r\n    }\r\n\r\n    // Getters\r\n    public String getUsuario() {\r\n        return campoUsuario.getText();\r\n    }\r\n\r\n    public String getContrasena() {\r\n        return new String(campoContrasena.getPassword());\r\n    }\r\n\r\n    public JButton getBotonIniciar() {\r\n        return botonIniciar;\r\n    }\r\n\r\n    public JButton getBotonRegistrarse() {\r\n        return botonRegistrarse;\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/vistas/VistaInicioSesion.java b/vistas/VistaInicioSesion.java
+--- a/vistas/VistaInicioSesion.java	(revision 4d37eb69297cd7bacd3b41fe0e638534490efea6)
++++ b/vistas/VistaInicioSesion.java	(date 1748374959026)
+@@ -3,7 +3,7 @@
+ import javax.swing.*;
+ import java.awt.*;
+ 
+-public class VistaInicioSesion extends JFrame {
++public class VistaInicioSesion extends JPanel {
+ 
+     private JTextField campoUsuario;
+     private JPasswordField campoContrasena;
+@@ -11,29 +11,20 @@
+     private JButton botonRegistrarse;
+ 
+     public VistaInicioSesion() {
+-        setTitle("HotelSys - Inicio de Sesión");
+-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+-        setResizable(false);
+-
+-        initComponentes();
+-
+-        pack(); // Ajusta tamaño al contenido
+-        setLocationRelativeTo(null); // Centrar ventana
++        initComponentes(); // Ya no usas setTitle, pack, etc.
+     }
+ 
+     private void initComponentes() {
+-        Color colorLinea = Color.GRAY; // Línea visible
++        Color colorLinea = Color.GRAY;
+         Color fondo = Color.WHITE;
+ 
+         JPanel panelPrincipal = new JPanel(new BorderLayout());
+         panelPrincipal.setBackground(fondo);
+ 
+-        // Panel izquierdo: login
+         JPanel panelLogin = new JPanel(null);
+         panelLogin.setBackground(fondo);
+         panelLogin.setPreferredSize(new Dimension(400, 400));
+ 
+-        // Posiciones ajustadas un poco más a la izquierda
+         JLabel etiquetaTitulo = new JLabel("Inicio de Sesión");
+         etiquetaTitulo.setFont(new Font("SansSerif", Font.BOLD, 22));
+         etiquetaTitulo.setBounds(50, 30, 250, 30);
+@@ -62,28 +53,21 @@
+         botonIniciar.setFocusPainted(false);
+         panelLogin.add(botonIniciar);
+ 
+-        // Línea divisoria visible y fina
+         JSeparator linea = new JSeparator(SwingConstants.VERTICAL);
+         linea.setPreferredSize(new Dimension(2, 400));
+         linea.setForeground(colorLinea);
+ 
+-        // Panel derecho
+         JPanel panelDerecho = new JPanel(new BorderLayout());
+         panelDerecho.setBackground(fondo);
+         panelDerecho.setPreferredSize(new Dimension(400, 400));
+ 
+-        JLabel textoRegistro = new JLabel();
+-        textoRegistro.setText("<html><div style='text-align: left;'>¿Aún no eres usuario de nuestro hotel?</div></html>");
++        JLabel textoRegistro = new JLabel("<html><div style='text-align: left;'>¿Aún no eres usuario de nuestro hotel?</div></html>");
+         textoRegistro.setFont(new Font("SansSerif", Font.PLAIN, 16));
+         textoRegistro.setBorder(BorderFactory.createEmptyBorder(20, 40, 10, 40));
+-        textoRegistro.setMaximumSize(new Dimension(Integer.MAX_VALUE, textoRegistro.getPreferredSize().height));
+-
+ 
+         ImageIcon icono = new ImageIcon("img/hotel.png");
+         Image imagenEscalada = icono.getImage().getScaledInstance(320, 180, Image.SCALE_SMOOTH);
+         JLabel etiquetaImagen = new JLabel(new ImageIcon(imagenEscalada));
+-        etiquetaImagen.setAlignmentX(Component.CENTER_ALIGNMENT);
+-        etiquetaImagen.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 20));
+ 
+         botonRegistrarse = new JButton("Registrarse");
+         botonRegistrarse.setBackground(new Color(80, 180, 120));
+@@ -91,9 +75,8 @@
+         botonRegistrarse.setFocusPainted(false);
+         botonRegistrarse.setPreferredSize(new Dimension(160, 40));
+ 
+-        JPanel contenedorBoton = new JPanel();
++        JPanel contenedorBoton = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
+         contenedorBoton.setBackground(fondo);
+-        contenedorBoton.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
+         contenedorBoton.add(botonRegistrarse);
+ 
+         JPanel panelContenido = new JPanel();
+@@ -111,7 +94,8 @@
+         panelPrincipal.add(linea, BorderLayout.CENTER);
+         panelPrincipal.add(panelDerecho, BorderLayout.EAST);
+ 
+-        getContentPane().add(panelPrincipal);
++        setLayout(new BorderLayout());
++        add(panelPrincipal, BorderLayout.CENTER);
+     }
+ 
+     // Getters
+@@ -131,3 +115,4 @@
+         return botonRegistrarse;
+     }
+ }
++
+Index: vistas/Main.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package HotelProyectoFinal.vistas;\r\n\r\nimport HotelProyectoFinal.controladores.ControlBotones;\r\nimport HotelProyectoFinal.modelos.DatosUsuario;\r\nimport javax.swing.*;\r\n\r\npublic class Main {\r\n    public static void main(String[] args) {\r\n        /*JFrame ventana = new JFrame(\"Hotel Proyecto\");\r\n        ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);\r\n        ventana.setSize(500,500);\r\n        VistaRegistrarse vistaRegistrarse = new VistaRegistrarse();\r\n        DatosUsuario modeloDatos = new DatosUsuario(vistaRegistrarse);\r\n        VistaVerUsuarios vistaVerUsuarios = new VistaVerUsuarios();\r\n        VistaModificarUsuario vistaModificarUsuario = new VistaModificarUsuario();\r\n        new ControlBotones(vistaRegistrarse,modeloDatos,vistaVerUsuarios,vistaModificarUsuario);\r\n        ventana.add(vistaRegistrarse);\r\n        ventana.setLocationRelativeTo(null);\r\n        ventana.setVisible(true);*/\r\n        JFrame ventana = new JFrame(\"Hotel Proyecto\");\r\n        ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);\r\n        ventana.setSize(1000,500);\r\n        VistaGestionarReservas ventanaPrincipal = new VistaGestionarReservas();\r\n        ventanaPrincipal.setVisible(true);\r\n        ventana.add(ventanaPrincipal);\r\n        ventana.setLocationRelativeTo(null);\r\n        ventana.setVisible(true);\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/vistas/Main.java b/vistas/Main.java
+--- a/vistas/Main.java	(revision 4d37eb69297cd7bacd3b41fe0e638534490efea6)
++++ b/vistas/Main.java	(date 1748374683893)
+@@ -20,7 +20,7 @@
+         JFrame ventana = new JFrame("Hotel Proyecto");
+         ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+         ventana.setSize(1000,500);
+-        VistaGestionarReservas ventanaPrincipal = new VistaGestionarReservas();
++        VistaInicioSesion ventanaPrincipal = new VistaInicioSesion();
+         ventanaPrincipal.setVisible(true);
+         ventana.add(ventanaPrincipal);
+         ventana.setLocationRelativeTo(null);
+Index: .idea/libraries/layout_8_0_4.xml
+===================================================================
+diff --git a/.idea/libraries/layout_8_0_4.xml b/.idea/libraries/layout_8_0_4.xml
+deleted file mode 100644
+--- a/.idea/libraries/layout_8_0_4.xml	(revision 4d37eb69297cd7bacd3b41fe0e638534490efea6)
++++ /dev/null	(revision 4d37eb69297cd7bacd3b41fe0e638534490efea6)
+@@ -1,11 +0,0 @@
+-<component name="libraryTable">
+-  <library name="layout-8.0.4">
+-    <CLASSES>
+-      <root url="jar://$PROJECT_DIR$/lib/layout-8.0.4.jar!/" />
+-      <root url="jar://$PROJECT_DIR$/lib/slf4j-api-2.0.13.jar!/" />
+-      <root url="jar://$PROJECT_DIR$/lib/slf4j-simple-2.0.13.jar!/" />
+-    </CLASSES>
+-    <JAVADOC />
+-    <SOURCES />
+-  </library>
+-</component>
+\ No newline at end of file
+Index: out/production/proyecto-java-hotel/HotelProyectoFinal/.idea/libraries/lib.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/out/production/proyecto-java-hotel/HotelProyectoFinal/.idea/libraries/lib.xml b/out/production/proyecto-java-hotel/HotelProyectoFinal/.idea/libraries/lib.xml
+deleted file mode 100644
+--- a/out/production/proyecto-java-hotel/HotelProyectoFinal/.idea/libraries/lib.xml	(revision 4d37eb69297cd7bacd3b41fe0e638534490efea6)
++++ /dev/null	(revision 4d37eb69297cd7bacd3b41fe0e638534490efea6)
+@@ -1,10 +0,0 @@
+-<component name="libraryTable">
+-  <library name="lib">
+-    <CLASSES>
+-      <root url="jar://$PROJECT_DIR$/lib/jfreechart-1.5.3.jar!/" />
+-      <root url="jar://$PROJECT_DIR$/lib/jcommon-1.0.24.jar!/" />
+-    </CLASSES>
+-    <JAVADOC />
+-    <SOURCES />
+-  </library>
+-</component>
+\ No newline at end of file
+Index: out/production/proyecto-java-hotel/HotelProyectoFinal/.idea/libraries/io_8_0_4.xml
+===================================================================
+diff --git a/out/production/proyecto-java-hotel/HotelProyectoFinal/.idea/libraries/io_8_0_4.xml b/out/production/proyecto-java-hotel/HotelProyectoFinal/.idea/libraries/io_8_0_4.xml
+deleted file mode 100644
+--- a/out/production/proyecto-java-hotel/HotelProyectoFinal/.idea/libraries/io_8_0_4.xml	(revision 4d37eb69297cd7bacd3b41fe0e638534490efea6)
++++ /dev/null	(revision 4d37eb69297cd7bacd3b41fe0e638534490efea6)
+@@ -1,9 +0,0 @@
+-<component name="libraryTable">
+-  <library name="io-8.0.4">
+-    <CLASSES>
+-      <root url="jar://$PROJECT_DIR$/lib/io-8.0.4.jar!/" />
+-    </CLASSES>
+-    <JAVADOC />
+-    <SOURCES />
+-  </library>
+-</component>
+\ No newline at end of file
+Index: .idea/libraries/commons_8_0_4.xml
+===================================================================
+diff --git a/.idea/libraries/commons_8_0_4.xml b/.idea/libraries/commons_8_0_4.xml
+deleted file mode 100644
+--- a/.idea/libraries/commons_8_0_4.xml	(revision 4d37eb69297cd7bacd3b41fe0e638534490efea6)
++++ /dev/null	(revision 4d37eb69297cd7bacd3b41fe0e638534490efea6)
+@@ -1,9 +0,0 @@
+-<component name="libraryTable">
+-  <library name="commons-8.0.4">
+-    <CLASSES>
+-      <root url="jar://$PROJECT_DIR$/lib/commons-8.0.4.jar!/" />
+-    </CLASSES>
+-    <JAVADOC />
+-    <SOURCES />
+-  </library>
+-</component>
+\ No newline at end of file
+Index: .idea/libraries/lib.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/libraries/lib.xml b/.idea/libraries/lib.xml
+deleted file mode 100644
+--- a/.idea/libraries/lib.xml	(revision 4d37eb69297cd7bacd3b41fe0e638534490efea6)
++++ /dev/null	(revision 4d37eb69297cd7bacd3b41fe0e638534490efea6)
+@@ -1,10 +0,0 @@
+-<component name="libraryTable">
+-  <library name="lib">
+-    <CLASSES>
+-      <root url="jar://$PROJECT_DIR$/lib/jfreechart-1.5.3.jar!/" />
+-      <root url="jar://$PROJECT_DIR$/lib/jcommon-1.0.24.jar!/" />
+-    </CLASSES>
+-    <JAVADOC />
+-    <SOURCES />
+-  </library>
+-</component>
+\ No newline at end of file
+Index: out/production/proyecto-java-hotel/HotelProyectoFinal/.idea/.gitignore
+===================================================================
+diff --git a/out/production/proyecto-java-hotel/HotelProyectoFinal/.idea/.gitignore b/out/production/proyecto-java-hotel/HotelProyectoFinal/.idea/.gitignore
+deleted file mode 100644
+--- a/out/production/proyecto-java-hotel/HotelProyectoFinal/.idea/.gitignore	(revision 4d37eb69297cd7bacd3b41fe0e638534490efea6)
++++ /dev/null	(revision 4d37eb69297cd7bacd3b41fe0e638534490efea6)
+@@ -1,10 +0,0 @@
+-# Default ignored files
+-/shelf/
+-/workspace.xml
+-# Editor-based HTTP Client requests
+-/httpRequests/
+-# Environment-dependent path to Maven home directory
+-/mavenHomeManager.xml
+-# Datasource local storage ignored files
+-/dataSources/
+-/dataSources.local.xml
+Index: .idea/libraries/kernel_8_0_4.xml
+===================================================================
+diff --git a/.idea/libraries/kernel_8_0_4.xml b/.idea/libraries/kernel_8_0_4.xml
+deleted file mode 100644
+--- a/.idea/libraries/kernel_8_0_4.xml	(revision 4d37eb69297cd7bacd3b41fe0e638534490efea6)
++++ /dev/null	(revision 4d37eb69297cd7bacd3b41fe0e638534490efea6)
+@@ -1,9 +0,0 @@
+-<component name="libraryTable">
+-  <library name="kernel-8.0.4">
+-    <CLASSES>
+-      <root url="jar://$PROJECT_DIR$/lib/kernel-8.0.4.jar!/" />
+-    </CLASSES>
+-    <JAVADOC />
+-    <SOURCES />
+-  </library>
+-</component>
+\ No newline at end of file
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+deleted file mode 100644
+--- a/.idea/misc.xml	(revision 4d37eb69297cd7bacd3b41fe0e638534490efea6)
++++ /dev/null	(revision 4d37eb69297cd7bacd3b41fe0e638534490efea6)
+@@ -1,6 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="ProjectRootManager" version="2" languageLevel="JDK_24" default="true" project-jdk-name="24" project-jdk-type="JavaSDK">
+-    <output url="file://$PROJECT_DIR$/out" />
+-  </component>
+-</project>
+\ No newline at end of file
+Index: out/production/proyecto-java-hotel/HotelProyectoFinal/proyecto-java-hotel.iml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/out/production/proyecto-java-hotel/HotelProyectoFinal/proyecto-java-hotel.iml b/out/production/proyecto-java-hotel/HotelProyectoFinal/proyecto-java-hotel.iml
+deleted file mode 100644
+--- a/out/production/proyecto-java-hotel/HotelProyectoFinal/proyecto-java-hotel.iml	(revision 4d37eb69297cd7bacd3b41fe0e638534490efea6)
++++ /dev/null	(revision 4d37eb69297cd7bacd3b41fe0e638534490efea6)
+@@ -1,16 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<module type="JAVA_MODULE" version="4">
+-  <component name="NewModuleRootManager" inherit-compiler-output="true">
+-    <exclude-output />
+-    <content url="file://$MODULE_DIR$">
+-      <sourceFolder url="file://$MODULE_DIR$" isTestSource="false" packagePrefix="HotelProyectoFinal" />
+-    </content>
+-    <orderEntry type="inheritedJdk" />
+-    <orderEntry type="sourceFolder" forTests="false" />
+-    <orderEntry type="library" name="lib" level="project" />
+-    <orderEntry type="library" name="io-8.0.4" level="project" />
+-    <orderEntry type="library" name="kernel-8.0.4" level="project" />
+-    <orderEntry type="library" name="layout-8.0.4" level="project" />
+-    <orderEntry type="library" name="commons-8.0.4" level="project" />
+-  </component>
+-</module>
+\ No newline at end of file
+Index: out/production/proyecto-java-hotel/HotelProyectoFinal/.idea/vcs.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/out/production/proyecto-java-hotel/HotelProyectoFinal/.idea/vcs.xml b/out/production/proyecto-java-hotel/HotelProyectoFinal/.idea/vcs.xml
+deleted file mode 100644
+--- a/out/production/proyecto-java-hotel/HotelProyectoFinal/.idea/vcs.xml	(revision 4d37eb69297cd7bacd3b41fe0e638534490efea6)
++++ /dev/null	(revision 4d37eb69297cd7bacd3b41fe0e638534490efea6)
+@@ -1,6 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="VcsDirectoryMappings">
+-    <mapping directory="" vcs="Git" />
+-  </component>
+-</project>
+\ No newline at end of file
+Index: .idea/modules.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/modules.xml b/.idea/modules.xml
+deleted file mode 100644
+--- a/.idea/modules.xml	(revision 4d37eb69297cd7bacd3b41fe0e638534490efea6)
++++ /dev/null	(revision 4d37eb69297cd7bacd3b41fe0e638534490efea6)
+@@ -1,8 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="ProjectModuleManager">
+-    <modules>
+-      <module fileurl="file://$PROJECT_DIR$/proyecto-java-hotel.iml" filepath="$PROJECT_DIR$/proyecto-java-hotel.iml" />
+-    </modules>
+-  </component>
+-</project>
+\ No newline at end of file
+Index: out/production/proyecto-java-hotel/HotelProyectoFinal/.idea/modules.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/out/production/proyecto-java-hotel/HotelProyectoFinal/.idea/modules.xml b/out/production/proyecto-java-hotel/HotelProyectoFinal/.idea/modules.xml
+deleted file mode 100644
+--- a/out/production/proyecto-java-hotel/HotelProyectoFinal/.idea/modules.xml	(revision 4d37eb69297cd7bacd3b41fe0e638534490efea6)
++++ /dev/null	(revision 4d37eb69297cd7bacd3b41fe0e638534490efea6)
+@@ -1,8 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="ProjectModuleManager">
+-    <modules>
+-      <module fileurl="file://$PROJECT_DIR$/proyecto-java-hotel.iml" filepath="$PROJECT_DIR$/proyecto-java-hotel.iml" />
+-    </modules>
+-  </component>
+-</project>
+\ No newline at end of file
+Index: .idea/.gitignore
+===================================================================
+diff --git a/.idea/.gitignore b/.idea/.gitignore
+deleted file mode 100644
+--- a/.idea/.gitignore	(revision 4d37eb69297cd7bacd3b41fe0e638534490efea6)
++++ /dev/null	(revision 4d37eb69297cd7bacd3b41fe0e638534490efea6)
+@@ -1,10 +0,0 @@
+-# Default ignored files
+-/shelf/
+-/workspace.xml
+-# Editor-based HTTP Client requests
+-/httpRequests/
+-# Environment-dependent path to Maven home directory
+-/mavenHomeManager.xml
+-# Datasource local storage ignored files
+-/dataSources/
+-/dataSources.local.xml
+Index: .idea/libraries/io_8_0_4.xml
+===================================================================
+diff --git a/.idea/libraries/io_8_0_4.xml b/.idea/libraries/io_8_0_4.xml
+deleted file mode 100644
+--- a/.idea/libraries/io_8_0_4.xml	(revision 4d37eb69297cd7bacd3b41fe0e638534490efea6)
++++ /dev/null	(revision 4d37eb69297cd7bacd3b41fe0e638534490efea6)
+@@ -1,9 +0,0 @@
+-<component name="libraryTable">
+-  <library name="io-8.0.4">
+-    <CLASSES>
+-      <root url="jar://$PROJECT_DIR$/lib/io-8.0.4.jar!/" />
+-    </CLASSES>
+-    <JAVADOC />
+-    <SOURCES />
+-  </library>
+-</component>
+\ No newline at end of file
+Index: out/production/proyecto-java-hotel/HotelProyectoFinal/.idea/libraries/kernel_8_0_4.xml
+===================================================================
+diff --git a/out/production/proyecto-java-hotel/HotelProyectoFinal/.idea/libraries/kernel_8_0_4.xml b/out/production/proyecto-java-hotel/HotelProyectoFinal/.idea/libraries/kernel_8_0_4.xml
+deleted file mode 100644
+--- a/out/production/proyecto-java-hotel/HotelProyectoFinal/.idea/libraries/kernel_8_0_4.xml	(revision 4d37eb69297cd7bacd3b41fe0e638534490efea6)
++++ /dev/null	(revision 4d37eb69297cd7bacd3b41fe0e638534490efea6)
+@@ -1,9 +0,0 @@
+-<component name="libraryTable">
+-  <library name="kernel-8.0.4">
+-    <CLASSES>
+-      <root url="jar://$PROJECT_DIR$/lib/kernel-8.0.4.jar!/" />
+-    </CLASSES>
+-    <JAVADOC />
+-    <SOURCES />
+-  </library>
+-</component>
+\ No newline at end of file
+Index: out/production/proyecto-java-hotel/HotelProyectoFinal/.idea/libraries/commons_8_0_4.xml
+===================================================================
+diff --git a/out/production/proyecto-java-hotel/HotelProyectoFinal/.idea/libraries/commons_8_0_4.xml b/out/production/proyecto-java-hotel/HotelProyectoFinal/.idea/libraries/commons_8_0_4.xml
+deleted file mode 100644
+--- a/out/production/proyecto-java-hotel/HotelProyectoFinal/.idea/libraries/commons_8_0_4.xml	(revision 4d37eb69297cd7bacd3b41fe0e638534490efea6)
++++ /dev/null	(revision 4d37eb69297cd7bacd3b41fe0e638534490efea6)
+@@ -1,9 +0,0 @@
+-<component name="libraryTable">
+-  <library name="commons-8.0.4">
+-    <CLASSES>
+-      <root url="jar://$PROJECT_DIR$/lib/commons-8.0.4.jar!/" />
+-    </CLASSES>
+-    <JAVADOC />
+-    <SOURCES />
+-  </library>
+-</component>
+\ No newline at end of file
+Index: .idea/vcs.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/vcs.xml b/.idea/vcs.xml
+deleted file mode 100644
+--- a/.idea/vcs.xml	(revision 4d37eb69297cd7bacd3b41fe0e638534490efea6)
++++ /dev/null	(revision 4d37eb69297cd7bacd3b41fe0e638534490efea6)
+@@ -1,6 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="VcsDirectoryMappings">
+-    <mapping directory="" vcs="Git" />
+-  </component>
+-</project>
+\ No newline at end of file
+Index: out/production/proyecto-java-hotel/HotelProyectoFinal/README.md
+===================================================================
+diff --git a/out/production/proyecto-java-hotel/HotelProyectoFinal/README.md b/out/production/proyecto-java-hotel/HotelProyectoFinal/README.md
+deleted file mode 100644
+--- a/out/production/proyecto-java-hotel/HotelProyectoFinal/README.md	(revision 4d37eb69297cd7bacd3b41fe0e638534490efea6)
++++ /dev/null	(revision 4d37eb69297cd7bacd3b41fe0e638534490efea6)
+@@ -1,1 +0,0 @@
+-# proyecto-java-hotel
+Index: out/production/proyecto-java-hotel/HotelProyectoFinal/.idea/libraries/layout_8_0_4.xml
+===================================================================
+diff --git a/out/production/proyecto-java-hotel/HotelProyectoFinal/.idea/libraries/layout_8_0_4.xml b/out/production/proyecto-java-hotel/HotelProyectoFinal/.idea/libraries/layout_8_0_4.xml
+deleted file mode 100644
+--- a/out/production/proyecto-java-hotel/HotelProyectoFinal/.idea/libraries/layout_8_0_4.xml	(revision 4d37eb69297cd7bacd3b41fe0e638534490efea6)
++++ /dev/null	(revision 4d37eb69297cd7bacd3b41fe0e638534490efea6)
+@@ -1,11 +0,0 @@
+-<component name="libraryTable">
+-  <library name="layout-8.0.4">
+-    <CLASSES>
+-      <root url="jar://$PROJECT_DIR$/lib/layout-8.0.4.jar!/" />
+-      <root url="jar://$PROJECT_DIR$/lib/slf4j-api-2.0.13.jar!/" />
+-      <root url="jar://$PROJECT_DIR$/lib/slf4j-simple-2.0.13.jar!/" />
+-    </CLASSES>
+-    <JAVADOC />
+-    <SOURCES />
+-  </library>
+-</component>
+\ No newline at end of file
+Index: out/production/proyecto-java-hotel/HotelProyectoFinal/.idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/out/production/proyecto-java-hotel/HotelProyectoFinal/.idea/misc.xml b/out/production/proyecto-java-hotel/HotelProyectoFinal/.idea/misc.xml
+deleted file mode 100644
+--- a/out/production/proyecto-java-hotel/HotelProyectoFinal/.idea/misc.xml	(revision 4d37eb69297cd7bacd3b41fe0e638534490efea6)
++++ /dev/null	(revision 4d37eb69297cd7bacd3b41fe0e638534490efea6)
+@@ -1,6 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="ProjectRootManager" version="2" languageLevel="JDK_24" default="true" project-jdk-name="24" project-jdk-type="JavaSDK">
+-    <output url="file://$PROJECT_DIR$/out" />
+-  </component>
+-</project>
+\ No newline at end of file
+Index: proyecto-java-hotel.iml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/proyecto-java-hotel.iml b/proyecto-java-hotel.iml
+deleted file mode 100644
+--- a/proyecto-java-hotel.iml	(revision 4d37eb69297cd7bacd3b41fe0e638534490efea6)
++++ /dev/null	(revision 4d37eb69297cd7bacd3b41fe0e638534490efea6)
+@@ -1,16 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<module type="JAVA_MODULE" version="4">
+-  <component name="NewModuleRootManager" inherit-compiler-output="true">
+-    <exclude-output />
+-    <content url="file://$MODULE_DIR$">
+-      <sourceFolder url="file://$MODULE_DIR$" isTestSource="false" packagePrefix="HotelProyectoFinal" />
+-    </content>
+-    <orderEntry type="inheritedJdk" />
+-    <orderEntry type="sourceFolder" forTests="false" />
+-    <orderEntry type="library" name="lib" level="project" />
+-    <orderEntry type="library" name="io-8.0.4" level="project" />
+-    <orderEntry type="library" name="kernel-8.0.4" level="project" />
+-    <orderEntry type="library" name="layout-8.0.4" level="project" />
+-    <orderEntry type="library" name="commons-8.0.4" level="project" />
+-  </component>
+-</module>
+\ No newline at end of file
+diff --git a/out/production/proyecto-java-hotel/HotelProyectoFinal/.gitignore b/out/production/proyecto-java-hotel/HotelProyectoFinal/.gitignore
+deleted file mode 100644

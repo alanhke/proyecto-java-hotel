@@ -4,6 +4,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionListener;
+
 public class VistaInicioSesion extends JPanel {
 
     private JTextField campoUsuario;
@@ -12,91 +16,94 @@ public class VistaInicioSesion extends JPanel {
     private JButton botonRegistrarse;
 
     public VistaInicioSesion() {
-        initComponentes(); // Ya no usas setTitle, pack, etc.
+        initComponentes();
     }
 
     private void initComponentes() {
-        Color colorLinea = Color.GRAY;
         Color fondo = Color.WHITE;
+        Color colorBoton = new Color(60, 120, 200);
+        Color colorBotonRegistro = new Color(80, 180, 120);
 
-        JPanel panelPrincipal = new JPanel(new BorderLayout());
-        panelPrincipal.setBackground(fondo);
+        setLayout(new BorderLayout());
+        setBackground(fondo);
 
-        JPanel panelLogin = new JPanel(null);
+        // Panel Izquierdo (Login)
+        JPanel panelLogin = new JPanel();
+        panelLogin.setLayout(null);
         panelLogin.setBackground(fondo);
         panelLogin.setPreferredSize(new Dimension(400, 400));
 
         JLabel etiquetaTitulo = new JLabel("Inicio de Sesión");
         etiquetaTitulo.setFont(new Font("SansSerif", Font.BOLD, 22));
-        etiquetaTitulo.setBounds(50, 30, 250, 30);
+        etiquetaTitulo.setBounds(100, 30, 250, 30);
         panelLogin.add(etiquetaTitulo);
 
         JLabel etiquetaUsuario = new JLabel("Usuario:");
-        etiquetaUsuario.setBounds(20, 100, 80, 25);
+        etiquetaUsuario.setBounds(50, 100, 80, 25);
         panelLogin.add(etiquetaUsuario);
 
         campoUsuario = new JTextField();
-        campoUsuario.setBounds(110, 100, 200, 25);
+        campoUsuario.setBounds(150, 100, 200, 25);
         panelLogin.add(campoUsuario);
 
         JLabel etiquetaContrasena = new JLabel("Contraseña:");
-        etiquetaContrasena.setBounds(20, 140, 80, 25);
+        etiquetaContrasena.setBounds(50, 140, 80, 25);
         panelLogin.add(etiquetaContrasena);
 
         campoContrasena = new JPasswordField();
-        campoContrasena.setBounds(110, 140, 200, 25);
+        campoContrasena.setBounds(150, 140, 200, 25);
         panelLogin.add(campoContrasena);
 
         botonIniciar = new JButton("Iniciar Sesión");
-        botonIniciar.setBounds(110, 190, 200, 30);
-        botonIniciar.setBackground(new Color(60, 120, 200));
+        botonIniciar.setBounds(150, 190, 200, 30);
+        botonIniciar.setBackground(colorBoton);
         botonIniciar.setForeground(Color.WHITE);
         botonIniciar.setFocusPainted(false);
         panelLogin.add(botonIniciar);
 
+        // Línea vertical separadora
         JSeparator linea = new JSeparator(SwingConstants.VERTICAL);
-        linea.setPreferredSize(new Dimension(2, 400));
-        linea.setForeground(colorLinea);
+        linea.setForeground(Color.GRAY);
+        linea.setPreferredSize(new Dimension(1, 400));
 
+        // Panel Derecho (Registro)
         JPanel panelDerecho = new JPanel(new BorderLayout());
         panelDerecho.setBackground(fondo);
         panelDerecho.setPreferredSize(new Dimension(400, 400));
 
-        JLabel textoRegistro = new JLabel("<html><div style='text-align: left;'>¿Aún no eres usuario de nuestro hotel?</div></html>");
-        textoRegistro.setFont(new Font("SansSerif", Font.PLAIN, 16));
-        textoRegistro.setBorder(BorderFactory.createEmptyBorder(20, 40, 10, 40));
-
-        ImageIcon icono = new ImageIcon("img/hotel.png");
-        Image imagenEscalada = icono.getImage().getScaledInstance(320, 180, Image.SCALE_SMOOTH);
-        JLabel etiquetaImagen = new JLabel(new ImageIcon(imagenEscalada));
-
-        botonRegistrarse = new JButton("Registrarse");
-        botonRegistrarse.setBackground(new Color(80, 180, 120));
-        botonRegistrarse.setForeground(Color.WHITE);
-        botonRegistrarse.setFocusPainted(false);
-        botonRegistrarse.setPreferredSize(new Dimension(160, 40));
-
-        JPanel contenedorBoton = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
-        contenedorBoton.setBackground(fondo);
-        contenedorBoton.add(botonRegistrarse);
-
         JPanel panelContenido = new JPanel();
         panelContenido.setBackground(fondo);
         panelContenido.setLayout(new BoxLayout(panelContenido, BoxLayout.Y_AXIS));
+        panelContenido.setBorder(BorderFactory.createEmptyBorder(30, 40, 30, 40));
+
+        JLabel textoRegistro = new JLabel("¿Aún no eres usuario de nuestro hotel?");
+        textoRegistro.setFont(new Font("SansSerif", Font.PLAIN, 16));
+        textoRegistro.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        ImageIcon icono = new ImageIcon("img/hotel.png");
+        Image imagenEscalada = icono.getImage().getScaledInstance(280, 160, Image.SCALE_SMOOTH);
+        JLabel etiquetaImagen = new JLabel(new ImageIcon(imagenEscalada));
+        etiquetaImagen.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        botonRegistrarse = new JButton("Registrarse");
+        botonRegistrarse.setBackground(colorBotonRegistro);
+        botonRegistrarse.setForeground(Color.WHITE);
+        botonRegistrarse.setFocusPainted(false);
+        botonRegistrarse.setPreferredSize(new Dimension(160, 40));
+        botonRegistrarse.setMaximumSize(new Dimension(160, 40));
+        botonRegistrarse.setAlignmentX(Component.CENTER_ALIGNMENT);
+
         panelContenido.add(textoRegistro);
         panelContenido.add(Box.createVerticalStrut(20));
         panelContenido.add(etiquetaImagen);
         panelContenido.add(Box.createVerticalStrut(20));
-        panelContenido.add(contenedorBoton);
+        panelContenido.add(botonRegistrarse);
 
         panelDerecho.add(panelContenido, BorderLayout.CENTER);
 
-        panelPrincipal.add(panelLogin, BorderLayout.WEST);
-        panelPrincipal.add(linea, BorderLayout.CENTER);
-        panelPrincipal.add(panelDerecho, BorderLayout.EAST);
-
-        setLayout(new BorderLayout());
-        add(panelPrincipal, BorderLayout.CENTER);
+        add(panelLogin, BorderLayout.WEST);
+        add(linea, BorderLayout.CENTER);
+        add(panelDerecho, BorderLayout.EAST);
     }
 
     // Getters
