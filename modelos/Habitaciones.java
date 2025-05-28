@@ -1,6 +1,7 @@
 package HotelProyectoFinal.modelos;
 
 import HotelProyectoFinal.utilities.MySQLConnection;
+import HotelProyectoFinal.vistas.VistaCrearModificarHabitacion;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -15,6 +16,14 @@ public class Habitaciones {
         this.tipo = tipo;
         this.estado = estado;
         this.precio = precio;
+    }
+
+    public Habitaciones(VistaCrearModificarHabitacion vista, int numeroH) {
+        numero = numeroH;
+        tipo = vista.getTipoText();
+        estado = vista.getEstadoText();
+        precio = Double.parseDouble(vista.getPrecioText());
+
     }
 
     public int getNumero() {

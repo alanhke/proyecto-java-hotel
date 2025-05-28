@@ -51,7 +51,7 @@ public class VistaCrearModificarHabitacion extends JPanel {
         gbc.weightx = 1.0;
         add(precio, gbc);
 
-        aceptar = new JButton("Aceptar");
+        aceptar = new JButton("Aceptar Habitacion");
         gbc.gridx = 0;
         gbc.gridy = 3;
         gbc.weightx = 0.5;
@@ -68,24 +68,36 @@ public class VistaCrearModificarHabitacion extends JPanel {
         return tipo;
     }
 
-    public void setTipo(JTextField tipo) {
-        this.tipo = tipo;
+    public String getTipoText(){
+        return tipo.getText();
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo.setText(tipo);
     }
 
     public JTextField getEstado() {
         return estado;
     }
 
-    public void setEstado(JTextField estado) {
-        this.estado = estado;
+    public String getEstadoText(){
+        return estado.getText();
+    }
+
+    public void setEstado(String estado) {
+        this.estado.setText(estado);
     }
 
     public JTextField getPrecio() {
         return precio;
     }
 
-    public void setPrecio(JTextField precio) {
-        this.precio = precio;
+    public String getPrecioText(){
+        return precio.getText();
+    }
+
+    public void setPrecio(String precio) {
+        this.precio.setText(precio);
     }
 
     public JButton getAceptar() {
