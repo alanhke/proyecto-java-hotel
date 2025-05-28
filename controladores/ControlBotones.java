@@ -53,6 +53,7 @@ public class ControlBotones implements ActionListener {
 
     ArrayList<Habitaciones> habitaciones;
     HabitacionesTableModel habitacionesTableModel;
+    Habitaciones habitacionSeleccionada;
 
     ArrayList<Huespedes> huespedes;
     HuespedesTableModel huespedesTableModel;
@@ -71,6 +72,8 @@ public class ControlBotones implements ActionListener {
     JFrame ventanaActual;
     JFrame ventanaPersonalizar;
     JFrame ventanaCrearModificarHabitacion;
+
+    String t;
 
     int filaSeleccionada;
     private static final String RUTA_ARCHIVO = "ultimaRuta";
@@ -99,6 +102,7 @@ public class ControlBotones implements ActionListener {
         vistaReportes.setListeners(this);
         vistaPersonalizar.setListeners(this);
         vistaInicioSesion.setListeners(this);
+        vistaCrearModificarHabitacion.setListeners(this);
 
         datosGuardados = new ArrayList<>();
 
@@ -229,12 +233,28 @@ public class ControlBotones implements ActionListener {
          else if (textoBotonPresionado.equals("Limpiar Tabla Habitaciones")) {
              habitacionesTableModel.clear();
          } else if (textoBotonPresionado.equals("Modificar habitacion")) {
-             mostrarVentanaCrearModificarHabitacion("Modificar");
+             filaSeleccionada = vistaGestionarHabitaciones.getTableView().getSelectedRow();
+             t = "Modificar";
+             habitacionSeleccionada = habitaciones.get(filaSeleccionada);
+             vistaCrearModificarHabitacion.setTipo(habitacionSeleccionada.getTipo());
+             vistaCrearModificarHabitacion.setEstado(habitacionSeleccionada.getEstado());
+             vistaCrearModificarHabitacion.setPrecio(String.valueOf(habitacionSeleccionada.getPrecio()));
+             mostrarVentanaCrearModificarHabitacion();
          } else if (textoBotonPresionado.equals("Eliminar habitacion")) {
              eliminarHabitacion();
+         } else if (textoBotonPresionado.equals("Crear habitacion")) {
+             filaSeleccionada = vistaGestionarHabitaciones.getTableView().getSelectedRow();
+            t = "Crear";
+            mostrarVentanaCrearModificarHabitacion();
          }//Botones vista crear modificar habitacion
          else if (textoBotonPresionado.equals("Aceptar Habitacion")) {
-             
+             if (t.equalsIgnoreCase("Crear")){
+                guardarHabitacion();
+             } else if (t.equalsIgnoreCase("Modificar")) {
+                 modificarHabitacion(habitacionSeleccionada);
+             }
+         } else if (textoBotonPresionado.equals("Cancelar Habitacion")) {
+             volverAGestionarHabitaciones();
          }
     }
 
@@ -512,7 +532,7 @@ public class ControlBotones implements ActionListener {
         ventanaPrincipal.dispose();
     }
 
-    public void mostrarVentanaCrearModificarHabitacion(String t){
+    public void mostrarVentanaCrearModificarHabitacion(){
         if (t.equals("Modificar")){
             filaSeleccionada = vistaGestionarHabitaciones.getTableView().getSelectedRow();
 
@@ -520,21 +540,21 @@ public class ControlBotones implements ActionListener {
                 JOptionPane.showMessageDialog(vistaGestionarHabitaciones, "Debes seleccionar una habitacion para eliminar", "Error", JOptionPane.WARNING_MESSAGE);
                 return;
             }
-            Habitaciones habitacionSeleccionada = habitaciones.get(filaSeleccionada);
-            vistaCrearModificarHabitacion.setTipo(habitacionSeleccionada.getTipo());
-            vistaCrearModificarHabitacion.setEstado(habitacionSeleccionada.getEstado());
-            vistaCrearModificarHabitacion.setPrecio(String.valueOf(habitacionSeleccionada.getPrecio()));
-            modificarHabitacion(habitacionSeleccionada);
         }
         ventanaCrearModificarHabitacion.setSize(500,500);
         ventanaCrearModificarHabitacion.add(vistaCrearModificarHabitacion);
         ventanaCrearModificarHabitacion.setLocationRelativeTo(null);
         ventanaCrearModificarHabitacion.setVisible(true);
+        ventanaActual.dispose();
         ventanaActual = ventanaCrearModificarHabitacion;
     }
 
     public void volverAPaginaPrincipal(){
         ventanaPrincipal.setVisible(true);
+        ventanaActual.dispose();
+    }
+    public void volverAGestionarHabitaciones(){
+        ventanaGestionarHabitaciones.setVisible(true);
         ventanaActual.dispose();
     }
 
@@ -656,27 +676,60 @@ public class ControlBotones implements ActionListener {
         return false;
     }
 
+    public void guardarHabitacion() {
+        String tipo = vistaCrearModificarHabitacion.getTipoText();
+        String estado = vistaCrearModificarHabitacion.getEstadoText();
+        String precio = vistaCrearModificarHabitacion.getPrecioText();
+
+        if (tipo.isEmpty() || estado.isEmpty() || precio.isEmpty()) {
+            JOptionPane.showMessageDialog(vistaCrearModificarHabitacion, "Todos los campos deben estar llenos", "Error", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        if (!estado.equalsIgnoreCase("en limpieza") && !estado.equalsIgnoreCase("ocupada") && !estado.equalsIgnoreCase("disponible")) {
+            JOptionPane.showMessageDialog(vistaCrearModificarHabitacion, "Estado inválido (en limpieza, ocupada o disponible)", "Error", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        if (!tipo.equalsIgnoreCase("simple") && !tipo.equalsIgnoreCase("doble") && !tipo.equalsIgnoreCase("suite")) {
+            JOptionPane.showMessageDialog(vistaCrearModificarHabitacion, "Tipo inválido (simple, doble o suite)", "Error", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        Habitaciones ha = new Habitaciones(vistaCrearModificarHabitacion);
+        Habitaciones.agregarHabitacion(ha);
+        vistaCrearModificarHabitacion.getTipo().setText("");
+        vistaCrearModificarHabitacion.getEstado().setText("");
+        vistaCrearModificarHabitacion.getPrecio().setText("");
+        JOptionPane.showMessageDialog(vistaCrearModificarHabitacion, "Habitación creada con éxito", "Creado", JOptionPane.OK_OPTION);
+        volverAGestionarHabitaciones();
+    }
+
     public void modificarHabitacion(Habitaciones hSeleccionada){
         String tipo = vistaCrearModificarHabitacion.getTipoText();
         String estado = vistaCrearModificarHabitacion.getEstadoText();
         String precio = vistaCrearModificarHabitacion.getPrecioText();
-        if (!tipo.isEmpty() && !estado.isEmpty() && !precio.isEmpty()) {
-            Habitaciones ha = new Habitaciones(vistaCrearModificarHabitacion,hSeleccionada.getNumero());
-            Habitaciones.actualizarHabitaciones(ha,hSeleccionada.getNumero());
-            vistaCrearModificarHabitacion.getTipo().setText("");
-            vistaCrearModificarHabitacion.getEstado().setText("");
-            vistaCrearModificarHabitacion.getPrecio().setText("");
-            ventanaCrearModificarHabitacion.dispose();
-            mostrarVentanaGestionar();
-            JOptionPane.showMessageDialog(vistaModificarUsuario, "Habitacion actualizada con exito","Modificado",JOptionPane.OK_OPTION);
-            ventanaGestionarHabitaciones.dispose();
-        }else if (!estado.equalsIgnoreCase("en limpieza") || !estado.equalsIgnoreCase("ocupada") || !estado.equalsIgnoreCase("disponible")) {
-            //throw new Errores("las contraseñas no son iguales");
-            JOptionPane.showMessageDialog(vistaModificarUsuario, "Tienes que poner bien el estado de la habitacion (en limpieza, ocupada o disponible", "Error", JOptionPane.WARNING_MESSAGE);
-        }else if (!tipo.equalsIgnoreCase("simple") || !tipo.equalsIgnoreCase("doble") || !tipo.equalsIgnoreCase("suite")) {
-            //throw new Errores("las contraseñas no son iguales");
-            JOptionPane.showMessageDialog(vistaModificarUsuario, "Tienes que poner bien el tipo de habitacion (simple, doble o suite", "Error", JOptionPane.WARNING_MESSAGE);
+
+        if (tipo.isEmpty() || estado.isEmpty() || precio.isEmpty()) {
+            JOptionPane.showMessageDialog(vistaCrearModificarHabitacion, "Todos los campos deben estar llenos", "Error", JOptionPane.WARNING_MESSAGE);
+            return;
         }
+
+        if (!estado.equalsIgnoreCase("en limpieza") && !estado.equalsIgnoreCase("ocupada") && !estado.equalsIgnoreCase("disponible")) {
+            JOptionPane.showMessageDialog(vistaCrearModificarHabitacion, "Estado inválido (en limpieza, ocupada o disponible)", "Error", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        if (!tipo.equalsIgnoreCase("simple") && !tipo.equalsIgnoreCase("doble") && !tipo.equalsIgnoreCase("suite")) {
+            JOptionPane.showMessageDialog(vistaCrearModificarHabitacion, "Tipo inválido (simple, doble o suite)", "Error", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        Habitaciones ha = new Habitaciones(vistaCrearModificarHabitacion,hSeleccionada.getNumero());
+        Habitaciones.actualizarHabitaciones(ha,hSeleccionada.getNumero());
+        vistaCrearModificarHabitacion.getTipo().setText("");
+        vistaCrearModificarHabitacion.getEstado().setText("");
+        vistaCrearModificarHabitacion.getPrecio().setText("");
+        JOptionPane.showMessageDialog(vistaModificarUsuario, "Habitacion actualizada con exito","Modificado",JOptionPane.OK_OPTION);
+        volverAGestionarHabitaciones();
     }
 }
 

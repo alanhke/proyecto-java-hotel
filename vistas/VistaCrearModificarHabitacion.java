@@ -2,6 +2,7 @@ package HotelProyectoFinal.vistas;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class VistaCrearModificarHabitacion extends JPanel {
     private JTextField tipo;
@@ -57,7 +58,7 @@ public class VistaCrearModificarHabitacion extends JPanel {
         gbc.weightx = 0.5;
         add(aceptar, gbc);
 
-        cancelar = new JButton("Cancelar");
+        cancelar = new JButton("Cancelar Habitacion");
         gbc.gridx = 1;
         gbc.gridy = 3;
         gbc.weightx = 0.5;
@@ -114,5 +115,10 @@ public class VistaCrearModificarHabitacion extends JPanel {
 
     public void setCancelar(JButton cancelar) {
         this.cancelar = cancelar;
+    }
+
+    public void setListeners(ActionListener listener){
+        aceptar.addActionListener(listener);
+        cancelar.addActionListener(listener);
     }
 }
