@@ -47,6 +47,7 @@ public class ControlBotones implements ActionListener {
     VistaPersonalizar vistaPersonalizar;
     VistaCrearModificarHabitacion vistaCrearModificarHabitacion;
     Estilo estilo;
+    VistaCrearModificarReserva vistaCrearModificarReserva;
 
     ArrayList<DatosUsuario> datosGuardados;
     DatosUsuarioTableModel table;
@@ -72,12 +73,13 @@ public class ControlBotones implements ActionListener {
     JFrame ventanaActual;
     JFrame ventanaPersonalizar;
     JFrame ventanaCrearModificarHabitacion;
+    JFrame ventanCrearModificarReservas;
 
     String t;
 
     int filaSeleccionada;
     private static final String RUTA_ARCHIVO = "ultimaRuta";
-    public ControlBotones(VistaRegistrarse panel, DatosUsuario datos, VistaVerUsuarios panel2, VistaModificarUsuario panel3, VistaPaginaPrincipal paginaPrincipal, VistaGestionarHabitaciones vistaGestionarHabitaciones1, VistaGestionarReservas vistaGestionarReservas1, VistaGestionarHuespedes vistaGestionarHuespedes1, VistaReportes vistaReportes1, VistaPersonalizar vistaPersonalizar1, Estilo estilo1, VistaInicioSesion vistaInicioSesion1, VistaCrearModificarHabitacion vistaCrearModificarHabitacion1) {
+    public ControlBotones(VistaRegistrarse panel, DatosUsuario datos, VistaVerUsuarios panel2, VistaModificarUsuario panel3, VistaPaginaPrincipal paginaPrincipal, VistaGestionarHabitaciones vistaGestionarHabitaciones1, VistaGestionarReservas vistaGestionarReservas1, VistaGestionarHuespedes vistaGestionarHuespedes1, VistaReportes vistaReportes1, VistaPersonalizar vistaPersonalizar1, Estilo estilo1, VistaInicioSesion vistaInicioSesion1, VistaCrearModificarHabitacion vistaCrearModificarHabitacion1, VistaCrearModificarReserva vistaCrearModificarReserva1) {
         vistaRegistrarse = panel;
         vistaVerUsuarios = panel2;
         vistaModificarUsuario = panel3;
@@ -90,6 +92,7 @@ public class ControlBotones implements ActionListener {
         estilo = estilo1;
         vistaInicioSesion = vistaInicioSesion1;
         vistaCrearModificarHabitacion = vistaCrearModificarHabitacion1;
+        vistaCrearModificarReserva = vistaCrearModificarReserva1;
 
         table = vistaVerUsuarios.getTable();
         vistaRegistrarse.setListeners(this);
@@ -103,6 +106,7 @@ public class ControlBotones implements ActionListener {
         vistaPersonalizar.setListeners(this);
         vistaInicioSesion.setListeners(this);
         vistaCrearModificarHabitacion.setListeners(this);
+        vistaCrearModificarReserva.setListeners(this);
 
         datosGuardados = new ArrayList<>();
 
@@ -120,7 +124,7 @@ public class ControlBotones implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String textoBotonPresionado = ((JButton) e.getSource()).getText();
-         if (textoBotonPresionado.equals("Registrarse")) {
+        if (textoBotonPresionado.equals("Registrarse")) {
             String nombre = vistaRegistrarse.getNombreUsuario();
             String contra = vistaRegistrarse.getPassword().trim();
             String finalPassword = vistaRegistrarse.getFinalPassword().trim();
@@ -138,34 +142,34 @@ public class ControlBotones implements ActionListener {
                 vistaRegistrarse.getTfName().setText("");
                 vistaRegistrarse.getTfLastName().setText("");
                 JOptionPane.showMessageDialog(vistaRegistrarse, "Los datos fueron enviados correctamente");
-            }else if (!contra.equals(finalPassword)) {
+            } else if (!contra.equals(finalPassword)) {
                 //throw new Errores("las contraseñas no son iguales");
                 JOptionPane.showMessageDialog(vistaRegistrarse, "Las contraseñas no son iguales", "Error", JOptionPane.WARNING_MESSAGE);
-            }else {
-                String vacio = vistaRegistrarse.getTextVacio(nombre,contra,finalPassword,firstName, lastName);
+            } else {
+                String vacio = vistaRegistrarse.getTextVacio(nombre, contra, finalPassword, firstName, lastName);
                 //throw new Errores("El campo " + vacio + " esta vacio.");
                 JOptionPane.showMessageDialog(vistaRegistrarse, "El campo " + vacio + " esta vacio.", "Error", JOptionPane.WARNING_MESSAGE);
             }
-         }else if (textoBotonPresionado.equals("limpiar")){
+        } else if (textoBotonPresionado.equals("limpiar")) {
             vistaRegistrarse.getTfUserName().setText("");
             vistaRegistrarse.getTfContra().setText("");
             vistaRegistrarse.getTfFinalPassword().setText("");
             vistaRegistrarse.getTfName().setText("");
             vistaRegistrarse.getTfLastName().setText("");
-         }else if (textoBotonPresionado.equals("Ver guardados")){
+        } else if (textoBotonPresionado.equals("Ver guardados")) {
             verDatos();
-         } else if (textoBotonPresionado.equals("Limpiar")) {
+        } else if (textoBotonPresionado.equals("Limpiar")) {
             table.clear();
-         } else if (textoBotonPresionado.equals("Exportar a PDF")) {
+        } else if (textoBotonPresionado.equals("Exportar a PDF")) {
             generarPDF();
-         } else if (textoBotonPresionado.equals("Eliminar Usuario")) {
+        } else if (textoBotonPresionado.equals("Eliminar Usuario")) {
             boolean eliminado = eliminarUsuario();
             if (eliminado) {
                 JOptionPane.showMessageDialog(vistaRegistrarse, "El usuario se ha eliminado", "Usuario eliminado", JOptionPane.OK_OPTION);
-            }else {
+            } else {
                 JOptionPane.showMessageDialog(vistaRegistrarse, "El usuario no se ha eliminado", "Error", JOptionPane.WARNING_MESSAGE);
             }
-         }else if (textoBotonPresionado.equals("Modificar Usuario")) {
+        } else if (textoBotonPresionado.equals("Modificar Usuario")) {
             filaSeleccionada = vistaVerUsuarios.getTableView().getSelectedRow();
             if (filaSeleccionada == -1) {
                 JOptionPane.showMessageDialog(vistaVerUsuarios, "Debes seleccionar un usuario de la tabla.", "Advertencia", JOptionPane.WARNING_MESSAGE);
@@ -185,77 +189,75 @@ public class ControlBotones implements ActionListener {
             ventanaModificar.add(vistaModificarUsuario);
             ventanaModificar.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             ventanaModificar.setLocationRelativeTo(null);
-            ventanaModificar.setSize(500,500);
+            ventanaModificar.setSize(500, 500);
             ventanaModificar.setVisible(true);
-         }else if (textoBotonPresionado.equals("Aceptar")){
+        } else if (textoBotonPresionado.equals("Aceptar")) {
             modificarUsuario();
-         }else if (textoBotonPresionado.equals("Gestionar Habitaciones")) {
-             mostrarVentanaGestionar();
-         } else if (textoBotonPresionado.equals("Gestionar Reservas")) {
+        } else if (textoBotonPresionado.equals("Gestionar Habitaciones")) {
+            mostrarVentanaGestionar();
+        } else if (textoBotonPresionado.equals("Gestionar Reservas")) {
             mostrarVentanaReservas();
-         } else if (textoBotonPresionado.equals("Gestión de Huéspedes")) {
-             mostrarVentanaHuespedes();
-         } else if (textoBotonPresionado.equals("Ver Reportes")) {
+        } else if (textoBotonPresionado.equals("Gestión de Huéspedes")) {
+            mostrarVentanaHuespedes();
+        } else if (textoBotonPresionado.equals("Ver Reportes")) {
             mostrarVentanaReportes();
-         } else if (textoBotonPresionado.equals("Generar Reporte")) {
-             String tipo = vistaReportes.getTipoReporteSeleccionado();
-             if (tipo.equals("Ingresos por Mes")) {
-                 vistaReportes.mostrarGraficaIngresos();
-             } else if (tipo.equals("Ocupación de Habitaciones")) {
-                 vistaReportes.mostrarGraficaOcupacion();
-             }
-         } else if (textoBotonPresionado.equals("Exportar a PDF")) {
-             JFileChooser selector = new JFileChooser();
-             selector.setDialogTitle("Guardar Reporte como PDF");
-             int resultado = selector.showSaveDialog(null);
-             if (resultado == JFileChooser.APPROVE_OPTION) {
-                 File archivo = selector.getSelectedFile();
-                 String rutaPDF = archivo.getAbsolutePath();
-                 if (!rutaPDF.toLowerCase().endsWith(".pdf")) {
-                     rutaPDF += ".pdf";
-                 }
-                 vistaReportes.exportarGraficaAPDF(rutaPDF);
-             }
-         } else if (textoBotonPresionado.equals("Volver")) {
-             volverAPaginaPrincipal();
-         } else if (textoBotonPresionado.equals("Personalizar")) {
+        } else if (textoBotonPresionado.equals("Generar Reporte")) {
+            String tipo = vistaReportes.getTipoReporteSeleccionado();
+            if (tipo.equals("Ingresos por Mes")) {
+                vistaReportes.mostrarGraficaIngresos();
+            } else if (tipo.equals("Ocupación de Habitaciones")) {
+                vistaReportes.mostrarGraficaOcupacion();
+            }
+        } else if (textoBotonPresionado.equals("Exportar a PDF")) {
+            JFileChooser selector = new JFileChooser();
+            selector.setDialogTitle("Guardar Reporte como PDF");
+            int resultado = selector.showSaveDialog(null);
+            if (resultado == JFileChooser.APPROVE_OPTION) {
+                File archivo = selector.getSelectedFile();
+                String rutaPDF = archivo.getAbsolutePath();
+                if (!rutaPDF.toLowerCase().endsWith(".pdf")) {
+                    rutaPDF += ".pdf";
+                }
+                vistaReportes.exportarGraficaAPDF(rutaPDF);
+            }
+        } else if (textoBotonPresionado.equals("Volver")) {
+            volverAPaginaPrincipal();
+        } else if (textoBotonPresionado.equals("Personalizar")) {
             mostrarVentanaPersonalizar();
-         } else if (textoBotonPresionado.equals("Aplicar Cambios")) {
-             aplicarPersonalizacion();
-         } else if (textoBotonPresionado.equals("Iniciar Sesión")) {
-             ventanaPrincipal.add(vistaPaginaPrincipal);
-             ventanaPrincipal.setSize(1000,500);
-             //ventanaPrincipal.pack();
-             ventanaPrincipal.setLocationRelativeTo(null);
-             ventanaPrincipal.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-             ventanaPrincipal.setVisible(true);
-         }//Botones vista habitaciones
-         else if (textoBotonPresionado.equals("Limpiar Tabla Habitaciones")) {
-             habitacionesTableModel.clear();
-         } else if (textoBotonPresionado.equals("Modificar habitacion")) {
-             filaSeleccionada = vistaGestionarHabitaciones.getTableView().getSelectedRow();
-             t = "Modificar";
-             habitacionSeleccionada = habitaciones.get(filaSeleccionada);
-             vistaCrearModificarHabitacion.setTipo(habitacionSeleccionada.getTipo());
-             vistaCrearModificarHabitacion.setEstado(habitacionSeleccionada.getEstado());
-             vistaCrearModificarHabitacion.setPrecio(String.valueOf(habitacionSeleccionada.getPrecio()));
-             mostrarVentanaCrearModificarHabitacion();
-         } else if (textoBotonPresionado.equals("Eliminar habitacion")) {
-             eliminarHabitacion();
-         } else if (textoBotonPresionado.equals("Crear habitacion")) {
-             filaSeleccionada = vistaGestionarHabitaciones.getTableView().getSelectedRow();
+        } else if (textoBotonPresionado.equals("Aplicar Cambios")) {
+            aplicarPersonalizacion();
+        } else if (textoBotonPresionado.equals("Iniciar Sesión")) {
+            mostrarVentanaPrincipal();
+        }//Botones vista habitaciones
+        else if (textoBotonPresionado.equals("Limpiar Tabla Habitaciones")) {
+            habitacionesTableModel.clear();
+        } else if (textoBotonPresionado.equals("Modificar habitacion")) {
+            filaSeleccionada = vistaGestionarHabitaciones.getTableView().getSelectedRow();
+            t = "Modificar";
+            habitacionSeleccionada = habitaciones.get(filaSeleccionada);
+            vistaCrearModificarHabitacion.setTipo(habitacionSeleccionada.getTipo());
+            vistaCrearModificarHabitacion.setEstado(habitacionSeleccionada.getEstado());
+            vistaCrearModificarHabitacion.setPrecio(String.valueOf(habitacionSeleccionada.getPrecio()));
+            mostrarVentanaCrearModificarHabitacion();
+        } else if (textoBotonPresionado.equals("Eliminar habitacion")) {
+            eliminarHabitacion();
+        } else if (textoBotonPresionado.equals("Crear habitacion")) {
+            filaSeleccionada = vistaGestionarHabitaciones.getTableView().getSelectedRow();
             t = "Crear";
             mostrarVentanaCrearModificarHabitacion();
-         }//Botones vista crear modificar habitacion
-         else if (textoBotonPresionado.equals("Aceptar Habitacion")) {
-             if (t.equalsIgnoreCase("Crear")){
+        }//Botones vista crear modificar habitacion
+        else if (textoBotonPresionado.equals("Aceptar Habitacion")) {
+            if (t.equalsIgnoreCase("Crear")) {
                 guardarHabitacion();
-             } else if (t.equalsIgnoreCase("Modificar")) {
-                 modificarHabitacion(habitacionSeleccionada);
-             }
-         } else if (textoBotonPresionado.equals("Cancelar Habitacion")) {
-             volverAGestionarHabitaciones();
-         }
+            } else if (t.equalsIgnoreCase("Modificar")) {
+                modificarHabitacion(habitacionSeleccionada);
+            }
+        } else if (textoBotonPresionado.equals("Cancelar Habitacion")) {
+            volverAGestionarHabitaciones();
+        }//Botones vista reservas
+        else if (textoBotonPresionado.equals("Crear Reserva")) {
+            mostrarVentanaCrearModificarReserva();
+        }
     }
 
     public void guardarDatos(DatosUsuario registroDatos2) {
@@ -500,9 +502,18 @@ public class ControlBotones implements ActionListener {
         ventanaPrincipal.dispose();
         cargarReservas();
     }
+    public void mostrarVentanaCrearModificarReserva(){
+        ventanCrearModificarReservas.add(vistaCrearModificarReserva);
+        ventanCrearModificarReservas.setSize(1000,500);
+        //ventanaGestionarHuespedes.pack();
+        ventanCrearModificarReservas.setLocationRelativeTo(null);
+        ventanCrearModificarReservas.setVisible(true);
+        ventanaGestionarReservas.dispose();
+        ventanaActual = ventanCrearModificarReservas;
+    }
 
     public void mostrarVentanaHuespedes(){
-        ventanaGestionarHuespedes.add(vistaGestionarHuespedes);
+        ventanaGestionarHuespedes.add(vistaCrearModificarReserva);
         ventanaGestionarHuespedes.setSize(1000,500);
         //ventanaGestionarHuespedes.pack();
         ventanaGestionarHuespedes.setLocationRelativeTo(null);
@@ -604,6 +615,7 @@ public class ControlBotones implements ActionListener {
         ventanaModificar = new JFrame("Modificar usuario");
         ventanaMostrarDatos = new JFrame();
         ventanaCrearModificarHabitacion = new JFrame("Habitacion");
+        ventanCrearModificarReservas = new JFrame("Reservas");
     }
 
     public void mostrarVentanaPrincipal(){
@@ -730,5 +742,7 @@ public class ControlBotones implements ActionListener {
         JOptionPane.showMessageDialog(vistaModificarUsuario, "Habitacion actualizada con exito","Modificado",JOptionPane.OK_OPTION);
         volverAGestionarHabitaciones();
     }
+
+
 }
 

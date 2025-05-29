@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 
 public class VistaGestionarReservas extends JPanel {
     JButton limpiar;
+    JButton crear;
     JButton modificar;
     JButton eliminar;
     JButton volver;
@@ -24,11 +25,13 @@ public class VistaGestionarReservas extends JPanel {
         modificar = new JButton("Modificar reservas");
         eliminar = new JButton("Eliminar reservas");
         volver = new JButton("Volver");
+        crear = new JButton("Crear Reserva");
         reservasTableModel = new ReservasTableModel();
         table = new JTable(reservasTableModel);
         scrollPane = new JScrollPane(table);
         JPanel botones = new JPanel();
         botones.add(limpiar);
+        botones.add(crear);
         botones.add(modificar);
         botones.add(eliminar);
         botones.add(volver);
@@ -42,6 +45,7 @@ public class VistaGestionarReservas extends JPanel {
         modificar.addActionListener(listener);
         eliminar.addActionListener(listener);
         volver.addActionListener(listener);
+        crear.addActionListener(listener);
     }
 
     public ReservasTableModel getTable(){

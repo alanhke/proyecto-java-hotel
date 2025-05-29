@@ -22,9 +22,10 @@ public class Main {
         Estilo estilo = new Estilo();
         VistaInicioSesion vistaInicioSesion = new VistaInicioSesion();
         VistaCrearModificarHabitacion vistaCrearModificarHabitacion = new VistaCrearModificarHabitacion();
+        VistaCrearModificarReserva vistaCrearModificarReserva = new VistaCrearModificarReserva();
 
 
         new ControlBotones(vistaRegistrarse,modeloDatos,vistaVerUsuarios,vistaModificarUsuario, vistaPaginaPrincipal, gestionarHabitaciones,vistaGestionarRes
-        , vistaGestionarHuespedes, vistaReportes, VistaPersonalizar, estilo, vistaInicioSesion, vistaCrearModificarHabitacion);
+        , vistaGestionarHuespedes, vistaReportes, VistaPersonalizar, estilo, vistaInicioSesion, vistaCrearModificarHabitacion, vistaCrearModificarReserva);
     }
 }
