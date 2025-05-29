@@ -48,6 +48,7 @@ public class ControlBotones implements ActionListener {
     VistaCrearModificarHabitacion vistaCrearModificarHabitacion;
     Estilo estilo;
     VistaCrearModificarReserva vistaCrearModificarReserva;
+    VistaCrearModificarHuesped vistaCrearModificarHuesped;
 
     ArrayList<DatosUsuario> datosGuardados;
     DatosUsuarioTableModel table;
@@ -74,12 +75,13 @@ public class ControlBotones implements ActionListener {
     JFrame ventanaPersonalizar;
     JFrame ventanaCrearModificarHabitacion;
     JFrame ventanCrearModificarReservas;
+    JFrame ventanaCrearModificarHuespedes;
 
     String t;
 
     int filaSeleccionada;
     private static final String RUTA_ARCHIVO = "ultimaRuta";
-    public ControlBotones(VistaRegistrarse panel, DatosUsuario datos, VistaVerUsuarios panel2, VistaModificarUsuario panel3, VistaPaginaPrincipal paginaPrincipal, VistaGestionarHabitaciones vistaGestionarHabitaciones1, VistaGestionarReservas vistaGestionarReservas1, VistaGestionarHuespedes vistaGestionarHuespedes1, VistaReportes vistaReportes1, VistaPersonalizar vistaPersonalizar1, Estilo estilo1, VistaInicioSesion vistaInicioSesion1, VistaCrearModificarHabitacion vistaCrearModificarHabitacion1, VistaCrearModificarReserva vistaCrearModificarReserva1) {
+    public ControlBotones(VistaRegistrarse panel, DatosUsuario datos, VistaVerUsuarios panel2, VistaModificarUsuario panel3, VistaPaginaPrincipal paginaPrincipal, VistaGestionarHabitaciones vistaGestionarHabitaciones1, VistaGestionarReservas vistaGestionarReservas1, VistaGestionarHuespedes vistaGestionarHuespedes1, VistaReportes vistaReportes1, VistaPersonalizar vistaPersonalizar1, Estilo estilo1, VistaInicioSesion vistaInicioSesion1, VistaCrearModificarHabitacion vistaCrearModificarHabitacion1, VistaCrearModificarReserva vistaCrearModificarReserva1, VistaCrearModificarHuesped vistaCrearModificarHuesped1) {
         vistaRegistrarse = panel;
         vistaVerUsuarios = panel2;
         vistaModificarUsuario = panel3;
@@ -93,6 +95,7 @@ public class ControlBotones implements ActionListener {
         vistaInicioSesion = vistaInicioSesion1;
         vistaCrearModificarHabitacion = vistaCrearModificarHabitacion1;
         vistaCrearModificarReserva = vistaCrearModificarReserva1;
+        vistaCrearModificarHuesped = vistaCrearModificarHuesped1;
 
         table = vistaVerUsuarios.getTable();
         vistaRegistrarse.setListeners(this);
@@ -107,6 +110,7 @@ public class ControlBotones implements ActionListener {
         vistaInicioSesion.setListeners(this);
         vistaCrearModificarHabitacion.setListeners(this);
         vistaCrearModificarReserva.setListeners(this);
+        vistaCrearModificarHuesped.setListeners(this);
 
         datosGuardados = new ArrayList<>();
 
@@ -257,6 +261,9 @@ public class ControlBotones implements ActionListener {
         }//Botones vista reservas
         else if (textoBotonPresionado.equals("Crear Reserva")) {
             mostrarVentanaCrearModificarReserva();
+        }//botones vista huespedes
+        else if (textoBotonPresionado.equals("Crear huesped")) {
+            mostrarVentanaCrearModificarHuesped();
         }
     }
 
@@ -513,7 +520,7 @@ public class ControlBotones implements ActionListener {
     }
 
     public void mostrarVentanaHuespedes(){
-        ventanaGestionarHuespedes.add(vistaCrearModificarReserva);
+        ventanaGestionarHuespedes.add(vistaGestionarHuespedes);
         ventanaGestionarHuespedes.setSize(1000,500);
         //ventanaGestionarHuespedes.pack();
         ventanaGestionarHuespedes.setLocationRelativeTo(null);
@@ -521,6 +528,15 @@ public class ControlBotones implements ActionListener {
         ventanaActual = ventanaGestionarHuespedes;
         ventanaPrincipal.dispose();
         cargarHuespedes();
+    }
+    public void mostrarVentanaCrearModificarHuesped(){
+        ventanaCrearModificarHuespedes.add(vistaCrearModificarHuesped);
+        ventanaCrearModificarHuespedes.setSize(1000,500);
+        //ventanaGestionarHuespedes.pack();
+        ventanaCrearModificarHuespedes.setLocationRelativeTo(null);
+        ventanaCrearModificarHuespedes.setVisible(true);
+        ventanaGestionarHuespedes.dispose();
+        ventanaActual = ventanaCrearModificarHuespedes;
     }
 
     public void mostrarVentanaReportes(){
@@ -583,6 +599,9 @@ public class ControlBotones implements ActionListener {
         vistas.add(vistaGestionarHuespedes);
         vistas.add(vistaReportes);
         vistas.add(vistaPersonalizar);
+        vistas.add(vistaCrearModificarHabitacion);
+        vistas.add(vistaCrearModificarReserva);
+        vistas.add(vistaCrearModificarHuesped);
         for (Component vist : vistas) {
             Estilo.aplicarEstiloGlobal(vist, fuente, tamano, tema);
         }
@@ -616,6 +635,7 @@ public class ControlBotones implements ActionListener {
         ventanaMostrarDatos = new JFrame();
         ventanaCrearModificarHabitacion = new JFrame("Habitacion");
         ventanCrearModificarReservas = new JFrame("Reservas");
+        ventanaCrearModificarHuespedes = new JFrame("Huespedes");
     }
 
     public void mostrarVentanaPrincipal(){
