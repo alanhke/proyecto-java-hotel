@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class VistaCrearModificarReserva extends JPanel {
+    private final JTextField reservaId;
     private final JTextField idHuesped;
     private final JTextField fechaEntrada;
     private final JTextField fechaSalida;
@@ -16,12 +17,15 @@ public class VistaCrearModificarReserva extends JPanel {
         setBorder(BorderFactory.createEmptyBorder(20, 30, 20, 30));
         Font fuenteCampos = new Font("SansSerif", Font.PLAIN, 14);
         Font fuenteBotones = new Font("SansSerif", Font.BOLD, 14);
+        reservaId = new JTextField(10);
+        reservaId.setEditable(false);
         idHuesped    = new JTextField(15);
         fechaEntrada = new JTextField(10);
         fechaSalida  = new JTextField(10);
         aceptar      = new JButton("Aceptar reserva");
         cancelar     = new JButton("Cancelar reserva");
 
+        reservaId.setFont(fuenteCampos);
         idHuesped.setFont(fuenteCampos);
         fechaEntrada.setFont(fuenteCampos);
         fechaSalida.setFont(fuenteCampos);
@@ -52,20 +56,28 @@ public class VistaCrearModificarReserva extends JPanel {
 
         gbc.gridwidth = 1;
         gbc.gridy++;
+        gbc.gridx = 0;
+        add(new JLabel("ID Reserva:"), gbc);
+
+        gbc.gridx = 1;
+        add(reservaId, gbc);
+
+        gbc.gridy++;
+        gbc.gridx = 0;
         add(new JLabel("ID Huésped:"), gbc);
 
         gbc.gridx = 1;
         add(idHuesped, gbc);
 
-        gbc.gridx = 0;
         gbc.gridy++;
+        gbc.gridx = 0;
         add(new JLabel("Fecha de entrada (dd/MM/yyyy):"), gbc);
 
         gbc.gridx = 1;
         add(fechaEntrada, gbc);
 
-        gbc.gridx = 0;
         gbc.gridy++;
+        gbc.gridx = 0;
         add(new JLabel("Fecha de salida (dd/MM/yyyy):"), gbc);
 
         gbc.gridx = 1;
@@ -76,12 +88,13 @@ public class VistaCrearModificarReserva extends JPanel {
         botones.add(aceptar);
         botones.add(cancelar);
 
-        gbc.gridx = 0;
         gbc.gridy++;
+        gbc.gridx = 0;
         gbc.gridwidth = 2;
         gbc.anchor = GridBagConstraints.EAST;
         add(botones, gbc);
     }
+
     public String getIdHuesped()         { return idHuesped.getText().trim(); }
     public JTextField getIdHuespedField()     { return idHuesped; }
     public void   setIdHuesped(String s) { idHuesped.setText(s); }

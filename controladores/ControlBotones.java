@@ -62,7 +62,7 @@ public class ControlBotones implements ActionListener {
 
     ArrayList<Huespedes> huespedes;
     HuespedesTableModel huespedesTableModel;
-    Huespedes huespedSeleccionada;
+    Huespedes huespedSeleccionado;
 
     ArrayList<Reservas> reservas;
     ReservasTableModel reservasTableModel;
@@ -280,7 +280,13 @@ public class ControlBotones implements ActionListener {
         }
         //botones vista huespedes
         else if (textoBotonPresionado.equals("Crear huesped")) {
+            crearOModificar = "Crear";
             mostrarVentanaCrearModificarHuesped();
+        }else if (textoBotonPresionado.equals("Modificar huesped")) {
+            crearOModificar = "Modificar";
+            mostrarVentanaCrearModificarHuesped();
+        }else if (textoBotonPresionado.equals("Eliminar huesped")) {
+
         }
     }
 
@@ -579,6 +585,20 @@ public class ControlBotones implements ActionListener {
         cargarHuespedes();
     }
     public void mostrarVentanaCrearModificarHuesped(){
+        if (crearOModificar.equals("Modificar")){
+            filaSeleccionada = vistaGestionarHuespedes.getTableView().getSelectedRow();
+
+            if (filaSeleccionada == -1) {
+                JOptionPane.showMessageDialog(vistaGestionarHuespedes, "Debes seleccionar un huesped para modificar", "Error", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            huespedSeleccionado = huespedes.get(filaSeleccionada);
+            vistaCrearModificarHuesped.setNombres(huespedSeleccionado.getNombre());
+            vistaCrearModificarHuesped.setCorreo(huespedSeleccionado.getCorreo());
+            vistaCrearModificarHuesped.setDireccion(huespedSeleccionado.getDireccion());
+            vistaCrearModificarHuesped.setTelefono(huespedSeleccionado.getTelefono());
+            vistaCrearModificarHuesped.setDocumentoIdentidad(huespedSeleccionado.getDocumentoIdentidad());
+        }
         ventanaCrearModificarHuespedes.add(vistaCrearModificarHuesped);
         ventanaCrearModificarHuespedes.setSize(1000,500);
         //ventanaGestionarHuespedes.pack();
@@ -729,27 +749,6 @@ public class ControlBotones implements ActionListener {
         }
     }
 
-    public boolean eliminarHabitacion(){
-        filaSeleccionada = vistaGestionarHabitaciones.getTableView().getSelectedRow();
-
-        if (filaSeleccionada == -1) {
-            JOptionPane.showMessageDialog(vistaGestionarHabitaciones, "Debes seleccionar una habitacion para eliminar", "Error", JOptionPane.WARNING_MESSAGE);
-            return false;
-        }
-
-        Habitaciones habitacion = habitaciones.get(filaSeleccionada);
-
-        int confirmacion = JOptionPane.showConfirmDialog(vistaGestionarHabitaciones, "¿Estás seguro de eliminar la habitacion " + habitacion.getNumero() + "?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
-        if (confirmacion == JOptionPane.YES_OPTION) {
-            Habitaciones.eliminarHabitacion(habitaciones.get(filaSeleccionada).getNumero());
-            habitaciones.remove(filaSeleccionada);
-            habitacionesTableModel.removeRow(filaSeleccionada);
-            return true;
-        }
-
-        return false;
-    }
-
     public void guardarHabitacion() {
         String tipo = vistaCrearModificarHabitacion.getTipoText();
         String estado = vistaCrearModificarHabitacion.getEstadoText();
@@ -803,6 +802,26 @@ public class ControlBotones implements ActionListener {
         vistaCrearModificarHabitacion.getPrecio().setText("");
         JOptionPane.showMessageDialog(vistaModificarUsuario, "Habitacion actualizada con exito","Modificado",JOptionPane.OK_OPTION);
         volverAGestionarHabitaciones();
+    }
+    public boolean eliminarHabitacion(){
+        filaSeleccionada = vistaGestionarHabitaciones.getTableView().getSelectedRow();
+
+        if (filaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(vistaGestionarHabitaciones, "Debes seleccionar una habitacion para eliminar", "Error", JOptionPane.WARNING_MESSAGE);
+            return false;
+        }
+
+        Habitaciones habitacion = habitaciones.get(filaSeleccionada);
+
+        int confirmacion = JOptionPane.showConfirmDialog(vistaGestionarHabitaciones, "¿Estás seguro de eliminar la habitacion " + habitacion.getNumero() + "?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+        if (confirmacion == JOptionPane.YES_OPTION) {
+            Habitaciones.eliminarHabitacion(habitaciones.get(filaSeleccionada).getNumero());
+            habitaciones.remove(filaSeleccionada);
+            habitacionesTableModel.removeRow(filaSeleccionada);
+            return true;
+        }
+
+        return false;
     }
 
     public void guardarReserva() {
@@ -891,6 +910,56 @@ public class ControlBotones implements ActionListener {
         vistaCrearModificarReserva.getFechaEntradaField().setText("");
         vistaCrearModificarReserva.getFechaSalidaField().setText("");
         JOptionPane.showMessageDialog(vistaCrearModificarReserva, "Reserva modificada con éxito", "Creado", JOptionPane.OK_OPTION);
+        volverAGestionarHabitaciones();
+    }
+    public boolean eliminarReserva(){
+        filaSeleccionada = vistaGestionarReservas.getTableView().getSelectedRow();
+
+        if (filaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(vistaGestionarReservas, "Debes seleccionar una reserva para eliminar", "Error", JOptionPane.WARNING_MESSAGE);
+            return false;
+        }
+
+        Reservas reserva = reservas.get(filaSeleccionada);
+
+        int confirmacion = JOptionPane.showConfirmDialog(vistaGestionarReservas, "¿Estás seguro de eliminar la reserva " + reserva.getId() +" del huesped: "+ reserva.getHuesped().getNombre() + "?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+        if (confirmacion == JOptionPane.YES_OPTION) {
+            Reservas.eliminarReserva(reservas.get(filaSeleccionada).getId());
+            reservas.remove(filaSeleccionada);
+            reservasTableModel.removeRow(filaSeleccionada);
+            return true;
+        }
+
+        return false;
+    }
+
+    public void guardarHuesped() {
+        String nombres = vistaCrearModificarHuesped.getNombres();
+        String correo = vistaCrearModificarHuesped.getCorreo();
+        String direccion = vistaCrearModificarHuesped.getDireccion();
+        String telefono = vistaCrearModificarHuesped.getTelefono();
+        String documentoIdentidad = vistaCrearModificarHuesped.getDocumentoIdentidad();
+
+        if (nombres.isEmpty() || correo.isEmpty() || direccion.isEmpty() || telefono.isEmpty() || documentoIdentidad.isEmpty()) {
+            JOptionPane.showMessageDialog(vistaCrearModificarReserva, "Todos los campos deben estar llenos", "Error", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        if (!estado.equalsIgnoreCase("en limpieza") && !estado.equalsIgnoreCase("ocupada") && !estado.equalsIgnoreCase("disponible")) {
+            JOptionPane.showMessageDialog(vistaCrearModificarHabitacion, "Estado inválido (en limpieza, ocupada o disponible)", "Error", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        if (!tipo.equalsIgnoreCase("simple") && !tipo.equalsIgnoreCase("doble") && !tipo.equalsIgnoreCase("suite")) {
+            JOptionPane.showMessageDialog(vistaCrearModificarHabitacion, "Tipo inválido (simple, doble o suite)", "Error", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        Huespedes hue = new Huespedes(vistaCrearModificarHabitacion);
+        Habitaciones.agregarHabitacion(ha);
+        vistaCrearModificarHabitacion.getTipo().setText("");
+        vistaCrearModificarHabitacion.getEstado().setText("");
+        vistaCrearModificarHabitacion.getPrecio().setText("");
+        JOptionPane.showMessageDialog(vistaCrearModificarHabitacion, "Habitación creada con éxito", "Creado", JOptionPane.OK_OPTION);
         volverAGestionarHabitaciones();
     }
 }

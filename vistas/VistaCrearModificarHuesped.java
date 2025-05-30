@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class VistaCrearModificarHuesped extends JPanel {
+    private final JTextField huespedId;
     private final JTextField nombres;
     private final JTextField correo;
     private final JTextField direccion;
@@ -20,6 +21,8 @@ public class VistaCrearModificarHuesped extends JPanel {
         Font fuenteCampos = new Font("SansSerif", Font.PLAIN, 14);
         Font fuenteBotones = new Font("SansSerif", Font.BOLD, 14);
 
+        huespedId = new JTextField(20);
+        huespedId.setEditable(false);
         nombres = new JTextField(20);
         correo  = new JTextField(20);
         direccion = new JTextField(20);
@@ -29,6 +32,7 @@ public class VistaCrearModificarHuesped extends JPanel {
         aceptar = new JButton("Aceptar Huesped");
         cancelar = new JButton("Cancelar");
 
+        huespedId.setFont(fuenteCampos);
         nombres.setFont(fuenteCampos);
         correo.setFont(fuenteCampos);
         direccion.setFont(fuenteCampos);
@@ -64,30 +68,37 @@ public class VistaCrearModificarHuesped extends JPanel {
         gbc.gridwidth = 1;
 
         gbc.gridy++;
+        gbc.gridx = 0;
+        add(new JLabel("ID Huésped:"), gbc);
+        gbc.gridx = 1;
+        add(huespedId, gbc);
+
+        gbc.gridy++;
+        gbc.gridx = 0;
         add(new JLabel("Nombres:"), gbc);
         gbc.gridx = 1;
         add(nombres, gbc);
 
-        gbc.gridx = 0;
         gbc.gridy++;
+        gbc.gridx = 0;
         add(new JLabel("Correo electrónico:"), gbc);
         gbc.gridx = 1;
         add(correo, gbc);
 
-        gbc.gridx = 0;
         gbc.gridy++;
+        gbc.gridx = 0;
         add(new JLabel("Dirección:"), gbc);
         gbc.gridx = 1;
         add(direccion, gbc);
 
-        gbc.gridx = 0;
         gbc.gridy++;
+        gbc.gridx = 0;
         add(new JLabel("Teléfono:"), gbc);
         gbc.gridx = 1;
         add(telefono, gbc);
 
-        gbc.gridx = 0;
         gbc.gridy++;
+        gbc.gridx = 0;
         add(new JLabel("Documento de identidad:"), gbc);
         gbc.gridx = 1;
         add(documentoIdentidad, gbc);
@@ -97,8 +108,8 @@ public class VistaCrearModificarHuesped extends JPanel {
         botones.add(aceptar);
         botones.add(cancelar);
 
-        gbc.gridx = 0;
         gbc.gridy++;
+        gbc.gridx = 0;
         gbc.gridwidth = 2;
         gbc.anchor = GridBagConstraints.EAST;
         add(botones, gbc);

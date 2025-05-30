@@ -1,6 +1,8 @@
 package HotelProyectoFinal.modelos;
 
 import HotelProyectoFinal.utilities.MySQLConnection;
+import HotelProyectoFinal.vistas.VistaCrearModificarHuesped;
+import HotelProyectoFinal.vistas.VistaCrearModificarReserva;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -14,6 +16,14 @@ public class Huespedes {
     String documentoIdentidad;
     public Huespedes(int id, String nombre, String correo, String direccion, String telefono, String documentoIdentidad) {
         this.id = id;
+        this.nombre = nombre;
+        this.correo = correo;
+        this.direccion = direccion;
+        this.telefono = telefono;
+        this.documentoIdentidad = documentoIdentidad;
+    }
+    public Huespedes(VistaCrearModificarHuesped vista){
+        this.id = vista.getid;
         this.nombre = nombre;
         this.correo = correo;
         this.direccion = direccion;
