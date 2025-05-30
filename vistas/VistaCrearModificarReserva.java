@@ -19,7 +19,7 @@ public class VistaCrearModificarReserva extends JPanel {
         idHuesped    = new JTextField(15);
         fechaEntrada = new JTextField(10);
         fechaSalida  = new JTextField(10);
-        aceptar      = new JButton("Aceptar");
+        aceptar      = new JButton("Aceptar reserva");
         cancelar     = new JButton("Cancelar");
 
         idHuesped.setFont(fuenteCampos);

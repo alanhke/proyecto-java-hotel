@@ -762,7 +762,5 @@ public class ControlBotones implements ActionListener {
         JOptionPane.showMessageDialog(vistaModificarUsuario, "Habitacion actualizada con exito","Modificado",JOptionPane.OK_OPTION);
         volverAGestionarHabitaciones();
     }
-
-
 }
 

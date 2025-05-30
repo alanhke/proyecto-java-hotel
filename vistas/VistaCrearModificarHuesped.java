@@ -26,7 +26,7 @@ public class VistaCrearModificarHuesped extends JPanel {
         telefono  = new JTextField(20);
         documentoIdentidad = new JTextField(20);
 
-        aceptar = new JButton("Aceptar");
+        aceptar = new JButton("Aceptar Huesped");
         cancelar = new JButton("Cancelar");
 
         nombres.setFont(fuenteCampos);
