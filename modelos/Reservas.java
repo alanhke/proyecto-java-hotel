@@ -1,7 +1,10 @@
 package HotelProyectoFinal.modelos;
 
 import HotelProyectoFinal.utilities.MySQLConnection;
+import HotelProyectoFinal.vistas.VistaCrearModificarHuesped;
+import HotelProyectoFinal.vistas.VistaCrearModificarReserva;
 
+import javax.swing.*;
 import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -20,17 +23,33 @@ public class Reservas {
         this.fechaEntrada = fechaEntrada;
         this.fechaSalida = fechaSalida;
     }
-    public Reservas(int id, int idHuesped,String fechaEntrada, String fechaSalida) {
+    public Reservas(int id, int idHuesped,Date fechaEntrada, Date fechaSalida) {
         this.id = id;
         this.huesped = Huespedes.obtenerHuesped(idHuesped);
+        this.fechaEntrada = fechaEntrada;
+        this.fechaSalida = fechaSalida;
+    }
+    public Reservas(int id, int idHuesped, String fechaentrada, String fechasalida) {
+        this.id = id;
+        this.huesped = Huespedes.obtenerHuesped(idHuesped);
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
         try {
-            SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
-            this.fechaEntrada = formato.parse(fechaEntrada);
-            this.fechaSalida = formato.parse(fechaSalida);
-        } catch (ParseException e) {
+            fechaEntrada = formato.parse(fechaentrada);
+            fechaSalida  = formato.parse(fechasalida);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Formato de fecha inválido. Usa dd/MM/yyyy");
             e.printStackTrace();
-            this.fechaEntrada = null;
-            this.fechaSalida = null;
+        }
+    }
+    public Reservas(VistaCrearModificarReserva vistaCrearModificarReserva){
+        id = Integer.parseInt(vistaCrearModificarReserva.getIdHuesped());
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        try {
+            fechaEntrada = formato.parse(vistaCrearModificarReserva.getFechaEntrada());
+            fechaSalida  = formato.parse(vistaCrearModificarReserva.getFechaSalida());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Formato de fecha inválido. Usa dd/MM/yyyy");
+            e.printStackTrace();
         }
     }
 

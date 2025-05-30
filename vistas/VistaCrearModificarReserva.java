@@ -20,7 +20,7 @@ public class VistaCrearModificarReserva extends JPanel {
         fechaEntrada = new JTextField(10);
         fechaSalida  = new JTextField(10);
         aceptar      = new JButton("Aceptar reserva");
-        cancelar     = new JButton("Cancelar");
+        cancelar     = new JButton("Cancelar reserva");
 
         idHuesped.setFont(fuenteCampos);
         fechaEntrada.setFont(fuenteCampos);
@@ -83,12 +83,15 @@ public class VistaCrearModificarReserva extends JPanel {
         add(botones, gbc);
     }
     public String getIdHuesped()         { return idHuesped.getText().trim(); }
+    public JTextField getIdHuespedField()     { return idHuesped; }
     public void   setIdHuesped(String s) { idHuesped.setText(s); }
 
     public String getFechaEntrada()            { return fechaEntrada.getText().trim(); }
+    public JTextField  getFechaEntradaField()     { return fechaEntrada; }
     public void   setFechaEntrada(String fecha){ fechaEntrada.setText(fecha); }
 
     public String getFechaSalida()             { return fechaSalida.getText().trim(); }
+    public JTextField getFechaSalidaField()     { return fechaSalida; }
     public void   setFechaSalida(String fecha) { fechaSalida.setText(fecha); }
 
     public JButton getAceptar()  { return aceptar; }

@@ -29,9 +29,12 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.prefs.Preferences;
 
 public class ControlBotones implements ActionListener {
@@ -59,9 +62,11 @@ public class ControlBotones implements ActionListener {
 
     ArrayList<Huespedes> huespedes;
     HuespedesTableModel huespedesTableModel;
+    Huespedes huespedSeleccionada;
 
     ArrayList<Reservas> reservas;
     ReservasTableModel reservasTableModel;
+    Reservas reservaSeleccionada;
 
     JFrame ventanaInicioSesion;
     JFrame ventanaModificar;
@@ -77,7 +82,7 @@ public class ControlBotones implements ActionListener {
     JFrame ventanCrearModificarReservas;
     JFrame ventanaCrearModificarHuespedes;
 
-    String t;
+    String crearOModificar;
 
     int filaSeleccionada;
     private static final String RUTA_ARCHIVO = "ultimaRuta";
@@ -237,27 +242,43 @@ public class ControlBotones implements ActionListener {
             habitacionesTableModel.clear();
         } else if (textoBotonPresionado.equals("Modificar habitacion")) {
             //filaSeleccionada = vistaGestionarHabitaciones.getTableView().getSelectedRow();
-            t = "Modificar";
+            crearOModificar = "Modificar";
             mostrarVentanaCrearModificarHabitacion();
         } else if (textoBotonPresionado.equals("Eliminar habitacion")) {
             eliminarHabitacion();
         } else if (textoBotonPresionado.equals("Crear habitacion")) {
             filaSeleccionada = vistaGestionarHabitaciones.getTableView().getSelectedRow();
-            t = "Crear";
+            crearOModificar = "Crear";
             mostrarVentanaCrearModificarHabitacion();
         }//Botones vista crear modificar habitacion
         else if (textoBotonPresionado.equals("Aceptar habitación")) {
-            if (t.equalsIgnoreCase("Crear")) {
+            if (crearOModificar.equalsIgnoreCase("Crear")) {
                 guardarHabitacion();
-            } else if (t.equalsIgnoreCase("Modificar")) {
-                modificarHabitacion(habitacionSeleccionada);
+            } else if (crearOModificar.equalsIgnoreCase("Modificar")) {
+                modificarHabitacion();
             }
         } else if (textoBotonPresionado.equals("Cancelar Habitacion")) {
             volverAGestionarHabitaciones();
         }//Botones vista reservas
         else if (textoBotonPresionado.equals("Crear Reserva")) {
+            crearOModificar = "Crear";
             mostrarVentanaCrearModificarReserva();
-        }//botones vista huespedes
+        } else if (textoBotonPresionado.equals("Modificar reservas")) {
+            crearOModificar = "Modificar";
+            mostrarVentanaCrearModificarReserva();
+        } else if (textoBotonPresionado.equals("Eliminar reservas")) {
+
+        }//botones vista crear modificar reservas
+        else if (textoBotonPresionado.equals("Aceptar reserva")) {
+            if (crearOModificar.equalsIgnoreCase("Crear")) {
+                guardarReserva();
+            } else if (crearOModificar.equalsIgnoreCase("Modificar")) {
+                modificarReserva();
+            }
+        } else if (textoBotonPresionado.equals("Cancelar reserva")) {
+            volverAGestionarReservas();
+        }
+        //botones vista huespedes
         else if (textoBotonPresionado.equals("Crear huesped")) {
             mostrarVentanaCrearModificarHuesped();
         }
@@ -494,6 +515,26 @@ public class ControlBotones implements ActionListener {
         ventanaPrincipal.dispose();
         cargarHabitaciones();
     }
+    public void mostrarVentanaCrearModificarHabitacion(){
+        if (crearOModificar.equals("Modificar")){
+            filaSeleccionada = vistaGestionarHabitaciones.getTableView().getSelectedRow();
+
+            if (filaSeleccionada == -1) {
+                JOptionPane.showMessageDialog(vistaGestionarHabitaciones, "Debes seleccionar una habitacion para modificar", "Error", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            habitacionSeleccionada = habitaciones.get(filaSeleccionada);
+            vistaCrearModificarHabitacion.setTipo(habitacionSeleccionada.getTipo());
+            vistaCrearModificarHabitacion.setEstado(habitacionSeleccionada.getEstado());
+            vistaCrearModificarHabitacion.setPrecio(String.valueOf(habitacionSeleccionada.getPrecio()));
+        }
+        ventanaCrearModificarHabitacion.setSize(500,500);
+        ventanaCrearModificarHabitacion.add(vistaCrearModificarHabitacion);
+        ventanaCrearModificarHabitacion.setLocationRelativeTo(null);
+        ventanaCrearModificarHabitacion.setVisible(true);
+        ventanaActual.dispose();
+        ventanaActual = ventanaCrearModificarHabitacion;
+    }
 
     public void mostrarVentanaReservas(){
         ventanaGestionarReservas.add(vistaGestionarReservas);
@@ -506,6 +547,18 @@ public class ControlBotones implements ActionListener {
         cargarReservas();
     }
     public void mostrarVentanaCrearModificarReserva(){
+        if (crearOModificar.equals("Modificar")){
+            filaSeleccionada = vistaGestionarReservas.getTableView().getSelectedRow();
+
+            if (filaSeleccionada == -1) {
+                JOptionPane.showMessageDialog(vistaGestionarReservas, "Debes seleccionar una reserva para modificar", "Error", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            reservaSeleccionada = reservas.get(filaSeleccionada);
+            vistaCrearModificarReserva.setIdHuesped(String.valueOf(reservaSeleccionada.getHuesped().getId()));
+            vistaCrearModificarReserva.setFechaEntrada(String.valueOf(reservaSeleccionada.getFechaEntrada()));
+            vistaCrearModificarReserva.setFechaSalida(String.valueOf(reservaSeleccionada.getFechaSalida()));
+        }
         ventanCrearModificarReservas.add(vistaCrearModificarReserva);
         ventanCrearModificarReservas.setSize(1000,500);
         //ventanaGestionarHuespedes.pack();
@@ -555,27 +608,6 @@ public class ControlBotones implements ActionListener {
         ventanaPrincipal.dispose();
     }
 
-    public void mostrarVentanaCrearModificarHabitacion(){
-        if (t.equals("Modificar")){
-            filaSeleccionada = vistaGestionarHabitaciones.getTableView().getSelectedRow();
-
-            if (filaSeleccionada == -1) {
-                JOptionPane.showMessageDialog(vistaGestionarHabitaciones, "Debes seleccionar una habitacion para eliminar", "Error", JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-            habitacionSeleccionada = habitaciones.get(filaSeleccionada);
-            vistaCrearModificarHabitacion.setTipo(habitacionSeleccionada.getTipo());
-            vistaCrearModificarHabitacion.setEstado(habitacionSeleccionada.getEstado());
-            vistaCrearModificarHabitacion.setPrecio(String.valueOf(habitacionSeleccionada.getPrecio()));
-        }
-        ventanaCrearModificarHabitacion.setSize(500,500);
-        ventanaCrearModificarHabitacion.add(vistaCrearModificarHabitacion);
-        ventanaCrearModificarHabitacion.setLocationRelativeTo(null);
-        ventanaCrearModificarHabitacion.setVisible(true);
-        ventanaActual.dispose();
-        ventanaActual = ventanaCrearModificarHabitacion;
-    }
-
     public void volverAPaginaPrincipal(){
         ventanaPrincipal.setVisible(true);
         ventanaActual.dispose();
@@ -583,6 +615,17 @@ public class ControlBotones implements ActionListener {
     public void volverAGestionarHabitaciones(){
         ventanaGestionarHabitaciones.setVisible(true);
         ventanaActual.dispose();
+        cargarHabitaciones();
+    }
+    public void volverAGestionarReservas(){
+        ventanaGestionarReservas.setVisible(true);
+        ventanaActual.dispose();
+        cargarReservas();
+    }
+    public void volverAGestionarHuespedes(){
+        ventanaGestionarHuespedes.setVisible(true);
+        ventanaActual.dispose();
+        cargarHuespedes();
     }
 
     public void aplicarPersonalizacion() {
@@ -734,8 +777,7 @@ public class ControlBotones implements ActionListener {
         JOptionPane.showMessageDialog(vistaCrearModificarHabitacion, "Habitación creada con éxito", "Creado", JOptionPane.OK_OPTION);
         volverAGestionarHabitaciones();
     }
-
-    public void modificarHabitacion(Habitaciones hSeleccionada){
+    public void modificarHabitacion(){
         String tipo = vistaCrearModificarHabitacion.getTipoText();
         String estado = vistaCrearModificarHabitacion.getEstadoText();
         String precio = vistaCrearModificarHabitacion.getPrecioText();
@@ -754,12 +796,101 @@ public class ControlBotones implements ActionListener {
             JOptionPane.showMessageDialog(vistaCrearModificarHabitacion, "Tipo inválido (simple, doble o suite)", "Error", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        Habitaciones ha = new Habitaciones(vistaCrearModificarHabitacion,hSeleccionada.getNumero());
-        Habitaciones.actualizarHabitaciones(ha,hSeleccionada.getNumero());
+        Habitaciones ha = new Habitaciones(vistaCrearModificarHabitacion,habitacionSeleccionada.getNumero());
+        Habitaciones.actualizarHabitaciones(ha,habitacionSeleccionada.getNumero());
         vistaCrearModificarHabitacion.getTipo().setText("");
         vistaCrearModificarHabitacion.getEstado().setText("");
         vistaCrearModificarHabitacion.getPrecio().setText("");
         JOptionPane.showMessageDialog(vistaModificarUsuario, "Habitacion actualizada con exito","Modificado",JOptionPane.OK_OPTION);
+        volverAGestionarHabitaciones();
+    }
+
+    public void guardarReserva() {
+        String huespedStr = vistaCrearModificarReserva.getIdHuesped();
+        String fechaEntradaStr = vistaCrearModificarReserva.getFechaEntrada();
+        String fechaSalidaStr = vistaCrearModificarReserva.getFechaSalida();
+
+        if (huespedStr.isEmpty() || fechaEntradaStr.isEmpty() || fechaSalidaStr.isEmpty()) {
+            JOptionPane.showMessageDialog(vistaCrearModificarReserva, "Todos los campos deben estar llenos", "Error", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        int huespedId;
+        try {
+            huespedId = Integer.parseInt(huespedStr);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(vistaCrearModificarReserva, "El ID del huésped debe ser un número entero", "Error", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
+        formatoFecha.setLenient(false);
+
+        Date fechaEntrada, fechaSalida;
+
+        try {
+            fechaEntrada = formatoFecha.parse(fechaEntradaStr);
+            fechaSalida = formatoFecha.parse(fechaSalidaStr);
+        } catch (ParseException e) {
+            JOptionPane.showMessageDialog(vistaCrearModificarReserva, "Formato de fecha inválido. Usa dd/MM/yyyy", "Error", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        if (!fechaEntrada.before(fechaSalida)) {
+            JOptionPane.showMessageDialog(vistaCrearModificarReserva, "La fecha de entrada debe ser anterior a la fecha de salida", "Error", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        Reservas re = new Reservas(vistaCrearModificarReserva);
+        Reservas.agregarReserva(re);
+        vistaCrearModificarReserva.getIdHuespedField().setText("");
+        vistaCrearModificarReserva.getFechaEntradaField().setText("");
+        vistaCrearModificarReserva.getFechaSalidaField().setText("");
+        JOptionPane.showMessageDialog(vistaCrearModificarReserva, "Reserva creada con éxito", "Creado", JOptionPane.OK_OPTION);
+        volverAGestionarHabitaciones();
+    }
+    public void modificarReserva(){
+        String huespedStr = vistaCrearModificarReserva.getIdHuesped();
+        String fechaEntradaStr = vistaCrearModificarReserva.getFechaEntrada();
+        String fechaSalidaStr = vistaCrearModificarReserva.getFechaSalida();
+
+        if (huespedStr.isEmpty() || fechaEntradaStr.isEmpty() || fechaSalidaStr.isEmpty()) {
+            JOptionPane.showMessageDialog(vistaCrearModificarReserva, "Todos los campos deben estar llenos", "Error", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        int huespedId;
+        try {
+            huespedId = Integer.parseInt(huespedStr);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(vistaCrearModificarReserva, "El ID del huésped debe ser un número entero", "Error", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
+        formatoFecha.setLenient(false);
+
+        Date fechaEntrada, fechaSalida;
+
+        try {
+            fechaEntrada = formatoFecha.parse(fechaEntradaStr);
+            fechaSalida = formatoFecha.parse(fechaSalidaStr);
+        } catch (ParseException e) {
+            JOptionPane.showMessageDialog(vistaCrearModificarReserva, "Formato de fecha inválido. Usa dd/MM/yyyy", "Error", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        if (!fechaEntrada.before(fechaSalida)) {
+            JOptionPane.showMessageDialog(vistaCrearModificarReserva, "La fecha de entrada debe ser anterior a la fecha de salida", "Error", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        Reservas re = new Reservas(vistaCrearModificarReserva);
+        Reservas.actualizarReserva(re, huespedId);
+        vistaCrearModificarReserva.getIdHuespedField().setText("");
+        vistaCrearModificarReserva.getFechaEntradaField().setText("");
+        vistaCrearModificarReserva.getFechaSalidaField().setText("");
+        JOptionPane.showMessageDialog(vistaCrearModificarReserva, "Reserva modificada con éxito", "Creado", JOptionPane.OK_OPTION);
         volverAGestionarHabitaciones();
     }
 }
