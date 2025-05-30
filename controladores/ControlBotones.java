@@ -236,12 +236,8 @@ public class ControlBotones implements ActionListener {
         else if (textoBotonPresionado.equals("Limpiar Tabla Habitaciones")) {
             habitacionesTableModel.clear();
         } else if (textoBotonPresionado.equals("Modificar habitacion")) {
-            filaSeleccionada = vistaGestionarHabitaciones.getTableView().getSelectedRow();
+            //filaSeleccionada = vistaGestionarHabitaciones.getTableView().getSelectedRow();
             t = "Modificar";
-            habitacionSeleccionada = habitaciones.get(filaSeleccionada);
-            vistaCrearModificarHabitacion.setTipo(habitacionSeleccionada.getTipo());
-            vistaCrearModificarHabitacion.setEstado(habitacionSeleccionada.getEstado());
-            vistaCrearModificarHabitacion.setPrecio(String.valueOf(habitacionSeleccionada.getPrecio()));
             mostrarVentanaCrearModificarHabitacion();
         } else if (textoBotonPresionado.equals("Eliminar habitacion")) {
             eliminarHabitacion();
@@ -250,7 +246,7 @@ public class ControlBotones implements ActionListener {
             t = "Crear";
             mostrarVentanaCrearModificarHabitacion();
         }//Botones vista crear modificar habitacion
-        else if (textoBotonPresionado.equals("Aceptar Habitacion")) {
+        else if (textoBotonPresionado.equals("Aceptar habitación")) {
             if (t.equalsIgnoreCase("Crear")) {
                 guardarHabitacion();
             } else if (t.equalsIgnoreCase("Modificar")) {
@@ -567,6 +563,10 @@ public class ControlBotones implements ActionListener {
                 JOptionPane.showMessageDialog(vistaGestionarHabitaciones, "Debes seleccionar una habitacion para eliminar", "Error", JOptionPane.WARNING_MESSAGE);
                 return;
             }
+            habitacionSeleccionada = habitaciones.get(filaSeleccionada);
+            vistaCrearModificarHabitacion.setTipo(habitacionSeleccionada.getTipo());
+            vistaCrearModificarHabitacion.setEstado(habitacionSeleccionada.getEstado());
+            vistaCrearModificarHabitacion.setPrecio(String.valueOf(habitacionSeleccionada.getPrecio()));
         }
         ventanaCrearModificarHabitacion.setSize(500,500);
         ventanaCrearModificarHabitacion.add(vistaCrearModificarHabitacion);
