@@ -12,57 +12,78 @@ public class VistaCrearModificarHabitacion extends JPanel {
     private JButton cancelar;
 
     public VistaCrearModificarHabitacion() {
+        setBackground(new Color(245, 245, 245));
+        setBorder(BorderFactory.createEmptyBorder(20, 30, 20, 30));
+
+        Font fuenteCampos = new Font("SansSerif", Font.PLAIN, 14);
+        Font fuenteBotones = new Font("SansSerif", Font.BOLD, 14);
+
+        tipo    = new JTextField(15);
+        estado  = new JTextField(15);
+        precio  = new JTextField(15);
+        aceptar = new JButton("Aceptar habitación");
+        cancelar = new JButton("Cancelar Habitacion");
+
+        tipo.setFont(fuenteCampos);
+        estado.setFont(fuenteCampos);
+        precio.setFont(fuenteCampos);
+        aceptar.setFont(fuenteBotones);
+        cancelar.setFont(fuenteBotones);
+
+        aceptar.setBackground(new Color(33, 150, 243));
+        aceptar.setForeground(Color.WHITE);
+        cancelar.setBackground(new Color(224, 224, 224));
+
+        construirDisenio();
+    }
+
+    private void construirDisenio() {
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 10, 10);
-        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets  = new Insets(8, 10, 8, 10);
+        gbc.anchor  = GridBagConstraints.WEST;
+        gbc.fill    = GridBagConstraints.HORIZONTAL;
 
-        JLabel tipoLabel = new JLabel("Tipo:");
+        JLabel titulo = new JLabel("Crear / Modificar Habitación");
+        titulo.setFont(new Font("SansSerif", Font.BOLD, 18));
+        titulo.setForeground(new Color(33, 150, 243));
+
+        gbc.gridwidth = 2;
         gbc.gridx = 0;
         gbc.gridy = 0;
-        add(tipoLabel, gbc);
+        add(titulo, gbc);
 
-        tipo = new JTextField();
+        gbc.gridwidth = 1;
+        gbc.gridy++;
+        add(new JLabel("Tipo:"), gbc);
+
         gbc.gridx = 1;
-        gbc.gridy = 0;
-        gbc.weightx = 1.0;
         add(tipo, gbc);
 
-        JLabel estadoLabel = new JLabel("Estado:");
         gbc.gridx = 0;
-        gbc.gridy = 1;
-        gbc.weightx = 0;
-        add(estadoLabel, gbc);
+        gbc.gridy++;
+        add(new JLabel("Estado:"), gbc);
 
-        estado = new JTextField();
         gbc.gridx = 1;
-        gbc.gridy = 1;
-        gbc.weightx = 1.0;
         add(estado, gbc);
 
-        JLabel precioLabel = new JLabel("Precio:");
         gbc.gridx = 0;
-        gbc.gridy = 2;
-        gbc.weightx = 0;
-        add(precioLabel, gbc);
+        gbc.gridy++;
+        add(new JLabel("Precio:"), gbc);
 
-        precio = new JTextField();
         gbc.gridx = 1;
-        gbc.gridy = 2;
-        gbc.weightx = 1.0;
         add(precio, gbc);
 
-        aceptar = new JButton("Aceptar Habitacion");
-        gbc.gridx = 0;
-        gbc.gridy = 3;
-        gbc.weightx = 0.5;
-        add(aceptar, gbc);
+        JPanel botones = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 0));
+        botones.setOpaque(false);
+        botones.add(aceptar);
+        botones.add(cancelar);
 
-        cancelar = new JButton("Cancelar Habitacion");
-        gbc.gridx = 1;
-        gbc.gridy = 3;
-        gbc.weightx = 0.5;
-        add(cancelar, gbc);
+        gbc.gridx = 0;
+        gbc.gridy++;
+        gbc.gridwidth = 2;
+        gbc.anchor = GridBagConstraints.EAST;
+        add(botones, gbc);
     }
 
     public JTextField getTipo() {
