@@ -3,11 +3,14 @@ package HotelProyectoFinal.vistas;
 import HotelProyectoFinal.controladores.ControlBotones;
 import HotelProyectoFinal.modelos.DatosUsuario;
 import HotelProyectoFinal.utilities.Estilo;
+import com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatMaterialLighterIJTheme;
 
 import javax.swing.*;
 
 public class Main {
     public static void main(String[] args) {
+        FlatMaterialLighterIJTheme.setup();
+
         VistaRegistrarse vistaRegistrarse = new VistaRegistrarse();
         DatosUsuario modeloDatos = new DatosUsuario(vistaRegistrarse);
         VistaVerUsuarios vistaVerUsuarios = new VistaVerUsuarios();

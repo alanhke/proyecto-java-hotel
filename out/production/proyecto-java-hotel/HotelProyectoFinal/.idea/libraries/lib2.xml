@@ -1,0 +1,16 @@
+<component name="libraryTable">
+  <library name="lib2">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/commons-8.0.4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/io-8.0.4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/slf4j-api-2.0.13.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/kernel-8.0.4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jfreechart-1.5.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jcommon-1.0.24.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/layout-8.0.4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/slf4j-simple-2.0.13.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
