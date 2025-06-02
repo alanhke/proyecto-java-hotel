@@ -23,12 +23,12 @@ public class Huespedes {
         this.documentoIdentidad = documentoIdentidad;
     }
     public Huespedes(VistaCrearModificarHuesped vista){
-        this.id = vista.getid;
-        this.nombre = nombre;
-        this.correo = correo;
-        this.direccion = direccion;
-        this.telefono = telefono;
-        this.documentoIdentidad = documentoIdentidad;
+        this.id = 0;
+        this.nombre = vista.getNombres();
+        this.correo = vista.getCorreo();
+        this.direccion = vista.getDireccion();
+        this.telefono = vista.getTelefono();
+        this.documentoIdentidad = vista.getDocumentoIdentidad();
     }
 
     public int getId() {
@@ -120,18 +120,17 @@ public class Huespedes {
         return eliminados > 0;
     }
 
-    public static boolean agregarHuesped(DatosUsuario usuario){
+    public static boolean agregarHuesped(Huespedes huesped){
         String query = "INSERT INTO registro_huespedes " + "(nombres, correo, direccion, telefono, documentoIdentidad) " + "VALUES(?, ?, ?, ?, ?)";
         int creados = 0;
         try (Connection conexion = MySQLConnection.connect();
              PreparedStatement pst = conexion.prepareStatement(query);
         ){
-            pst.setString(1, usuario.getNombre());
-            pst.setString(2, usuario.getApellido());
-            pst.setString(3, usuario.getNombreUsuario());
-            pst.setString(4,usuario.getContrasena());
-            pst.setString(5,usuario.getGenero1());
-            pst.setString(6,usuario.getTipo());
+            pst.setString(1, huesped.getNombre());
+            pst.setString(2, huesped.getCorreo());
+            pst.setString(3, huesped.getDireccion());
+            pst.setString(4,huesped.getTelefono());
+            pst.setString(5,huesped.getDocumentoIdentidad());
             creados = pst.executeUpdate();
         }catch (SQLException e) {
             e.printStackTrace();
@@ -139,18 +138,18 @@ public class Huespedes {
         return creados > 0;
     }
 
-    public static boolean actualizarHuesped(DatosUsuario usuario, int id){
+    public static boolean actualizarHuesped(Huespedes huesped, int id){
         String query = "UPDATE registro_huespedes SET nombres = ?, correo = ?, direccion = ?, telefono = ?, documentoIdentidad = ? WHERE idhuespedes = " + id;
         int actualizados = 0;
         try (
                 Connection conexion = MySQLConnection.connect();
                 PreparedStatement pst = conexion.prepareStatement(query);
         ){
-            pst.setString(1, usuario.getNombre());
-            pst.setString(2, usuario.getApellido());
-            pst.setString(3, usuario.getNombreUsuario());
-            pst.setString(4,usuario.getContrasena());
-            pst.setString(5,usuario.getGenero1());
+            pst.setString(1, huesped.getNombre());
+            pst.setString(2, huesped.getCorreo());
+            pst.setString(3, huesped.getDireccion());
+            pst.setString(4,huesped.getTelefono());
+            pst.setString(5,huesped.getDocumentoIdentidad());
             actualizados = pst.executeUpdate();
         }catch (SQLException e) {
             e.printStackTrace();
@@ -160,18 +159,25 @@ public class Huespedes {
 
     public static Huespedes obtenerHuesped(int id) {
         Huespedes huespedBuscado = null;
-        String consulta = "Select * from registro_huespedes WHERE idhuespedes = " + id;
+        String consulta = "SELECT * FROM registro_huespedes WHERE idhuespedes = " + id;
 
         try (Connection con = MySQLConnection.connect();
-             Statement st = (Statement)con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_READ_ONLY);
-             ResultSet rs = st.executeQuery(consulta);
-        ){
-            huespedBuscado = new Huespedes(rs.getInt(1),rs.getString("nombres"), rs.getString("correo"), rs.getString("direccion"),rs.getString("telefono"),rs.getString("documentoIdentidad"));
+             Statement st = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+             ResultSet rs = st.executeQuery(consulta)) {
+
+            if (rs.next()) {
+                huespedBuscado = new Huespedes(
+                        rs.getInt(1),
+                        rs.getString("nombres"),
+                        rs.getString("correo"),
+                        rs.getString("direccion"),
+                        rs.getString("telefono"),
+                        rs.getString("documentoIdentidad")
+                );
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
-
         return huespedBuscado;
     }
 

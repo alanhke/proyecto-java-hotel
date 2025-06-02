@@ -95,6 +95,16 @@ public class VistaCrearModificarReserva extends JPanel {
         add(botones, gbc);
     }
 
+    public String getReservaId() {
+        return reservaId.getText();
+    }
+    public JTextField getReservaIdJTextField() {
+        return reservaId;
+    }
+    public void setReservaIdJtextField(String id) {
+        reservaId.setText(id);
+    }
+
     public String getIdHuesped()         { return idHuesped.getText().trim(); }
     public JTextField getIdHuespedField()     { return idHuesped; }
     public void   setIdHuesped(String s) { idHuesped.setText(s); }

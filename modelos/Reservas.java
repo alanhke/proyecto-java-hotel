@@ -1,54 +1,51 @@
 package HotelProyectoFinal.modelos;
 
 import HotelProyectoFinal.utilities.MySQLConnection;
-import HotelProyectoFinal.vistas.VistaCrearModificarHuesped;
 import HotelProyectoFinal.vistas.VistaCrearModificarReserva;
 
 import javax.swing.*;
 import java.sql.*;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
 public class Reservas {
     int id;
-    Huespedes huesped;
+    int huespedId;
     Date fechaEntrada;
     Date fechaSalida;
 
-    public Reservas(int id, Huespedes huesped,Date fechaEntrada, Date fechaSalida) {
+    public Reservas(int id, int huespedid,Date fechaEntrada, Date fechaSalida) {
         this.id = id;
-        this.huesped = huesped;
-        this.fechaEntrada = fechaEntrada;
-        this.fechaSalida = fechaSalida;
-    }
-    public Reservas(int id, int idHuesped,Date fechaEntrada, Date fechaSalida) {
-        this.id = id;
-        this.huesped = Huespedes.obtenerHuesped(idHuesped);
+        this.huespedId = huespedid;
         this.fechaEntrada = fechaEntrada;
         this.fechaSalida = fechaSalida;
     }
     public Reservas(int id, int idHuesped, String fechaentrada, String fechasalida) {
         this.id = id;
-        this.huesped = Huespedes.obtenerHuesped(idHuesped);
-        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        this.huespedId = idHuesped;
+        SimpleDateFormat formato = new SimpleDateFormat("yyyy/MM/dd");
         try {
             fechaEntrada = formato.parse(fechaentrada);
             fechaSalida  = formato.parse(fechasalida);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Formato de fecha inválido. Usa dd/MM/yyyy");
+            JOptionPane.showMessageDialog(null, "Formato de fecha inválido. Usa yyyy/MM/dd");
             e.printStackTrace();
         }
     }
     public Reservas(VistaCrearModificarReserva vistaCrearModificarReserva){
-        id = Integer.parseInt(vistaCrearModificarReserva.getIdHuesped());
-        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        //id = Integer.parseInt(vistaCrearModificarReserva.getReservaId());
+        try{
+            huespedId = Integer.parseInt(vistaCrearModificarReserva.getIdHuesped());
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        SimpleDateFormat formato = new SimpleDateFormat("yyyy/MM/dd");
         try {
             fechaEntrada = formato.parse(vistaCrearModificarReserva.getFechaEntrada());
             fechaSalida  = formato.parse(vistaCrearModificarReserva.getFechaSalida());
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Formato de fecha inválido. Usa dd/MM/yyyy");
+            JOptionPane.showMessageDialog(null, "Formato de fecha inválido. Usa yyyy/MM/dd");
             e.printStackTrace();
         }
     }
@@ -61,12 +58,12 @@ public class Reservas {
         this.id = id;
     }
 
-    public Huespedes getHuesped() {
-        return huesped;
+    public int getHuespedId() {
+        return huespedId;
     }
 
-    public void setHuesped(Huespedes huesped) {
-        this.huesped = huesped;
+    public void setHuespedId(int huesped) {
+        this.huespedId = huesped;
     }
 
     public Date getFechaEntrada() {
@@ -86,27 +83,28 @@ public class Reservas {
     }
     @Override
     public String toString() {
-        return "Id: "+ id + "\nHuesped: " + huesped.toString() + "\nFecha entrada: " + fechaEntrada  + "\nfecha salida: " + fechaSalida + "\n";
+        return "Id: "+ id + "\nHuesped id: " + huespedId + "\nFecha entrada: " + fechaEntrada  + "\nfecha salida: " + fechaSalida + "\n";
     }
 
     public static ArrayList<Reservas> obtenerReservas() {
         ArrayList<Reservas> reservas = new ArrayList<>();
-        //Statement st = null;
-        //ResultSet rs = null;
-        String consulta = "Select * from registro_reservas";
-
+        String consulta = "SELECT * FROM registro_reservas";
+        SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy/MM/dd");
         try (Connection con = MySQLConnection.connect();
-             Statement st = (Statement)con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_READ_ONLY);
-             ResultSet rs = st.executeQuery(consulta);
-        ){
+             Statement st = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+             ResultSet rs = st.executeQuery(consulta)) {
             while (rs.next()) {
-                reservas.add(new Reservas(rs.getInt(1),rs.getInt("idHuesped"), rs.getString("fechaEntrada"), rs.getString("fechaSalida")));
+                int id = rs.getInt(1);
+                int idHuesped = rs.getInt("idHuesped");
+                Date fechaEntrada = rs.getDate("fechaEntrada");
+                Date fechaSalida = rs.getDate("fechaSalida");
+                String fechaEntradaFormateada = formatoFecha.format(fechaEntrada);
+                String fechaSalidaFormateada = formatoFecha.format(fechaSalida);
+                reservas.add(new Reservas(id, idHuesped, fechaEntradaFormateada, fechaSalidaFormateada));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
-
         return reservas;
     }
 
@@ -131,7 +129,7 @@ public class Reservas {
         try (Connection conexion = MySQLConnection.connect();
              PreparedStatement pst = conexion.prepareStatement(query);
         ){
-            pst.setInt(1, reserva.getHuesped().getId());
+            pst.setInt(1, reserva.getHuespedId());
             pst.setDate(2, new java.sql.Date(reserva.getFechaEntrada().getTime()));
             pst.setDate(3, new java.sql.Date(reserva.getFechaSalida().getTime()));
             creados = pst.executeUpdate();
@@ -148,7 +146,7 @@ public class Reservas {
                 Connection conexion = MySQLConnection.connect();
                 PreparedStatement pst = conexion.prepareStatement(query);
         ){
-            pst.setInt(1, reserva.getHuesped().getId());
+            pst.setInt(1, reserva.getHuespedId());
             pst.setDate(2, new java.sql.Date(reserva.getFechaEntrada().getTime()));
             pst.setDate(3, new java.sql.Date(reserva.getFechaSalida().getTime()));
             actualizados = pst.executeUpdate();

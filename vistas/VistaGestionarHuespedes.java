@@ -20,7 +20,7 @@ public class VistaGestionarHuespedes extends JPanel {
     JScrollPane scrollPane;
     public VistaGestionarHuespedes() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        String[] datos = {"Nombre", "Correo", "Direccion", "Telefono", "Documento de identidad"};
+        String[] datos = {"Id","Nombre", "Correo", "Direccion", "Telefono", "Documento de identidad"};
         limpiar = new JButton("Limpiar Tabla Huespedes");
         modificar = new JButton("Modificar huespedes");
         eliminar = new JButton("Eliminar huespedes");

@@ -2,6 +2,7 @@ package HotelProyectoFinal.modelos;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -30,13 +31,11 @@ public class ReservasTableModel extends AbstractTableModel {
         if (columnIndex == 0){
             return Integer.class;
         } else if (columnIndex == 1) {
-            return Huespedes.class;
-        } else if (columnIndex == 2) {
-            return String.class;
-        } else if (columnIndex == 3) {
+            return Integer.class;
+        } else if (columnIndex == 2 || columnIndex == 3) {
             return String.class;
         }
-        return null;
+        return Object.class;
     }
 
     @Override
@@ -58,7 +57,7 @@ public class ReservasTableModel extends AbstractTableModel {
                     reserva.setId(Integer.parseInt(value.toString()));
                     break;
                 case 1:
-                    reserva.setHuesped((Huespedes) value);
+                    reserva.setHuespedId(Integer.parseInt(value.toString()));
                     break;
                 case 2:
                     reserva.setFechaEntrada((Date) value);
@@ -75,22 +74,21 @@ public class ReservasTableModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-
         Reservas reserva = reservas.get(rowIndex);
-
+        SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy/MM/dd");
         switch(columnIndex) {
             case 0:
                 return reserva.getId();
             case 1:
-                return reserva.getHuesped();
+                return reserva.getHuespedId();
             case 2:
-                return reserva.getFechaEntrada();
+                return formatoFecha.format(reserva.getFechaEntrada());
             case 3:
-                return reserva.getFechaSalida();
+                return formatoFecha.format(reserva.getFechaSalida());
         }
-
         return null;
     }
+
 
     public void addRow(Reservas reserva) {
         reservas.add(reserva);

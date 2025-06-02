@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class HuespedesTableModel extends AbstractTableModel {
     private ArrayList<Huespedes> huespedes = new ArrayList<Huespedes>();
     private String nombresColumnas[] =
-            {"Nombre", "Correo", "Direccion", "Telefono", "Documento de identidad"};
+            {"Id","Nombre", "Correo", "Direccion", "Telefono", "Documento de identidad"};
 
     @Override
     public int getRowCount() {
@@ -27,14 +27,16 @@ public class HuespedesTableModel extends AbstractTableModel {
     @Override
     public Class<?> getColumnClass(int columnIndex){
         if (columnIndex == 0){
-            return String.class;
-        } else if (columnIndex == 1) {
+            return Integer.class;
+        } else if (columnIndex == 1){
             return String.class;
         } else if (columnIndex == 2) {
             return String.class;
         } else if (columnIndex == 3) {
             return String.class;
-        }else if (columnIndex == 4) {
+        } else if (columnIndex == 4) {
+            return String.class;
+        }else if (columnIndex == 5) {
             return String.class;
         }
         return null;
@@ -56,18 +58,20 @@ public class HuespedesTableModel extends AbstractTableModel {
         try {
             switch(columnIndex) {
                 case 0:
+                    huesped.setId(Integer.parseInt(value.toString()));
+                case 1:
                     huesped.setNombre((String) value);
                     break;
-                case 1:
+                case 2:
                     huesped.setCorreo(value.toString());
                     break;
-                case 2:
+                case 3:
                     huesped.setDireccion((String) value);
                     break;
-                case 3:
+                case 4:
                     huesped.setTelefono((String) value);
                     break;
-                case 4:
+                case 5:
                     huesped.setDocumentoIdentidad((String) value);
             }
             fireTableCellUpdated(rowIndex, columnIndex);
@@ -83,14 +87,16 @@ public class HuespedesTableModel extends AbstractTableModel {
 
         switch(columnIndex) {
             case 0:
-                return huesped.getNombre();
+                return huesped.getId();
             case 1:
-                return huesped.getCorreo();
+                return huesped.getNombre();
             case 2:
-                return huesped.getDireccion();
+                return huesped.getCorreo();
             case 3:
-                return huesped.getTelefono();
+                return huesped.getDireccion();
             case 4:
+                return huesped.getTelefono();
+            case 5:
                 return huesped.getDocumentoIdentidad();
         }
 

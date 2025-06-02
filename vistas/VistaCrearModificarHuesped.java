@@ -30,7 +30,7 @@ public class VistaCrearModificarHuesped extends JPanel {
         documentoIdentidad = new JTextField(20);
 
         aceptar = new JButton("Aceptar Huesped");
-        cancelar = new JButton("Cancelar");
+        cancelar = new JButton("Cancelar Huesped");
 
         huespedId.setFont(fuenteCampos);
         nombres.setFont(fuenteCampos);
@@ -115,19 +115,44 @@ public class VistaCrearModificarHuesped extends JPanel {
         add(botones, gbc);
     }
 
+    public String getHuespedId() {
+        return huespedId.getText();
+    }
+    public JTextField getHuespedIdJTextField() {
+        return huespedId;
+    }
+    public void setHuespedId(String huespedId) {
+        this.huespedId.setText(huespedId);
+    }
+
     public String getNombres() { return nombres.getText().trim(); }
+    public JTextField getNombresJTextField() {
+        return nombres;
+    }
     public void setNombres(String s) { nombres.setText(s); }
 
     public String getCorreo() { return correo.getText().trim(); }
+    public JTextField getCorreoJTextField() {
+        return correo;
+    }
     public void setCorreo(String s) { correo.setText(s); }
 
     public String getDireccion() { return direccion.getText().trim(); }
+    public JTextField getDireccionJTextField() {
+        return direccion;
+    }
     public void setDireccion(String s) { direccion.setText(s); }
 
     public String getTelefono() { return telefono.getText().trim(); }
+    public JTextField getTelefonoJTextField() {
+        return telefono;
+    }
     public void setTelefono(String s) { telefono.setText(s); }
 
     public String getDocumentoIdentidad() { return documentoIdentidad.getText().trim(); }
+    public JTextField getDocumentoIdentidadJTextField() {
+        return documentoIdentidad;
+    }
     public void setDocumentoIdentidad(String s) { documentoIdentidad.setText(s); }
 
     public JButton getAceptar() { return aceptar; }
