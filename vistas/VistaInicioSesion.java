@@ -51,7 +51,7 @@ public class VistaInicioSesion extends JPanel {
         botonIniciar.setFont(new Font("SansSerif", Font.BOLD, 14));
         loginPanel.add(botonIniciar);
 
-        botonRegistrarse = new JButton("Registrarse");
+        botonRegistrarse = new JButton("Dar de alta");
         botonRegistrarse.setBounds(130, 210, 200, 30);
         botonRegistrarse.setBackground(new Color(52, 152, 219)); // Azul suave
         botonRegistrarse.setForeground(Color.WHITE);             // Texto blanco
