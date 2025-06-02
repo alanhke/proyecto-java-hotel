@@ -1,105 +1,68 @@
 package HotelProyectoFinal.vistas;
 
+import HotelProyectoFinal.utilities.RoundedPanel;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class VistaInicioSesion extends JPanel {
-
     private JTextField campoUsuario;
     private JPasswordField campoContrasena;
     private JButton botonIniciar;
     private JButton botonRegistrarse;
 
     public VistaInicioSesion() {
-        initComponentes(); // Ya no usas setTitle, pack, etc.
-    }
+        setLayout(new BorderLayout());
 
-    private void initComponentes() {
-        Color colorLinea = Color.GRAY;
-        Color fondo = Color.WHITE;
+        PanelConFondo background = new PanelConFondo("/hotel.png");
 
-        JPanel panelPrincipal = new JPanel(new BorderLayout());
-        panelPrincipal.setBackground(fondo);
-
-        JPanel panelLogin = new JPanel(null);
-        panelLogin.setBackground(fondo);
-        panelLogin.setPreferredSize(new Dimension(400, 400));
+        RoundedPanel loginPanel = new RoundedPanel(30);
+        loginPanel.setPreferredSize(new Dimension(380, 320));
+        loginPanel.setBackground(new Color(255, 255, 255, 220));
+        loginPanel.setLayout(null);
 
         JLabel etiquetaTitulo = new JLabel("Inicio de Sesión");
         etiquetaTitulo.setFont(new Font("SansSerif", Font.BOLD, 22));
-        etiquetaTitulo.setBounds(50, 30, 250, 30);
-        panelLogin.add(etiquetaTitulo);
+        etiquetaTitulo.setBounds(110, 20, 200, 30);
+        loginPanel.add(etiquetaTitulo);
 
         JLabel etiquetaUsuario = new JLabel("Usuario:");
-        etiquetaUsuario.setBounds(20, 100, 80, 25);
-        panelLogin.add(etiquetaUsuario);
+        etiquetaUsuario.setBounds(40, 80, 80, 25);
+        loginPanel.add(etiquetaUsuario);
 
         campoUsuario = new JTextField();
-        campoUsuario.setBounds(110, 100, 200, 25);
-        panelLogin.add(campoUsuario);
+        campoUsuario.setBounds(130, 80, 200, 25);
+        loginPanel.add(campoUsuario);
 
         JLabel etiquetaContrasena = new JLabel("Contraseña:");
-        etiquetaContrasena.setBounds(20, 140, 80, 25);
-        panelLogin.add(etiquetaContrasena);
+        etiquetaContrasena.setBounds(40, 120, 80, 25);
+        loginPanel.add(etiquetaContrasena);
 
         campoContrasena = new JPasswordField();
-        campoContrasena.setBounds(110, 140, 200, 25);
-        panelLogin.add(campoContrasena);
+        campoContrasena.setBounds(130, 120, 200, 25);
+        loginPanel.add(campoContrasena);
 
         botonIniciar = new JButton("Iniciar Sesión");
-        botonIniciar.setBounds(110, 190, 200, 30);
-        botonIniciar.setBackground(new Color(60, 120, 200));
-        botonIniciar.setForeground(Color.WHITE);
-        botonIniciar.setFocusPainted(false);
-        panelLogin.add(botonIniciar);
-
-        JSeparator linea = new JSeparator(SwingConstants.VERTICAL);
-        linea.setPreferredSize(new Dimension(2, 400));
-        linea.setForeground(colorLinea);
-
-        JPanel panelDerecho = new JPanel(new BorderLayout());
-        panelDerecho.setBackground(fondo);
-        panelDerecho.setPreferredSize(new Dimension(400, 400));
-
-        JLabel textoRegistro = new JLabel("<html><div style='text-align: left;'>¿Aún no eres usuario de nuestro hotel?</div></html>");
-        textoRegistro.setFont(new Font("SansSerif", Font.PLAIN, 16));
-        textoRegistro.setBorder(BorderFactory.createEmptyBorder(20, 40, 10, 40));
-
-        ImageIcon icono = new ImageIcon("img/hotel.png");
-        Image imagenEscalada = icono.getImage().getScaledInstance(320, 180, Image.SCALE_SMOOTH);
-        JLabel etiquetaImagen = new JLabel(new ImageIcon(imagenEscalada));
+        botonIniciar.setBounds(130, 170, 200, 30);
+        botonIniciar.setBackground(new Color(46, 204, 113)); // Verde suave
+        botonIniciar.setForeground(Color.WHITE);             // Texto blanco
+        botonIniciar.setFocusPainted(false);                 // Sin borde de enfoque
+        botonIniciar.setFont(new Font("SansSerif", Font.BOLD, 14));
+        loginPanel.add(botonIniciar);
 
         botonRegistrarse = new JButton("Registrarse");
-        botonRegistrarse.setBackground(new Color(80, 180, 120));
-        botonRegistrarse.setForeground(Color.WHITE);
-        botonRegistrarse.setFocusPainted(false);
-        botonRegistrarse.setPreferredSize(new Dimension(160, 40));
+        botonRegistrarse.setBounds(130, 210, 200, 30);
+        botonRegistrarse.setBackground(new Color(52, 152, 219)); // Azul suave
+        botonRegistrarse.setForeground(Color.WHITE);             // Texto blanco
+        botonRegistrarse.setFocusPainted(false);                 // Sin borde de enfoque
+        botonRegistrarse.setFont(new Font("SansSerif", Font.BOLD, 14));
+        loginPanel.add(botonRegistrarse);
 
-        JPanel contenedorBoton = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
-        contenedorBoton.setBackground(fondo);
-        contenedorBoton.add(botonRegistrarse);
-
-        JPanel panelContenido = new JPanel();
-        panelContenido.setBackground(fondo);
-        panelContenido.setLayout(new BoxLayout(panelContenido, BoxLayout.Y_AXIS));
-        panelContenido.add(textoRegistro);
-        panelContenido.add(Box.createVerticalStrut(20));
-        panelContenido.add(etiquetaImagen);
-        panelContenido.add(Box.createVerticalStrut(20));
-        panelContenido.add(contenedorBoton);
-
-        panelDerecho.add(panelContenido, BorderLayout.CENTER);
-
-        panelPrincipal.add(panelLogin, BorderLayout.WEST);
-        panelPrincipal.add(linea, BorderLayout.CENTER);
-        panelPrincipal.add(panelDerecho, BorderLayout.EAST);
-
-        setLayout(new BorderLayout());
-        add(panelPrincipal, BorderLayout.CENTER);
+        background.add(loginPanel);
+        add(background, BorderLayout.CENTER);
     }
 
-    // Getters
     public String getUsuario() {
         return campoUsuario.getText();
     }
@@ -116,9 +79,30 @@ public class VistaInicioSesion extends JPanel {
         return botonRegistrarse;
     }
 
-    public void setListeners(ActionListener listener) {
+    public void setListeners(java.awt.event.ActionListener listener) {
         botonIniciar.addActionListener(listener);
         botonRegistrarse.addActionListener(listener);
+    }
+}
+
+class PanelConFondo extends JPanel {
+    private Image imagenFondo;
+
+    public PanelConFondo(String rutaImagen) {
+        try {
+            imagenFondo = new ImageIcon(getClass().getResource(rutaImagen)).getImage();
+        } catch (Exception e) {
+            System.err.println("No se encontró la imagen: " + rutaImagen);
+        }
+        setLayout(new GridBagLayout()); // para centrar el panel login
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        if (imagenFondo != null) {
+            g.drawImage(imagenFondo, 0, 0, getWidth(), getHeight(), this);
+        }
     }
 }
 

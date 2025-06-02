@@ -3,11 +3,15 @@ package HotelProyectoFinal.vistas;
 import HotelProyectoFinal.controladores.ControlBotones;
 import HotelProyectoFinal.modelos.DatosUsuario;
 import HotelProyectoFinal.utilities.Estilo;
+import com.formdev.flatlaf.FlatLightLaf;
 
 import javax.swing.*;
 
 public class Main {
     public static void main(String[] args) {
+
+        FlatLightLaf.setup();
+
         VistaRegistrarse vistaRegistrarse = new VistaRegistrarse();
         DatosUsuario modeloDatos = new DatosUsuario(vistaRegistrarse);
         VistaVerUsuarios vistaVerUsuarios = new VistaVerUsuarios();
