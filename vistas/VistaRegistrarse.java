@@ -54,7 +54,7 @@ public class VistaRegistrarse extends JPanel {
         panelIzquierdo.add(lblBienvenido);
 
         try {
-            ImageIcon icon = new ImageIcon(getClass().getResource("/hotel.png"));
+            ImageIcon icon = new ImageIcon(getClass().getResource("/hotelEntrada.png"));
             JLabel lblImagen = new JLabel(icon);
             lblImagen.setAlignmentX(Component.CENTER_ALIGNMENT);
             panelIzquierdo.add(lblImagen);

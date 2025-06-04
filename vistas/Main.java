@@ -36,10 +36,10 @@ public class Main {
         VistaCrearModificarHabitacion vistaCrearModificarHabitacion = new VistaCrearModificarHabitacion();
         VistaCrearModificarReserva vistaCrearModificarReserva = new VistaCrearModificarReserva();
         VistaCrearModificarHuesped vistaCrearModificarHuesped = new VistaCrearModificarHuesped();
-
+        VistaVerPerfil vistaVerPerfil = new VistaVerPerfil();
 
         new ControlBotones(vistaRegistrarse,modeloDatos,vistaVerUsuarios,vistaModificarUsuario, vistaPaginaPrincipal, gestionarHabitaciones,vistaGestionarRes
         , vistaGestionarHuespedes, vistaReportes, VistaPersonalizar, estilo, vistaInicioSesion, vistaCrearModificarHabitacion, vistaCrearModificarReserva,
-                vistaCrearModificarHuesped);
+                vistaCrearModificarHuesped, vistaVerPerfil);
     }
 }

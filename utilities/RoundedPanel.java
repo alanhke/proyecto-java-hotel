@@ -29,5 +29,6 @@ public class RoundedPanel extends JPanel {
 
         // Llama a super.paintComponent solo si querés pintar componentes hijos correctamente
         super.paintComponent(g);
+
     }
 }

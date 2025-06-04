@@ -88,7 +88,7 @@ public class ControlBotones implements ActionListener {
 
     int filaSeleccionada;
     private static final String RUTA_ARCHIVO = "ultimaRuta";
-    public ControlBotones(VistaRegistrarse panel, DatosUsuario datos, VistaVerUsuarios panel2, VistaModificarUsuario panel3, VistaPaginaPrincipal paginaPrincipal, VistaGestionarHabitaciones vistaGestionarHabitaciones1, VistaGestionarReservas vistaGestionarReservas1, VistaGestionarHuespedes vistaGestionarHuespedes1, VistaReportes vistaReportes1, VistaPersonalizar vistaPersonalizar1, Estilo estilo1, VistaInicioSesion vistaInicioSesion1, VistaCrearModificarHabitacion vistaCrearModificarHabitacion1, VistaCrearModificarReserva vistaCrearModificarReserva1, VistaCrearModificarHuesped vistaCrearModificarHuesped1) {
+    public ControlBotones(VistaRegistrarse panel, DatosUsuario datos, VistaVerUsuarios panel2, VistaModificarUsuario panel3, VistaPaginaPrincipal paginaPrincipal, VistaGestionarHabitaciones vistaGestionarHabitaciones1, VistaGestionarReservas vistaGestionarReservas1, VistaGestionarHuespedes vistaGestionarHuespedes1, VistaReportes vistaReportes1, VistaPersonalizar vistaPersonalizar1, Estilo estilo1, VistaInicioSesion vistaInicioSesion1, VistaCrearModificarHabitacion vistaCrearModificarHabitacion1, VistaCrearModificarReserva vistaCrearModificarReserva1, VistaCrearModificarHuesped vistaCrearModificarHuesped1, VistaVerPerfil vistaVerPerfil1) {
         vistaRegistrarse = panel;
         vistaVerUsuarios = panel2;
         vistaModificarUsuario = panel3;
@@ -103,7 +103,7 @@ public class ControlBotones implements ActionListener {
         vistaCrearModificarHabitacion = vistaCrearModificarHabitacion1;
         vistaCrearModificarReserva = vistaCrearModificarReserva1;
         vistaCrearModificarHuesped = vistaCrearModificarHuesped1;
-        vistaVerPerfil = vistaVerPerfil;
+        vistaVerPerfil = vistaVerPerfil1;
 
         table = vistaVerUsuarios.getTable();
         vistaRegistrarse.setListeners(this);
@@ -119,6 +119,7 @@ public class ControlBotones implements ActionListener {
         vistaCrearModificarHabitacion.setListeners(this);
         vistaCrearModificarReserva.setListeners(this);
         vistaCrearModificarHuesped.setListeners(this);
+        vistaVerPerfil.setListeners(this);
 
 
         datosGuardados = new ArrayList<>();
@@ -660,6 +661,7 @@ public class ControlBotones implements ActionListener {
             ventanaVerPerfil.setContentPane(new VistaVerPerfil());
 
         ventanaVerPerfil.setVisible(true);
+        ventanaActual = ventanaVerPerfil;
         ventanaPrincipal.dispose();
     }
 

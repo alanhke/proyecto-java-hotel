@@ -1,134 +1,125 @@
 package HotelProyectoFinal.vistas;
 
+import HotelProyectoFinal.utilities.RoundedPanel;
+
 import javax.swing.*;
 import java.awt.*;
-import com.formdev.flatlaf.FlatLaf;
+import java.awt.event.ActionListener;
 
 public class VistaVerPerfil extends JPanel {
-    private JLabel lblImagenPerfil;
 
-    private JLabel lblNombre;
-    private JLabel lblApellido;
-    private JLabel lblUsuario;
-    private JLabel lblGenero;
-    private JLabel lblRol;
-
-    private JTextField tfNombre;
-    private JTextField tfApellido;
-    private JTextField tfUsuario;
-    private JTextField tfGenero;
-    private JTextField tfRol;
+    private JLabel imagenPerfil;
+    private JLabel lblNombre, lblApellidos, lblUsuario, lblContrasena, lblGenero, lblTipo;
+    private JLabel valorNombre, valorApellidos, valorUsuario, valorContrasena, valorGenero, valorTipo;
+    private JButton botonVolver;
 
     public VistaVerPerfil() {
-        setBackground(UIManager.getColor("Panel.background"));
-        setLayout(new BorderLayout(20, 20));
-        setBorder(BorderFactory.createEmptyBorder(20, 30, 20, 30));
+        setLayout(new BorderLayout());
 
-        // Panel Imagen Perfil a la izquierda
-        JPanel panelImagen = new JPanel();
-        panelImagen.setBackground(UIManager.getColor("Panel.background"));
-        panelImagen.setPreferredSize(new Dimension(180, 220));
-        panelImagen.setLayout(new BorderLayout());
+        PanelConFondo fondo = new PanelConFondo("/hotelNoche.png");
+        fondo.setLayout(new GridBagLayout()); // Para centrar cuadro principal
+        add(fondo, BorderLayout.CENTER);
 
-        lblImagenPerfil = new JLabel();
-        lblImagenPerfil.setHorizontalAlignment(JLabel.CENTER);
-        lblImagenPerfil.setVerticalAlignment(JLabel.CENTER);
+        RoundedPanel panelPrincipal = new RoundedPanel(30);
+        panelPrincipal.setPreferredSize(new Dimension(420, 530));
+        panelPrincipal.setBackground(new Color(255, 255, 255, 230));
+        panelPrincipal.setLayout(new BorderLayout());
+        panelPrincipal.setBorder(BorderFactory.createEmptyBorder(20, 30, 20, 30));
 
-        // Icono por defecto: monito gris (típico icono de info)
-        ImageIcon iconPerfil = (ImageIcon) UIManager.getIcon("OptionPane.informationIcon");
-        lblImagenPerfil.setIcon(iconPerfil);
-        panelImagen.add(lblImagenPerfil, BorderLayout.CENTER);
+        // Imagen usuario arriba
+        imagenPerfil = new JLabel();
+        imagenPerfil.setHorizontalAlignment(SwingConstants.CENTER);
+        imagenPerfil.setPreferredSize(new Dimension(150, 150));
+        ImageIcon iconoUsuario = new ImageIcon(getClass().getResource("/perfil.png"));
+        Image imgEscalada = iconoUsuario.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
+        imagenPerfil.setIcon(new ImageIcon(imgEscalada));
+        imagenPerfil.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
+        panelPrincipal.add(imagenPerfil, BorderLayout.NORTH);
 
-        // Panel Datos a la derecha
-        JPanel panelDatos = new JPanel();
-        panelDatos.setBackground(UIManager.getColor("Panel.background"));
-        panelDatos.setLayout(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 10, 10);
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.anchor = GridBagConstraints.WEST;
+        // Panel datos con GridLayout 6 filas x 2 columnas
+        JPanel panelDatos = new JPanel(new GridLayout(6, 2, 10, 10));
+        panelDatos.setOpaque(false);
 
-        lblNombre = new JLabel("Nombre(s):");
-        lblApellido = new JLabel("Apellido(s):");
-        lblUsuario = new JLabel("Nombre de usuario:");
+        lblNombre = new JLabel("Nombre:");
+        lblApellidos = new JLabel("Apellidos:");
+        lblUsuario = new JLabel("Usuario:");
+        lblContrasena = new JLabel("Contraseña:");
         lblGenero = new JLabel("Género:");
-        lblRol = new JLabel("Rol:");
+        lblTipo = new JLabel("Tipo:");
 
-        Font labelFont = UIManager.getFont("Label.font").deriveFont(Font.BOLD, 14f);
-        lblNombre.setFont(labelFont);
-        lblApellido.setFont(labelFont);
-        lblUsuario.setFont(labelFont);
-        lblGenero.setFont(labelFont);
-        lblRol.setFont(labelFont);
+        valorNombre = new JLabel("");
+        valorApellidos = new JLabel("");
+        valorUsuario = new JLabel("");
+        valorContrasena = new JLabel("");
+        valorGenero = new JLabel("");
+        valorTipo = new JLabel("");
 
-        tfNombre = crearCampoTexto();
-        tfApellido = crearCampoTexto();
-        tfUsuario = crearCampoTexto();
-        tfGenero = crearCampoTexto();
-        tfRol = crearCampoTexto();
+        Font fuenteEtiquetas = new Font("SansSerif", Font.BOLD, 16);
+        Font fuenteValores = new Font("SansSerif", Font.PLAIN, 16);
 
-        // Agregar componentes con GridBagLayout
-        gbc.gridx = 0; gbc.gridy = 0;
-        panelDatos.add(lblNombre, gbc);
-        gbc.gridx = 1;
-        panelDatos.add(tfNombre, gbc);
+        JLabel[] etiquetas = {lblNombre, lblApellidos, lblUsuario, lblContrasena, lblGenero, lblTipo};
+        JLabel[] valores = {valorNombre, valorApellidos, valorUsuario, valorContrasena, valorGenero, valorTipo};
 
-        gbc.gridx = 0; gbc.gridy = 1;
-        panelDatos.add(lblApellido, gbc);
-        gbc.gridx = 1;
-        panelDatos.add(tfApellido, gbc);
+        for (JLabel etiqueta : etiquetas) {
+            etiqueta.setFont(fuenteEtiquetas);
+            etiqueta.setForeground(new Color(50, 50, 50));
+        }
+        for (JLabel valor : valores) {
+            valor.setFont(fuenteValores);
+            valor.setForeground(new Color(80, 80, 80));
+        }
 
-        gbc.gridx = 0; gbc.gridy = 2;
-        panelDatos.add(lblUsuario, gbc);
-        gbc.gridx = 1;
-        panelDatos.add(tfUsuario, gbc);
+        panelDatos.add(lblNombre);
+        panelDatos.add(valorNombre);
+        panelDatos.add(lblApellidos);
+        panelDatos.add(valorApellidos);
+        panelDatos.add(lblUsuario);
+        panelDatos.add(valorUsuario);
+        panelDatos.add(lblContrasena);
+        panelDatos.add(valorContrasena);
+        panelDatos.add(lblGenero);
+        panelDatos.add(valorGenero);
+        panelDatos.add(lblTipo);
+        panelDatos.add(valorTipo);
 
-        gbc.gridx = 0; gbc.gridy = 3;
-        panelDatos.add(lblGenero, gbc);
-        gbc.gridx = 1;
-        panelDatos.add(tfGenero, gbc);
+        panelPrincipal.add(panelDatos, BorderLayout.CENTER);
 
-        gbc.gridx = 0; gbc.gridy = 4;
-        panelDatos.add(lblRol, gbc);
-        gbc.gridx = 1;
-        panelDatos.add(tfRol, gbc);
+        // Botón volver abajo
+        botonVolver = new JButton("🔙 Volver");
+        botonVolver.setPreferredSize(new Dimension(100, 40));
+        botonVolver.setFont(new Font("SansSerif", Font.BOLD, 14));
+        botonVolver.setBackground(new Color(52, 152, 219));
+        botonVolver.setForeground(Color.WHITE);
+        botonVolver.setFocusPainted(false);
+        botonVolver.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        add(panelImagen, BorderLayout.WEST);
-        add(panelDatos, BorderLayout.CENTER);
+        JPanel panelBoton = new JPanel();
+        panelBoton.setOpaque(false);
+        panelBoton.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0));
+        panelBoton.add(botonVolver);
+        panelPrincipal.add(panelBoton, BorderLayout.SOUTH);
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(40, 20, 40, 20);
+        fondo.add(panelPrincipal, gbc);
     }
 
-    private JTextField crearCampoTexto() {
-        JTextField tf = new JTextField(20);
-        tf.setFont(UIManager.getFont("TextField.font"));
-        tf.setEditable(false);
-        tf.setBackground(UIManager.getColor("TextField.background"));
-        tf.setBorder(BorderFactory.createEmptyBorder(6, 8, 6, 8));
-        return tf;
+    public void setDatos(String nombre, String apellidos, String usuario, String contrasena, String genero, String tipo) {
+        valorNombre.setText(nombre);
+        valorApellidos.setText(apellidos);
+        valorUsuario.setText(usuario);
+        valorContrasena.setText(contrasena);
+        valorGenero.setText(genero);
+        valorTipo.setText(tipo);
     }
 
-    // Métodos para llenar los campos con datos
-    public void setNombre(String nombre) {
-        tfNombre.setText(nombre);
+    public JButton getBotonVolver() {
+        return botonVolver;
     }
 
-    public void setApellido(String apellido) {
-        tfApellido.setText(apellido);
-    }
-
-    public void setUsuario(String usuario) {
-        tfUsuario.setText(usuario);
-    }
-
-    public void setGenero(String genero) {
-        tfGenero.setText(genero);
-    }
-
-    public void setRol(String rol) {
-        tfRol.setText(rol);
-    }
-
-    // Método para cambiar imagen de perfil (si quieres usar imagen real)
-    public void setImagenPerfil(ImageIcon icon) {
-        lblImagenPerfil.setIcon(icon);
+    public void setListeners(ActionListener listener) {
+        botonVolver.addActionListener(listener);
     }
 }
+
+
