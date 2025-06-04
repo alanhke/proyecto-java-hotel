@@ -53,8 +53,8 @@ public class VistaPersonalizar extends JPanel {
 
         // Panel botones
         panelBotones = new JPanel();
-        btnAplicar = new JButton("Aplicar Cambios");
-        btnVolver = new JButton("Volver");
+        btnAplicar = new JButton("✔️Aplicar Cambios");
+        btnVolver = new JButton("🔙 Volver");
         panelBotones.add(btnAplicar);
         panelBotones.add(btnVolver);
 

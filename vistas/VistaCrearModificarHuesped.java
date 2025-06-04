@@ -29,8 +29,8 @@ public class VistaCrearModificarHuesped extends JPanel {
         telefono  = new JTextField(20);
         documentoIdentidad = new JTextField(20);
 
-        aceptar = new JButton("Aceptar Huésped");
-        cancelar = new JButton("Cancelar Huésped");
+        aceptar = new JButton("✔️Aceptar Huésped");
+        cancelar = new JButton("❌ Cancelar Huésped");
 
         JTextField[] campos = {huespedId, nombres, correo, direccion, telefono, documentoIdentidad};
         for (JTextField campo : campos) {

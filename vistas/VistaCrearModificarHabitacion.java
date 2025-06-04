@@ -23,8 +23,8 @@ public class VistaCrearModificarHabitacion extends JPanel {
         tipo    = new JTextField(15);
         estado  = new JTextField(15);
         precio  = new JTextField(15);
-        aceptar = new JButton("Aceptar habitación");
-        cancelar = new JButton("Cancelar habitación");
+        aceptar = new JButton("✔️Aceptar habitación");
+        cancelar = new JButton("❌ Cancelar habitación");
 
         tipo.setFont(fuenteCampos);
         estado.setFont(fuenteCampos);

@@ -25,8 +25,8 @@ public class VistaCrearModificarReserva extends JPanel {
         fechaEntrada = crearCampo(fuenteGeneral, true);
         fechaSalida = crearCampo(fuenteGeneral, true);
 
-        aceptar = new JButton("Aceptar reserva");
-        cancelar = new JButton("Cancelar reserva");
+        aceptar = new JButton("✔️Aceptar reserva");
+        cancelar = new JButton("❌ Cancelar reserva");
 
         aceptar.setFont(fuenteBoton);
         cancelar.setFont(fuenteBoton);

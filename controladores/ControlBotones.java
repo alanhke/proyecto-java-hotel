@@ -262,13 +262,13 @@ public class ControlBotones implements ActionListener {
             crearOModificar = "Crear";
             mostrarVentanaCrearModificarHabitacion();
         }//Botones vista crear modificar habitacion
-        else if (textoBotonPresionado.equals("Aceptar habitación")) {
+        else if (textoBotonPresionado.equals("✔️Aceptar habitación")) {
             if (crearOModificar.equalsIgnoreCase("Crear")) {
                 guardarHabitacion();
             } else if (crearOModificar.equalsIgnoreCase("Modificar")) {
                 modificarHabitacion();
             }
-        } else if (textoBotonPresionado.equals("Cancelar habitación")) {
+        } else if (textoBotonPresionado.equals("❌ Cancelar habitación")) {
             volverAGestionarHabitaciones();
         }//Botones vista reservas
         else if (textoBotonPresionado.equals("➕ Crear Reserva")) {
@@ -280,13 +280,13 @@ public class ControlBotones implements ActionListener {
         } else if (textoBotonPresionado.equals("🗑️ Eliminar Reserva")) {
             eliminarReserva();
         }//botones vista crear modificar reservas
-        else if (textoBotonPresionado.equals("Aceptar reserva")) {
+        else if (textoBotonPresionado.equals("✔️Aceptar reserva")) {
             if (crearOModificar.equalsIgnoreCase("Crear")) {
                 guardarReserva();
             } else if (crearOModificar.equalsIgnoreCase("Modificar")) {
                 modificarReserva();
             }
-        } else if (textoBotonPresionado.equals("Cancelar reserva")) {
+        } else if (textoBotonPresionado.equals("❌ Cancelar reserva")) {
             volverAGestionarReservas();
         }
         //botones vista huespedes
@@ -299,13 +299,13 @@ public class ControlBotones implements ActionListener {
         }else if (textoBotonPresionado.equals("🗑️ Eliminar Huésped")) {
             eliminarHuesped();
         }//Botones vista crear modificar huesped
-        else if (textoBotonPresionado.equals("Aceptar Huesped")) {
+        else if (textoBotonPresionado.equals("✔️Aceptar Huésped")) {
             if (crearOModificar.equalsIgnoreCase("Crear")) {
                 guardarHuesped();
             } else if (crearOModificar.equalsIgnoreCase("Modificar")) {
                 modificarHuesped();
             }
-        } else if (textoBotonPresionado.equals("Cancelar Huesped")) {
+        } else if (textoBotonPresionado.equals("❌ Cancelar Huésped")) {
             volverAGestionarHuespedes();
         }
     }
@@ -1099,7 +1099,7 @@ public class ControlBotones implements ActionListener {
             vistaCrearModificarHuesped.getDireccionJTextField().setText("");
             vistaCrearModificarHuesped.getTelefonoJTextField().setText("");
             vistaCrearModificarHuesped.getDocumentoIdentidadJTextField().setText("");
-            volverAGestionarHabitaciones();
+            volverAGestionarHuespedes();
         } else {
             JOptionPane.showMessageDialog(vistaCrearModificarReserva, "Error al modificar el huésped", "Error", JOptionPane.ERROR_MESSAGE);
         }
