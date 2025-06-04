@@ -44,11 +44,11 @@ public class VistaGestionarReservas extends JPanel {
         JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 0));
         panelBotones.setOpaque(false);
 
-        limpiar = crearBoton("Limpiar Tabla", new Color(158, 158, 158), Color.WHITE);
-        crear = crearBoton("Crear Reserva", new Color(76, 175, 80), Color.WHITE);
-        modificar = crearBoton("Modificar", new Color(255, 193, 7), Color.BLACK);
-        eliminar = crearBoton("Eliminar", new Color(244, 67, 54), Color.WHITE);
-        volver = crearBoton("Volver", new Color(224, 224, 224), Color.BLACK);
+        limpiar = crearBoton("🧹 Limpiar tabla reservas", new Color(158, 158, 158), Color.WHITE);
+        crear = crearBoton("➕ Crear Reserva", new Color(76, 175, 80), Color.WHITE);
+        modificar = crearBoton("✏️ Modificar Reserva", new Color(255, 193, 7), Color.BLACK);
+        eliminar = crearBoton("🗑️ Eliminar Reserva", new Color(244, 67, 54), Color.WHITE);
+        volver = crearBoton("🔙 Volver", new Color(224, 224, 224), Color.BLACK);
 
         panelBotones.add(limpiar);
         panelBotones.add(crear);

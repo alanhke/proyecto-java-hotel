@@ -55,7 +55,7 @@ public class VistaReportes extends JPanel {
 
         btnGenerar = crearBoton("Generar Reporte", new Color(52, 152, 219));
         btnExportarPDF = crearBoton("Exportar a PDF", new Color(231, 76, 60));
-        btnVolver = crearBoton("Volver", new Color(149, 165, 166));
+        btnVolver = crearBoton("🔙 Volver", new Color(149, 165, 166));
 
         panelSelector.add(selectorReporte);
         panelSelector.add(btnGenerar);

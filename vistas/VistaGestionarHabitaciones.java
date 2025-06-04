@@ -54,10 +54,10 @@ public class VistaGestionarHabitaciones extends JPanel {
         add(scrollPane, BorderLayout.CENTER);
 
         // ===== Botones =====
-        limpiar = crearBoton("🧹 Limpiar", new Color(96, 125, 139));
-        crear = crearBoton("➕ Crear", new Color(76, 175, 80));
-        modificar = crearBoton("✏️ Modificar", new Color(255, 193, 7));
-        eliminar = crearBoton("🗑️ Eliminar", new Color(244, 67, 54));
+        limpiar = crearBoton("🧹 Limpiar Tabla Habitaciones", new Color(96, 125, 139));
+        crear = crearBoton("➕ Crear Habitacion", new Color(76, 175, 80));
+        modificar = crearBoton("✏️ Modificar Habitacion", new Color(255, 193, 7));
+        eliminar = crearBoton("🗑️ Eliminar Habitacion", new Color(244, 67, 54));
         volver = crearBoton("🔙 Volver", new Color(158, 158, 158));
 
         JPanel panelBotones = new JPanel(new GridBagLayout());

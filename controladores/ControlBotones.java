@@ -233,7 +233,7 @@ public class ControlBotones implements ActionListener {
                 }
                 vistaReportes.exportarGraficaAPDF(rutaPDF);
             }
-        } else if (textoBotonPresionado.equals("Volver")) {
+        } else if (textoBotonPresionado.equals("🔙 Volver")) {
             volverAPaginaPrincipal();
         } else if (textoBotonPresionado.equals("🎨 Personalizar")) {
             mostrarVentanaPersonalizar();
@@ -249,15 +249,15 @@ public class ControlBotones implements ActionListener {
         else if (textoBotonPresionado.equals("Dar de alta")) {
            mostarVentanaRegistarse();
         }
-        else if (textoBotonPresionado.equals("Limpiar Tabla Habitaciones")) {
+        else if (textoBotonPresionado.equals("🧹 Limpiar Tabla Habitaciones")) {
             habitacionesTableModel.clear();
-        } else if (textoBotonPresionado.equals("Modificar habitacion")) {
+        } else if (textoBotonPresionado.equals("✏️ Modificar Habitacion")) {
             //filaSeleccionada = vistaGestionarHabitaciones.getTableView().getSelectedRow();
             crearOModificar = "Modificar";
             mostrarVentanaCrearModificarHabitacion();
-        } else if (textoBotonPresionado.equals("Eliminar habitacion")) {
+        } else if (textoBotonPresionado.equals("🗑️ Eliminar Habitacion")) {
             eliminarHabitacion();
-        } else if (textoBotonPresionado.equals("Crear habitacion")) {
+        } else if (textoBotonPresionado.equals("➕ Crear Habitacion")) {
             filaSeleccionada = vistaGestionarHabitaciones.getTableView().getSelectedRow();
             crearOModificar = "Crear";
             mostrarVentanaCrearModificarHabitacion();
@@ -268,17 +268,17 @@ public class ControlBotones implements ActionListener {
             } else if (crearOModificar.equalsIgnoreCase("Modificar")) {
                 modificarHabitacion();
             }
-        } else if (textoBotonPresionado.equals("Cancelar Habitacion")) {
+        } else if (textoBotonPresionado.equals("Cancelar habitación")) {
             volverAGestionarHabitaciones();
         }//Botones vista reservas
-        else if (textoBotonPresionado.equals("Crear Reserva")) {
+        else if (textoBotonPresionado.equals("➕ Crear Reserva")) {
             crearOModificar = "Crear";
             mostrarVentanaCrearModificarReserva();
-        } else if (textoBotonPresionado.equals("Modificar reservas")) {
+        } else if (textoBotonPresionado.equals("✏️ Modificar Reserva")) {
             crearOModificar = "Modificar";
             mostrarVentanaCrearModificarReserva();
-        } else if (textoBotonPresionado.equals("Eliminar reservas")) {
-
+        } else if (textoBotonPresionado.equals("🗑️ Eliminar Reserva")) {
+            eliminarReserva();
         }//botones vista crear modificar reservas
         else if (textoBotonPresionado.equals("Aceptar reserva")) {
             if (crearOModificar.equalsIgnoreCase("Crear")) {
@@ -290,13 +290,13 @@ public class ControlBotones implements ActionListener {
             volverAGestionarReservas();
         }
         //botones vista huespedes
-        else if (textoBotonPresionado.equals("Crear huesped")) {
+        else if (textoBotonPresionado.equals("➕ Crear Huésped")) {
             crearOModificar = "Crear";
             mostrarVentanaCrearModificarHuesped();
-        }else if (textoBotonPresionado.equals("Modificar huespedes")) {
+        }else if (textoBotonPresionado.equals("✏️ Modificar Huésped")) {
             crearOModificar = "Modificar";
             mostrarVentanaCrearModificarHuesped();
-        }else if (textoBotonPresionado.equals("Eliminar huespedes")) {
+        }else if (textoBotonPresionado.equals("🗑️ Eliminar Huésped")) {
             eliminarHuesped();
         }//Botones vista crear modificar huesped
         else if (textoBotonPresionado.equals("Aceptar Huesped")) {
@@ -558,7 +558,7 @@ public class ControlBotones implements ActionListener {
         ventanaCrearModificarHabitacion.add(vistaCrearModificarHabitacion);
         ventanaCrearModificarHabitacion.setLocationRelativeTo(null);
         ventanaCrearModificarHabitacion.setVisible(true);
-        ventanaActual.dispose();
+        //ventanaActual.dispose();
         ventanaActual = ventanaCrearModificarHabitacion;
     }
 

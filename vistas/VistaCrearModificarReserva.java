@@ -71,8 +71,8 @@ public class VistaCrearModificarReserva extends JPanel {
         gbc.gridwidth = 1;
         agregarCampo(gbc, "ID Reserva:", reservaId, 1);
         agregarCampo(gbc, "ID Huésped:", idHuesped, 2);
-        agregarCampo(gbc, "Fecha de entrada (dd/MM/yyyy):", fechaEntrada, 3);
-        agregarCampo(gbc, "Fecha de salida (dd/MM/yyyy):", fechaSalida, 4);
+        agregarCampo(gbc, "Fecha de entrada (yyyy/MM/dd):", fechaEntrada, 3);
+        agregarCampo(gbc, "Fecha de salida (yyyy/MM/dd):", fechaSalida, 4);
 
         JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.RIGHT, 12, 0));
         panelBotones.setOpaque(false);
