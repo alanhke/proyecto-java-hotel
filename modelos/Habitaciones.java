@@ -91,6 +91,44 @@ public class Habitaciones {
         return habitaciones;
     }
 
+    public static ArrayList<Habitaciones> obtenerHabitacionesFiltradas(Integer numHabitacion, String tipo, String estado, Double precio) {
+        ArrayList<Habitaciones> habitaciones = new ArrayList<>();
+        StringBuilder query = new StringBuilder("SELECT * FROM registro_habitaciones WHERE 1=1");
+        ArrayList<Object> parametros = new ArrayList<>();
+
+        if (numHabitacion != null && numHabitacion != 0) {
+            query.append(" AND numeroHabitaciones = ?");
+            parametros.add(numHabitacion);
+        }
+        if (tipo != null && !tipo.trim().isEmpty()) {
+            query.append(" AND tipo LIKE ?");
+            parametros.add("%" + tipo.trim() + "%");
+        }
+        if (estado != null && !estado.trim().isEmpty()) {
+            query.append(" AND estado LIKE ?");
+            parametros.add("%" + estado.trim() + "%");
+        }
+        if (precio != null && precio != 0) {
+            query.append(" AND precio = ?");
+            parametros.add(precio);
+        }
+        try (Connection con = MySQLConnection.connect();
+             PreparedStatement ps = con.prepareStatement(query.toString())) {
+            for (int i = 0; i < parametros.size(); i++) {
+                ps.setObject(i + 1, parametros.get(i));
+            }
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Habitaciones h = new Habitaciones(rs.getInt("numeroHabitaciones"), rs.getString("tipo"), rs.getString("estado"), rs.getDouble("precio"));
+                    habitaciones.add(h);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return habitaciones;
+    }
+
     public static boolean eliminarHabitacion(int numeroHabitacion){
         String consulta = "Delete from registro_habitaciones where numeroHabitaciones = " + numeroHabitacion;
         int eliminados = 0;
@@ -140,4 +178,6 @@ public class Habitaciones {
         }
         return actualizados > 0;
     }
+
+
 }

@@ -262,7 +262,10 @@ public class ControlBotones implements ActionListener {
             filaSeleccionada = vistaGestionarHabitaciones.getTableView().getSelectedRow();
             crearOModificar = "Crear";
             mostrarVentanaCrearModificarHabitacion();
-        }//Botones vista crear modificar habitacion
+        } else if (textoBotonPresionado.equals("🔎 Buscar")) {
+            buscarHabitacion();
+        }
+        //Botones vista crear modificar habitacion
         else if (textoBotonPresionado.equals("✔️Aceptar habitación")) {
             if (crearOModificar.equalsIgnoreCase("Crear")) {
                 guardarHabitacion();
@@ -911,6 +914,21 @@ public class ControlBotones implements ActionListener {
             return true;
         }
         return false;
+    }
+    public void buscarHabitacion(){
+        int num = vistaGestionarHabitaciones.getNumero();
+        String tipo = vistaGestionarHabitaciones.getTipo();
+        String estado = vistaGestionarHabitaciones.getEstado();
+        double precio = vistaGestionarHabitaciones.getPrecio();
+        habitaciones = Habitaciones.obtenerHabitacionesFiltradas(num, tipo, estado, precio);
+        if (habitaciones.isEmpty()) {
+            JOptionPane.showMessageDialog(vistaGestionarHabitaciones, "No hay habitaciones con los filtros que ingreso.", "Filtros no encontrados", JOptionPane.WARNING_MESSAGE);
+        }else {
+            habitacionesTableModel.clear();
+            for (Habitaciones h : habitaciones) {
+                habitacionesTableModel.addRow(h);
+            }
+        }
     }
 
     public void guardarReserva() {
