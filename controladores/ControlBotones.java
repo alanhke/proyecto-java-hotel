@@ -272,7 +272,9 @@ public class ControlBotones implements ActionListener {
         } else if (textoBotonPresionado.equals("❌ Cancelar habitación")) {
             volverAGestionarHabitaciones();
         }//Botones vista reservas
-        else if (textoBotonPresionado.equals("➕ Crear Reserva")) {
+        else if (textoBotonPresionado.equals("🧹 Limpiar tabla reservas")) {
+            reservasTableModel.clear();
+        } else if (textoBotonPresionado.equals("➕ Crear Reserva")) {
             crearOModificar = "Crear";
             mostrarVentanaCrearModificarReserva();
         } else if (textoBotonPresionado.equals("✏️ Modificar Reserva")) {
@@ -291,7 +293,9 @@ public class ControlBotones implements ActionListener {
             volverAGestionarReservas();
         }
         //botones vista huespedes
-        else if (textoBotonPresionado.equals("➕ Crear Huésped")) {
+        else if (textoBotonPresionado.equals("🧹 Limpiar tabla huéspedes")) {
+            huespedesTableModel.clear();
+        } else if (textoBotonPresionado.equals("➕ Crear Huésped")) {
             crearOModificar = "Crear";
             mostrarVentanaCrearModificarHuesped();
         }else if (textoBotonPresionado.equals("✏️ Modificar Huésped")) {
@@ -585,8 +589,8 @@ public class ControlBotones implements ActionListener {
             SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy/MM/dd");
             vistaCrearModificarReserva.setReservaIdJtextField(String.valueOf(reservaSeleccionada.getId()));
             vistaCrearModificarReserva.setIdHuesped(String.valueOf(reservaSeleccionada.getHuespedId()));
-            vistaCrearModificarReserva.setFechaEntrada(formatoFecha.format(reservaSeleccionada.getFechaEntrada()));
-            vistaCrearModificarReserva.setFechaSalida(formatoFecha.format(reservaSeleccionada.getFechaSalida()));
+            vistaCrearModificarReserva.setFechaEntrada(reservaSeleccionada.getFechaEntrada());
+            vistaCrearModificarReserva.setFechaSalida(reservaSeleccionada.getFechaSalida());
         }
         ventanCrearModificarReservas.add(vistaCrearModificarReserva);
         ventanCrearModificarReservas.setSize(1000,500);
@@ -653,13 +657,10 @@ public class ControlBotones implements ActionListener {
     }
 
     public void mostrarVentanaVerPerfil(){
-
-            ventanaVerPerfil = new JFrame("Perfil del Usuario");
-            ventanaVerPerfil.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            ventanaVerPerfil.setSize(800, 600);
-            ventanaVerPerfil.setLocationRelativeTo(null);
-            ventanaVerPerfil.setContentPane(new VistaVerPerfil());
-
+        ventanaVerPerfil.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        ventanaVerPerfil.setSize(800, 600);
+        ventanaVerPerfil.setLocationRelativeTo(null);
+        ventanaVerPerfil.add(vistaVerPerfil);
         ventanaVerPerfil.setVisible(true);
         ventanaActual = ventanaVerPerfil;
         ventanaPrincipal.dispose();
@@ -730,6 +731,7 @@ public class ControlBotones implements ActionListener {
 
         //Demas ventanas
         ventanaPrincipal = new JFrame("Hotel Proyecto");
+        ventanaVerPerfil = new JFrame("Perfil del Usuario");
         ventanaGestionarHabitaciones = new JFrame("Gestionar Habitaciones");
         ventanaGestionarReservas = new JFrame("Gestionar Reservas");
         ventanaGestionarHuespedes = new JFrame("Gestionar Huespedes");
@@ -957,8 +959,8 @@ public class ControlBotones implements ActionListener {
         Reservas nueva = new Reservas(vistaCrearModificarReserva);
         Reservas.agregarReserva(nueva);
         vistaCrearModificarReserva.getIdHuespedField().setText("");
-        vistaCrearModificarReserva.getFechaEntradaField().setText("");
-        vistaCrearModificarReserva.getFechaSalidaField().setText("");
+        vistaCrearModificarReserva.getFechaEntradaChooser().setDate(null);
+        vistaCrearModificarReserva.getFechaSalidaChooser().setDate(null);
         JOptionPane.showMessageDialog(vistaCrearModificarReserva, "Reserva creada con éxito.", "Reserva guardada", JOptionPane.INFORMATION_MESSAGE);
         volverAGestionarReservas();
     }
@@ -1008,8 +1010,8 @@ public class ControlBotones implements ActionListener {
         Reservas modificada = new Reservas(vistaCrearModificarReserva);
         Reservas.actualizarReserva(modificada, huespedId);
         vistaCrearModificarReserva.getIdHuespedField().setText("");
-        vistaCrearModificarReserva.getFechaEntradaField().setText("");
-        vistaCrearModificarReserva.getFechaSalidaField().setText("");
+        vistaCrearModificarReserva.getFechaEntradaChooser().setDate(null);
+        vistaCrearModificarReserva.getFechaSalidaChooser().setDate(null);
         JOptionPane.showMessageDialog(vistaCrearModificarReserva, "Reserva modificada con éxito.", "Reserva actualizada", JOptionPane.INFORMATION_MESSAGE);
         volverAGestionarReservas();
     }

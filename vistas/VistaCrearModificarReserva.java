@@ -3,12 +3,14 @@ package HotelProyectoFinal.vistas;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.util.Date;
+import com.toedter.calendar.JDateChooser;
 
 public class VistaCrearModificarReserva extends JPanel {
     private final JTextField reservaId;
     private final JTextField idHuesped;
-    private final JTextField fechaEntrada;
-    private final JTextField fechaSalida;
+    private final JDateChooser fechaEntrada;
+    private final JDateChooser fechaSalida;
     private final JButton aceptar;
     private final JButton cancelar;
 
@@ -20,10 +22,11 @@ public class VistaCrearModificarReserva extends JPanel {
         Font fuenteTitulo = new Font("SansSerif", Font.BOLD, 20);
         Font fuenteBoton = new Font("SansSerif", Font.BOLD, 14);
 
-        reservaId = crearCampo(fuenteGeneral, false);
-        idHuesped = crearCampo(fuenteGeneral, true);
-        fechaEntrada = crearCampo(fuenteGeneral, true);
-        fechaSalida = crearCampo(fuenteGeneral, true);
+        reservaId = crearCampoTexto(fuenteGeneral, false);
+        idHuesped = crearCampoTexto(fuenteGeneral, true);
+
+        fechaEntrada = crearDateChooser(fuenteGeneral);
+        fechaSalida = crearDateChooser(fuenteGeneral);
 
         aceptar = new JButton("✔️Aceptar reserva");
         cancelar = new JButton("❌ Cancelar reserva");
@@ -41,7 +44,7 @@ public class VistaCrearModificarReserva extends JPanel {
         construirDisenio(fuenteTitulo);
     }
 
-    private JTextField crearCampo(Font fuente, boolean editable) {
+    private JTextField crearCampoTexto(Font fuente, boolean editable) {
         JTextField campo = new JTextField(20);
         campo.setFont(fuente);
         campo.setEditable(editable);
@@ -50,6 +53,14 @@ public class VistaCrearModificarReserva extends JPanel {
                 BorderFactory.createEmptyBorder(6, 8, 6, 8)
         ));
         return campo;
+    }
+
+    private JDateChooser crearDateChooser(Font fuente) {
+        JDateChooser dateChooser = new JDateChooser();
+        dateChooser.setFont(fuente);
+        dateChooser.setDateFormatString("yyyy/MM/dd");
+        dateChooser.setPreferredSize(new Dimension(200, 28));
+        return dateChooser;
     }
 
     private void construirDisenio(Font fuenteTitulo) {
@@ -71,8 +82,8 @@ public class VistaCrearModificarReserva extends JPanel {
         gbc.gridwidth = 1;
         agregarCampo(gbc, "ID Reserva:", reservaId, 1);
         agregarCampo(gbc, "ID Huésped:", idHuesped, 2);
-        agregarCampo(gbc, "Fecha de entrada (yyyy/MM/dd):", fechaEntrada, 3);
-        agregarCampo(gbc, "Fecha de salida (yyyy/MM/dd):", fechaSalida, 4);
+        agregarCampo(gbc, "Fecha de entrada:", fechaEntrada, 3);
+        agregarCampo(gbc, "Fecha de salida:", fechaSalida, 4);
 
         JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.RIGHT, 12, 0));
         panelBotones.setOpaque(false);
@@ -86,7 +97,7 @@ public class VistaCrearModificarReserva extends JPanel {
         add(panelBotones, gbc);
     }
 
-    private void agregarCampo(GridBagConstraints gbc, String etiqueta, JTextField campo, int fila) {
+    private void agregarCampo(GridBagConstraints gbc, String etiqueta, JComponent campo, int fila) {
         gbc.gridy = fila;
         gbc.gridx = 0;
         add(new JLabel(etiqueta), gbc);
@@ -94,7 +105,7 @@ public class VistaCrearModificarReserva extends JPanel {
         add(campo, gbc);
     }
 
-    // ==== Métodos getters/setters originales ====
+    // ==== Métodos getters/setters actualizados ====
 
     public String getReservaId() {
         return reservaId.getText();
@@ -120,28 +131,44 @@ public class VistaCrearModificarReserva extends JPanel {
         idHuesped.setText(s);
     }
 
-    public String getFechaEntrada() {
-        return fechaEntrada.getText().trim();
+    public Date getFechaEntradaDate() {
+        return fechaEntrada.getDate();
     }
 
-    public JTextField getFechaEntradaField() {
+    public String getFechaEntrada() {
+        Date fecha = fechaEntrada.getDate();
+        if (fecha != null) {
+            return new java.text.SimpleDateFormat("yyyy/MM/dd").format(fecha);
+        }
+        return "";
+    }
+
+    public JDateChooser getFechaEntradaChooser() {
         return fechaEntrada;
     }
 
-    public void setFechaEntrada(String fecha) {
-        fechaEntrada.setText(fecha);
+    public void setFechaEntrada(Date fecha) {
+        fechaEntrada.setDate(fecha);
+    }
+
+    public Date getFechaSalidaDate() {
+        return fechaSalida.getDate();
     }
 
     public String getFechaSalida() {
-        return fechaSalida.getText().trim();
+        Date fecha = fechaSalida.getDate();
+        if (fecha != null) {
+            return new java.text.SimpleDateFormat("yyyy/MM/dd").format(fecha);
+        }
+        return "";
     }
 
-    public JTextField getFechaSalidaField() {
+    public JDateChooser getFechaSalidaChooser() {
         return fechaSalida;
     }
 
-    public void setFechaSalida(String fecha) {
-        fechaSalida.setText(fecha);
+    public void setFechaSalida(Date fecha) {
+        fechaSalida.setDate(fecha);
     }
 
     public JButton getAceptar() {
@@ -157,4 +184,3 @@ public class VistaCrearModificarReserva extends JPanel {
         cancelar.addActionListener(listener);
     }
 }
-
