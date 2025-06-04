@@ -4,37 +4,45 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionListener;
+
 public class VistaModificarUsuario extends JPanel {
-    JTextField tfUserName;
-    JTextField tfName;
-    JTextField tfLastName;
-    JPasswordField tfContra;
-    JPasswordField tfFinalPassword;
-    ButtonGroup bgGender;
-    JButton btnOk;
-    JButton btnCancel;
-    JRadioButton rbGender1;
-    JRadioButton rbGender2;
-    JRadioButton rbGender3;
-    JComboBox<String> Opciones;
+    private final JTextField tfUserName;
+    private final JTextField tfName;
+    private final JTextField tfLastName;
+    private final JPasswordField tfContra;
+    private final JPasswordField tfFinalPassword;
+    private final JRadioButton rbGender1, rbGender2, rbGender3;
+    private final ButtonGroup bgGender;
+    private final JComboBox<String> opciones;
+    private final JButton btnOk, btnCancel;
+
     public VistaModificarUsuario() {
-        setLayout(null);
-        btnOk = new JButton("Aceptar");
-        btnCancel = new JButton("Cancelar");
-        JLabel lblFirstName = new JLabel("Nombre(s): ");
-        JLabel lblLastName = new JLabel("Apellido(s): ");
-        JLabel lblName = new JLabel("Nombre de usuario: ");
-        JLabel lblContra = new JLabel("Contraseña: ");
-        JLabel lblFinalPassword = new JLabel("Confirmar contraseña: ");
+        setLayout(new BorderLayout(15, 15));
+        setBorder(BorderFactory.createEmptyBorder(20, 40, 20, 40));
+        setBackground(new Color(250, 250, 250));
 
-        tfUserName = new JTextField(10);
-        tfName = new JTextField(10);
-        tfLastName = new JTextField(10);
-        tfContra = new JPasswordField(10);
-        tfFinalPassword = new JPasswordField(10);
+        JLabel titulo = new JLabel("Modificar Usuario");
+        titulo.setFont(new Font("SansSerif", Font.BOLD, 22));
+        titulo.setForeground(new Color(33, 150, 243));
+        add(titulo, BorderLayout.NORTH);
 
-        String[] Opcion = {"Personal","Empresa"};
-        Opciones = new JComboBox<String>(Opcion);
+        JPanel formulario = new JPanel(new GridBagLayout());
+        formulario.setOpaque(false);
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(8, 8, 8, 8);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+
+        // Campos
+        tfUserName = new JTextField(15);
+        tfName = new JTextField(15);
+        tfLastName = new JTextField(15);
+        tfContra = new JPasswordField(15);
+        tfFinalPassword = new JPasswordField(15);
+
+        // Género
         rbGender1 = new JRadioButton("Mujer");
         rbGender2 = new JRadioButton("Hombre");
         rbGender3 = new JRadioButton("Otro");
@@ -43,167 +51,121 @@ public class VistaModificarUsuario extends JPanel {
         bgGender.add(rbGender2);
         bgGender.add(rbGender3);
 
-        lblFirstName.setBounds(10, 10, 200, 30);
-        lblLastName.setBounds(10, 40, 200, 30);
-        tfName.setBounds(80, 10, 200, 30);
-        tfLastName.setBounds(80, 40, 200, 30);
-        add(lblFirstName);
-        add(lblLastName);
-        add(tfName);
-        add(tfLastName);
+        // ComboBox
+        opciones = new JComboBox<>(new String[]{"Personal", "Empresa"});
 
-        lblName.setBounds(10,70,200,30);
-        add(lblName);
-        tfUserName.setBounds(135,70,200,30);
-        add(tfUserName);
+        // Agregamos componentes
+        addField(formulario, gbc, 0, "Nombre(s):", tfName);
+        addField(formulario, gbc, 1, "Apellido(s):", tfLastName);
+        addField(formulario, gbc, 2, "Nombre de usuario:", tfUserName);
+        addField(formulario, gbc, 3, "Contraseña:", tfContra);
+        addField(formulario, gbc, 4, "Confirmar contraseña:", tfFinalPassword);
 
-        lblContra.setBounds(10,100,200,30);
-        add(lblContra);
-        tfContra.setBounds(90,100,200,30);
-        add(tfContra);
-        lblFinalPassword.setBounds(10,130,200,30);
-        add(lblFinalPassword);
-        tfFinalPassword.setBounds(150,130,200,30);
-        add(tfFinalPassword);
+        // Género
+        gbc.gridx = 0;
+        gbc.gridy = 5;
+        formulario.add(new JLabel("Género:"), gbc);
+        JPanel panelGenero = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        panelGenero.setOpaque(false);
+        panelGenero.add(rbGender1);
+        panelGenero.add(rbGender2);
+        panelGenero.add(rbGender3);
+        gbc.gridx = 1;
+        formulario.add(panelGenero, gbc);
 
-        rbGender1.setBounds(215,160,200,30);
-        rbGender2.setBounds(215,180,200,30);
-        rbGender3.setBounds(215,200,200,30);
-        add(rbGender1);
-        add(rbGender2);
-        add(rbGender3);
+        // Opción tipo
+        gbc.gridx = 0;
+        gbc.gridy = 6;
+        formulario.add(new JLabel("Tipo:"), gbc);
+        gbc.gridx = 1;
+        formulario.add(opciones, gbc);
 
-        Opciones.setBounds(300,160,200,30);
-        add(Opciones);
+        add(formulario, BorderLayout.CENTER);
 
-        btnOk.setBounds(5,250,100,30);
-        btnOk.setBorder(BorderFactory.createDashedBorder(Color.black,1,5,1,true));
-        add(btnOk);
-        btnCancel.setBounds(110,250,100,30);
-        btnCancel.setBorder(BorderFactory.createDashedBorder(Color.black,1,5,1,true));
-        add(btnCancel);
+        // Botones
+        btnOk = crearBoton("Aceptar", new Color(76, 175, 80), Color.WHITE);
+        btnCancel = crearBoton("Cancelar", new Color(244, 67, 54), Color.WHITE);
+
+        JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        panelBotones.setOpaque(false);
+        panelBotones.add(btnOk);
+        panelBotones.add(btnCancel);
+
+        add(panelBotones, BorderLayout.SOUTH);
     }
+
+    private void addField(JPanel panel, GridBagConstraints gbc, int y, String labelText, JComponent input) {
+        gbc.gridx = 0;
+        gbc.gridy = y;
+        panel.add(new JLabel(labelText), gbc);
+        gbc.gridx = 1;
+        panel.add(input, gbc);
+    }
+
+    private JButton crearBoton(String texto, Color fondo, Color textoColor) {
+        JButton boton = new JButton(texto);
+        boton.setFocusPainted(false);
+        boton.setBackground(fondo);
+        boton.setForeground(textoColor);
+        boton.setFont(new Font("SansSerif", Font.BOLD, 14));
+        boton.setPreferredSize(new Dimension(120, 35));
+        return boton;
+    }
+
+    // Setters y Getters
+
     public void setListeners(ActionListener listener){
         btnOk.addActionListener(listener);
         btnCancel.addActionListener(listener);
     }
 
     public String getBotonPresionado(JButton boton) {
-        if (boton == btnOk) {
-            return "Aceptar";
-        }else if (boton == btnCancel) {
-            return "Cancelar";
-        }
-        return null;
+        return (boton == btnOk) ? "Aceptar" : (boton == btnCancel) ? "Cancelar" : null;
     }
 
-    public String getNombre(){
-        return tfName.getText();
-    }
-    public String getApellido(){
-        return tfLastName.getText();
-    }
-    public String getNombreUsuario(){
-        return tfUserName.getText();
-    }
-    public String getPassword(){
-        return new String(tfContra.getPassword());
-    }
-    public String getFinalPassword(){
-        return tfFinalPassword.getText();
-    }
-    public String getGender(){
-        if (rbGender1.isSelected()){
-            return "Mujer";
-        }else if (rbGender2.isSelected()){
-            return "Hombre";
-        }else if (rbGender3.isSelected()){
-            return "Otro";
-        }
+    public String getNombre() { return tfName.getText(); }
+    public String getApellido() { return tfLastName.getText(); }
+    public String getNombreUsuario() { return tfUserName.getText(); }
+    public String getPassword() { return new String(tfContra.getPassword()); }
+    public String getFinalPassword() { return new String(tfFinalPassword.getPassword()); }
+
+    public String getGender() {
+        if (rbGender1.isSelected()) return "Mujer";
+        if (rbGender2.isSelected()) return "Hombre";
+        if (rbGender3.isSelected()) return "Otro";
         return "";
     }
-    public String getOpcion(){
-        return (String) Opciones.getSelectedItem();
-    }
 
-    public JRadioButton getGender1(){
-        return rbGender1;
-    }
-    public JRadioButton getGender2(){
-        return rbGender2;
-    }
-    public JRadioButton getGender3(){
-        return rbGender3;
-    }
-    public JTextField getTfUserName(){
-        return tfUserName;
-    }
-    public JTextField getTfName(){
-        return tfName;
-    }
-    public JTextField getTfLastName(){
-        return tfLastName;
-    }
-    public JTextField getTfFinalPassword(){
-        return tfFinalPassword;
-    }
-    public JTextField getTfContra(){
-        return tfContra;
+    public String getOpcion() {
+        return (String) opciones.getSelectedItem();
     }
 
     public String getTextVacio(String nombre, String contra, String finalPassword, String firstName, String lastName) {
-        if (nombre.isBlank()){
-            return "Nombre de usuario";
-        }else if(contra.isBlank()){
-            return "Contra";
-        }else if(finalPassword.isBlank()){
-            return "Confirmar contraseña";
-        }else if(firstName.isBlank()){
-            return "Nombres";
-        }else if(lastName.isBlank()){
-            return "Apellidos";
-        } else if (!rbGender1.isSelected() && !rbGender2.isSelected() && !rbGender3.isSelected()) {
-            return "Genero";
-        }
+        if (nombre.isBlank()) return "Nombre de usuario";
+        if (contra.isBlank()) return "Contra";
+        if (finalPassword.isBlank()) return "Confirmar contraseña";
+        if (firstName.isBlank()) return "Nombres";
+        if (lastName.isBlank()) return "Apellidos";
+        if (!rbGender1.isSelected() && !rbGender2.isSelected() && !rbGender3.isSelected()) return "Género";
         return null;
     }
 
-    public void setNombreUsuario(String tfUserName) {
-        this.tfUserName.setText(tfUserName);
-    }
+    public void setNombreUsuario(String nombre) { tfUserName.setText(nombre); }
+    public void setNombre(String nombre) { tfName.setText(nombre); }
+    public void setApellido(String apellido) { tfLastName.setText(apellido); }
+    public void setPassword(String contra) { tfContra.setText(contra); }
+    public void setFinalPassword(String finalContra) { tfFinalPassword.setText(finalContra); }
 
-    public void setNombre(String tfName) {
-        this.tfName.setText(tfName);
-    }
-
-    public void setApellido(String tfLastName) {
-        this.tfLastName.setText(tfLastName);
-    }
-
-    public void setPassword(String tfContra) {
-        this.tfContra.setText(tfContra);
-    }
-
-    public void setFinalPassword(String tfFinalPassword) {
-        this.tfFinalPassword.setText(tfFinalPassword);
-    }
-
-
-    public void setBgGender(String bgGender) {
-        if (bgGender.equals("Mujer")){
-            this.rbGender1.setSelected(true);
-        }else if (bgGender.equals("Hombre")){
-            this.rbGender2.setSelected(true);
-        }else if (bgGender.equals("Otro")){
-            this.rbGender3.setSelected(true);
+    public void setBgGender(String genero) {
+        switch (genero) {
+            case "Mujer" -> rbGender1.setSelected(true);
+            case "Hombre" -> rbGender2.setSelected(true);
+            case "Otro" -> rbGender3.setSelected(true);
         }
     }
 
     public void setOpcion(String opcion) {
-        if (opcion.equals("Personal")){
-            this.Opciones.setSelectedItem("Personal");
-        }else if (opcion.equals("Empresa")){
-            this.Opciones.setSelectedItem("Empresa");
-        }
+        opciones.setSelectedItem(opcion);
     }
 }
+

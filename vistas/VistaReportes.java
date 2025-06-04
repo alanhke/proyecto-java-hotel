@@ -1,22 +1,21 @@
 package HotelProyectoFinal.vistas;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import javax.imageio.ImageIO;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
+import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
-import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.layout.element.Image;
-
-import javax.swing.*;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import javax.imageio.ImageIO;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
 
 public class VistaReportes extends JPanel {
     JComboBox<String> selectorReporte;
@@ -24,65 +23,64 @@ public class VistaReportes extends JPanel {
     JButton btnExportarPDF;
     JButton btnVolver;
     ChartPanel panelGrafica;
-
     JPanel panelGraficaWrapper;
 
     public VistaReportes() {
         setLayout(new BorderLayout());
-        setBackground(new Color(250, 250, 255));
+        setBackground(new Color(245, 247, 250)); // Fondo muy suave
 
-        // ---------- Encabezado ----------
+        // Encabezado
         JPanel panelSuperior = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        panelSuperior.setBackground(new Color(250, 250, 255));
-
+        panelSuperior.setBackground(new Color(245, 247, 250));
         JLabel titulo = new JLabel("Reportes del Hotel");
-        titulo.setFont(new Font("SansSerif", Font.BOLD, 24));
+        titulo.setFont(new Font("SansSerif", Font.BOLD, 28));
+        titulo.setForeground(new Color(45, 62, 80)); // Texto oscuro suave
         panelSuperior.add(titulo);
-
         add(panelSuperior, BorderLayout.NORTH);
 
-        // ---------- Centro (Selector + Gráfica) ----------
-        JPanel panelCentro = new JPanel();
-        panelCentro.setLayout(new BorderLayout(10, 10));
-        panelCentro.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
-        panelCentro.setBackground(new Color(250, 250, 255));
+        // Centro (selector + gráfica)
+        JPanel panelCentro = new JPanel(new BorderLayout(15, 15));
+        panelCentro.setBorder(BorderFactory.createEmptyBorder(20, 30, 20, 30));
+        panelCentro.setBackground(new Color(245, 247, 250));
 
-        // Selector + botón
-        JPanel panelSelector = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        panelSelector.setBackground(new Color(250, 250, 255));
+        // Panel selector con combo y botones
+        JPanel panelSelector = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 10));
+        panelSelector.setBackground(new Color(245, 247, 250));
 
         selectorReporte = new JComboBox<>(new String[]{
                 "Ingresos por Mes",
                 "Ocupación de Habitaciones"
         });
+        selectorReporte.setPreferredSize(new Dimension(200, 30));
 
-        btnGenerar = new JButton("Generar Reporte");
+        btnGenerar = crearBoton("Generar Reporte", new Color(52, 152, 219));
+        btnExportarPDF = crearBoton("Exportar a PDF", new Color(231, 76, 60));
+        btnVolver = crearBoton("Volver", new Color(149, 165, 166));
+
         panelSelector.add(selectorReporte);
         panelSelector.add(btnGenerar);
+        panelSelector.add(btnExportarPDF);
+        panelSelector.add(btnVolver);
 
         panelCentro.add(panelSelector, BorderLayout.NORTH);
 
         // Panel para la gráfica
         panelGraficaWrapper = new JPanel(new BorderLayout());
-        panelGraficaWrapper.setBackground(new Color(250, 250, 255));
+        panelGraficaWrapper.setBackground(new Color(245, 247, 250));
         panelCentro.add(panelGraficaWrapper, BorderLayout.CENTER);
 
         add(panelCentro, BorderLayout.CENTER);
 
-        // ---------- Pie de página (botones de acción) ----------
-        JPanel panelInferior = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 10));
-        panelInferior.setBackground(new Color(250, 250, 255));
-
-        btnExportarPDF = new JButton("Exportar a PDF");
-        btnVolver = new JButton("Volver");
-
-        panelInferior.add(btnExportarPDF);
-        panelInferior.add(btnVolver);
-
-        add(panelInferior, BorderLayout.SOUTH);
-
-        // Gráfica inicial
         mostrarGraficaIngresos();
+    }
+
+    private JButton crearBoton(String texto, Color colorFondo) {
+        JButton boton = new JButton(texto);
+        boton.setBackground(colorFondo);
+        boton.setForeground(Color.WHITE);
+        boton.setFocusPainted(false);
+        boton.setFont(new Font("SansSerif", Font.BOLD, 14));
+        return boton;
     }
 
     public void mostrarGraficaIngresos() {
@@ -124,7 +122,7 @@ public class VistaReportes extends JPanel {
         repaint();
     }
 
-    public void setListeners(java.awt.event.ActionListener listener) {
+    public void setListeners(ActionListener listener) {
         btnGenerar.addActionListener(listener);
         btnExportarPDF.addActionListener(listener);
         btnVolver.addActionListener(listener);
@@ -156,3 +154,6 @@ public class VistaReportes extends JPanel {
         }
     }
 }
+
+
+

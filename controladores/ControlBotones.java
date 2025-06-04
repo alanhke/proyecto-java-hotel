@@ -51,6 +51,7 @@ public class ControlBotones implements ActionListener {
     Estilo estilo;
     VistaCrearModificarReserva vistaCrearModificarReserva;
     VistaCrearModificarHuesped vistaCrearModificarHuesped;
+    VistaVerPerfil vistaVerPerfil;
 
     ArrayList<DatosUsuario> datosGuardados;
     DatosUsuarioTableModel table;
@@ -81,6 +82,7 @@ public class ControlBotones implements ActionListener {
     JFrame ventanaCrearModificarHabitacion;
     JFrame ventanCrearModificarReservas;
     JFrame ventanaCrearModificarHuespedes;
+    JFrame ventanaVerPerfil;
 
     String crearOModificar;
 
@@ -101,6 +103,7 @@ public class ControlBotones implements ActionListener {
         vistaCrearModificarHabitacion = vistaCrearModificarHabitacion1;
         vistaCrearModificarReserva = vistaCrearModificarReserva1;
         vistaCrearModificarHuesped = vistaCrearModificarHuesped1;
+        vistaVerPerfil = vistaVerPerfil;
 
         table = vistaVerUsuarios.getTable();
         vistaRegistrarse.setListeners(this);
@@ -116,6 +119,7 @@ public class ControlBotones implements ActionListener {
         vistaCrearModificarHabitacion.setListeners(this);
         vistaCrearModificarReserva.setListeners(this);
         vistaCrearModificarHuesped.setListeners(this);
+
 
         datosGuardados = new ArrayList<>();
 
@@ -233,6 +237,10 @@ public class ControlBotones implements ActionListener {
             volverAPaginaPrincipal();
         } else if (textoBotonPresionado.equals("🎨 Personalizar")) {
             mostrarVentanaPersonalizar();
+        }else if (textoBotonPresionado.equals("👤 Ver Perfil")) {
+            mostrarVentanaVerPerfil();
+        }else if (textoBotonPresionado.equals("⏻ Cerrar Sesión")) {
+            volverAInicioDeSesion();
         } else if (textoBotonPresionado.equals("Aplicar Cambios")) {
             aplicarPersonalizacion();
         } else if (textoBotonPresionado.equals("Iniciar Sesión")) {
@@ -499,15 +507,15 @@ public class ControlBotones implements ActionListener {
         String lastName = vistaModificarUsuario.getApellido().trim();
         String genero = vistaModificarUsuario.getGender().trim();
         String tipo = vistaModificarUsuario.getOpcion();
-        boolean isGenderSelected = vistaModificarUsuario.getGender1().isSelected() || vistaModificarUsuario.getGender2().isSelected() || vistaModificarUsuario.getGender3().isSelected();
+        boolean isGenderSelected = !vistaRegistrarse.getGender().isEmpty();
         if (!nombre.isEmpty() && !contra.isEmpty() && !finalPassword.isEmpty() && !firstName.isEmpty() && isGenderSelected && contra.equals(finalPassword) && !lastName.isEmpty()) {
-            DatosUsuario rD = new DatosUsuario(vistaModificarUsuario);
-            DatosUsuario.actualizarUsuario(rD, filaSeleccionada+1);
-            vistaModificarUsuario.getTfUserName().setText("");
-            vistaModificarUsuario.getTfContra().setText("");
-            vistaModificarUsuario.getTfFinalPassword().setText("");
-            vistaModificarUsuario.getTfName().setText("");
-            vistaModificarUsuario.getTfLastName().setText("");
+            DatosUsuario rD = new DatosUsuario(vistaRegistrarse);
+            guardarDatos(rD);
+            vistaRegistrarse.getTfUserName().setText("");
+            vistaRegistrarse.getTfContra().setText("");
+            vistaRegistrarse.getTfFinalPassword().setText("");
+            vistaRegistrarse.getTfName().setText("");
+            vistaRegistrarse.getTfLastName().setText("");
             ventanaMostrarDatos.dispose();
             verDatos();
             JOptionPane.showMessageDialog(vistaModificarUsuario, "Usuario actualizado con exito","Modificado",JOptionPane.OK_OPTION);
@@ -643,9 +651,25 @@ public class ControlBotones implements ActionListener {
         ventanaPrincipal.dispose();
     }
 
+    public void mostrarVentanaVerPerfil(){
+
+            ventanaVerPerfil = new JFrame("Perfil del Usuario");
+            ventanaVerPerfil.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            ventanaVerPerfil.setSize(800, 600);
+            ventanaVerPerfil.setLocationRelativeTo(null);
+            ventanaVerPerfil.setContentPane(new VistaVerPerfil());
+
+        ventanaVerPerfil.setVisible(true);
+        ventanaPrincipal.dispose();
+    }
+
     public void volverAPaginaPrincipal(){
         ventanaPrincipal.setVisible(true);
         ventanaActual.dispose();
+    }
+    public void volverAInicioDeSesion(){
+        ventanaPrincipal.dispose();
+        ventanaInicioSesion.setVisible(true);
     }
     public void volverAGestionarHabitaciones(){
         ventanaGestionarHabitaciones.setVisible(true);
@@ -738,6 +762,8 @@ public class ControlBotones implements ActionListener {
         ventanaPrincipal.setLocationRelativeTo(null);
         ventanaPrincipal.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         ventanaPrincipal.setVisible(true);
+        ventanaInicioSesion.dispose();
+
     }
 
     public void mostarVentanaRegistarse(){

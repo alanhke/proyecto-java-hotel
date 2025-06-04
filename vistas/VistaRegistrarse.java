@@ -4,6 +4,22 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionListener;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionListener;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionListener;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionListener;
+
 public class VistaRegistrarse extends JPanel {
     JTextField tfUserName;
     JTextField tfName;
@@ -20,61 +36,74 @@ public class VistaRegistrarse extends JPanel {
     JComboBox<String> Opciones;
 
     public VistaRegistrarse() {
-        setLayout(null);
+        setLayout(new BorderLayout());
         setBackground(new Color(255, 255, 255, 230));
 
-        // Panel de bienvenida (parte derecha)
-        JPanel panelDerecho = new JPanel(null);
-        panelDerecho.setBounds(400, 0, 300, 330);
-        panelDerecho.setBackground(new Color(240, 244, 248)); // azul claro suave
+        // Panel izquierdo (imagen + mensaje)
+        JPanel panelIzquierdo = new JPanel();
+        panelIzquierdo.setLayout(new BoxLayout(panelIzquierdo, BoxLayout.Y_AXIS));
+        panelIzquierdo.setBackground(new Color(240, 244, 248));
+        panelIzquierdo.setPreferredSize(new Dimension(300, 330));
 
-        JLabel lblBienvenido = new JLabel("<html><center>¡Bienvenido!<br>Regístrate para continuar</center></html>");
+        JLabel lblBienvenido = new JLabel("<html><center>¡Bienvenido!<br>Regístrate para continuar</center></html>", JLabel.CENTER);
         lblBienvenido.setFont(new Font("SansSerif", Font.BOLD, 18));
-        lblBienvenido.setForeground(new Color(51, 51, 51)); // texto oscuro
-        lblBienvenido.setBounds(30, 20, 240, 60);
+        lblBienvenido.setForeground(new Color(51, 51, 51));
+        lblBienvenido.setAlignmentX(Component.CENTER_ALIGNMENT);
+        lblBienvenido.setBorder(BorderFactory.createEmptyBorder(20, 10, 20, 10));
+
+        panelIzquierdo.add(lblBienvenido);
 
         try {
             ImageIcon icon = new ImageIcon(getClass().getResource("/hotel.png"));
             JLabel lblImagen = new JLabel(icon);
-            lblImagen.setBounds(50, 100, 200, 200);
-            panelDerecho.add(lblImagen);
+            lblImagen.setAlignmentX(Component.CENTER_ALIGNMENT);
+            panelIzquierdo.add(lblImagen);
         } catch (Exception e) {
             JLabel error = new JLabel("Imagen no encontrada");
-            error.setBounds(50, 150, 200, 30);
-            panelDerecho.add(error);
+            error.setAlignmentX(Component.CENTER_ALIGNMENT);
+            panelIzquierdo.add(error);
         }
 
-        panelDerecho.add(lblBienvenido);
-        add(panelDerecho);
+        // Panel derecho con formulario
+        JPanel panelFormulario = new JPanel(new GridBagLayout());
+        panelFormulario.setBackground(new Color(255, 255, 255, 230));
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5, 10, 5, 10);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        // Labels
-        JLabel lblFirstName = new JLabel("Nombre(s): ");
-        JLabel lblLastName = new JLabel("Apellido(s): ");
-        JLabel lblName = new JLabel("Nombre de usuario: ");
-        JLabel lblContra = new JLabel("Contraseña: ");
-        JLabel lblFinalPassword = new JLabel("Confirmar contraseña: ");
-
-        lblFirstName.setBounds(20, 20, 120, 25);
+        gbc.gridx = 0; gbc.gridy = 0;
+        panelFormulario.add(new JLabel("Nombre(s): "), gbc);
         tfName = new JTextField(10);
-        tfName.setBounds(150, 20, 220, 25);
+        gbc.gridx = 1;
+        panelFormulario.add(tfName, gbc);
 
-        lblLastName.setBounds(20, 55, 120, 25);
+        gbc.gridx = 0; gbc.gridy = 1;
+        panelFormulario.add(new JLabel("Apellido(s): "), gbc);
         tfLastName = new JTextField(10);
-        tfLastName.setBounds(150, 55, 220, 25);
+        gbc.gridx = 1;
+        panelFormulario.add(tfLastName, gbc);
 
-        lblName.setBounds(20, 90, 130, 25);
+        gbc.gridx = 0; gbc.gridy = 2;
+        panelFormulario.add(new JLabel("Nombre de usuario: "), gbc);
         tfUserName = new JTextField(10);
-        tfUserName.setBounds(150, 90, 220, 25);
+        gbc.gridx = 1;
+        panelFormulario.add(tfUserName, gbc);
 
-        lblContra.setBounds(20, 125, 120, 25);
+        gbc.gridx = 0; gbc.gridy = 3;
+        panelFormulario.add(new JLabel("Contraseña: "), gbc);
         tfContra = new JPasswordField(10);
-        tfContra.setBounds(150, 125, 220, 25);
+        gbc.gridx = 1;
+        panelFormulario.add(tfContra, gbc);
 
-        lblFinalPassword.setBounds(20, 160, 150, 25);
+        gbc.gridx = 0; gbc.gridy = 4;
+        panelFormulario.add(new JLabel("Confirmar contraseña: "), gbc);
         tfFinalPassword = new JPasswordField(10);
-        tfFinalPassword.setBounds(170, 160, 200, 25);
+        gbc.gridx = 1;
+        panelFormulario.add(tfFinalPassword, gbc);
 
-        // Género
+        gbc.gridx = 0; gbc.gridy = 5;
+        panelFormulario.add(new JLabel("Género: "), gbc);
+        JPanel panelGenero = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 0));
         rbGender1 = new JRadioButton("Mujer");
         rbGender2 = new JRadioButton("Hombre");
         rbGender3 = new JRadioButton("Otro");
@@ -82,50 +111,48 @@ public class VistaRegistrarse extends JPanel {
         bgGender.add(rbGender1);
         bgGender.add(rbGender2);
         bgGender.add(rbGender3);
+        panelGenero.add(rbGender1);
+        panelGenero.add(rbGender2);
+        panelGenero.add(rbGender3);
+        panelGenero.setOpaque(false);
+        gbc.gridx = 1;
+        panelFormulario.add(panelGenero, gbc);
 
-        rbGender1.setBounds(20, 195, 100, 25);
-        rbGender2.setBounds(120, 195, 100, 25);
-        rbGender3.setBounds(220, 195, 100, 25);
+        gbc.gridx = 0; gbc.gridy = 6;
+        panelFormulario.add(new JLabel("Rol: "), gbc);
+        Opciones = new JComboBox<>(new String[]{"Administrador", "Recepcionista"});
+        gbc.gridx = 1;
+        panelFormulario.add(Opciones, gbc);
 
-        // Rol
-        String[] opciones = {"Administrador", "Recepcionista"};
-        Opciones = new JComboBox<>(opciones);
-        Opciones.setBounds(150, 230, 220, 25);
-
-        // Botones con colores llamativos
+        gbc.gridx = 0; gbc.gridy = 7; gbc.gridwidth = 2;
+        JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 5));
         btnOk = new JButton("Registrarse");
-        btnOk.setBackground(new Color(74, 144, 226)); // azul brillante
+        btnOk.setBackground(new Color(74, 144, 226));
         btnOk.setForeground(Color.WHITE);
-
         btnCancel = new JButton("Limpiar");
-        btnCancel.setBackground(new Color(208, 2, 27)); // rojo claro
+        btnCancel.setBackground(new Color(208, 2, 27));
         btnCancel.setForeground(Color.WHITE);
-
         verGuardados = new JButton("Ver guardados");
         verGuardados.setBackground(new Color(100, 100, 100));
         verGuardados.setForeground(Color.WHITE);
 
-        btnOk.setFont(new Font("SansSerif", Font.BOLD, 14));
-        btnCancel.setFont(new Font("SansSerif", Font.BOLD, 14));
-        verGuardados.setFont(new Font("SansSerif", Font.BOLD, 14));
+        Font fontBoton = new Font("SansSerif", Font.BOLD, 14);
+        btnOk.setFont(fontBoton);
+        btnCancel.setFont(fontBoton);
+        verGuardados.setFont(fontBoton);
 
-        btnOk.setBounds(20, 270, 120, 30);
-        btnCancel.setBounds(150, 270, 120, 30);
-        verGuardados.setBounds(280, 270, 120, 30);
+        panelBotones.setOpaque(false);
+        panelBotones.add(btnOk);
+        panelBotones.add(btnCancel);
+        panelBotones.add(verGuardados);
+        panelFormulario.add(panelBotones, gbc);
 
-        // Agregar componentes
-        add(lblFirstName); add(tfName);
-        add(lblLastName); add(tfLastName);
-        add(lblName); add(tfUserName);
-        add(lblContra); add(tfContra);
-        add(lblFinalPassword); add(tfFinalPassword);
-
-        add(rbGender1); add(rbGender2); add(rbGender3);
-        add(Opciones);
-
-        add(btnOk); add(btnCancel); add(verGuardados);
+        // Añadir al panel principal con inversión
+        add(panelIzquierdo, BorderLayout.WEST);
+        add(panelFormulario, BorderLayout.CENTER);
     }
 
+    // Métodos públicos para acceso externo
     public void setListeners(ActionListener listener) {
         btnOk.addActionListener(listener);
         btnCancel.addActionListener(listener);
@@ -139,53 +166,22 @@ public class VistaRegistrarse extends JPanel {
         return null;
     }
 
-    public JTextField getTfUserName() {
-        return tfUserName;
-    }
-
-    public JPasswordField getTfContra() {
-        return tfContra;
-    }
-
-    public JPasswordField getTfFinalPassword() {
-        return tfFinalPassword;
-    }
-
-    public JTextField getTfName() {
-        return tfName;
-    }
-
-    public JTextField getTfLastName() {
-        return tfLastName;
-    }
-
-    public String getNombre() {
-        return tfName.getText();
-    }
-
-    public String getApellido() {
-        return tfLastName.getText();
-    }
-
-    public String getNombreUsuario() {
-        return tfUserName.getText();
-    }
-
-    public String getPassword() {
-        return new String(tfContra.getPassword());
-    }
-
-    public String getFinalPassword() {
-        return new String(tfFinalPassword.getPassword());
-    }
-
+    public JTextField getTfUserName() { return tfUserName; }
+    public JPasswordField getTfContra() { return tfContra; }
+    public JPasswordField getTfFinalPassword() { return tfFinalPassword; }
+    public JTextField getTfName() { return tfName; }
+    public JTextField getTfLastName() { return tfLastName; }
+    public String getNombre() { return tfName.getText(); }
+    public String getApellido() { return tfLastName.getText(); }
+    public String getNombreUsuario() { return tfUserName.getText(); }
+    public String getPassword() { return new String(tfContra.getPassword()); }
+    public String getFinalPassword() { return new String(tfFinalPassword.getPassword()); }
     public String getGender() {
         if (rbGender1.isSelected()) return "Mujer";
         if (rbGender2.isSelected()) return "Hombre";
         if (rbGender3.isSelected()) return "Otro";
         return "";
     }
-
     public String getOpcion() {
         return (String) Opciones.getSelectedItem();
     }
@@ -200,3 +196,7 @@ public class VistaRegistrarse extends JPanel {
         return null;
     }
 }
+
+
+
+

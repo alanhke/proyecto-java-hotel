@@ -12,40 +12,46 @@ public class VistaCrearModificarHabitacion extends JPanel {
     private JButton cancelar;
 
     public VistaCrearModificarHabitacion() {
-        setBackground(new Color(245, 245, 245));
-        setBorder(BorderFactory.createEmptyBorder(20, 30, 20, 30));
+        setBackground(UIManager.getColor("Panel.background"));
+        setBorder(BorderFactory.createEmptyBorder(30, 40, 30, 40));
+        setLayout(new GridBagLayout());
 
-        Font fuenteCampos = new Font("SansSerif", Font.PLAIN, 14);
-        Font fuenteBotones = new Font("SansSerif", Font.BOLD, 14);
+        Font fuenteCampos = UIManager.getFont("TextField.font").deriveFont(Font.PLAIN, 14f);
+        Font fuenteBotones = UIManager.getFont("Button.font").deriveFont(Font.BOLD, 14f);
+        Font fuenteTitulo = UIManager.getFont("Label.font").deriveFont(Font.BOLD, 20f);
 
         tipo    = new JTextField(15);
         estado  = new JTextField(15);
         precio  = new JTextField(15);
         aceptar = new JButton("Aceptar habitación");
-        cancelar = new JButton("Cancelar Habitacion");
+        cancelar = new JButton("Cancelar habitación");
 
         tipo.setFont(fuenteCampos);
         estado.setFont(fuenteCampos);
         precio.setFont(fuenteCampos);
+
         aceptar.setFont(fuenteBotones);
         cancelar.setFont(fuenteBotones);
 
         aceptar.setBackground(new Color(33, 150, 243));
         aceptar.setForeground(Color.WHITE);
-        cancelar.setBackground(new Color(224, 224, 224));
+        aceptar.setFocusPainted(false);
 
-        construirDisenio();
+        cancelar.setBackground(new Color(240, 240, 240));
+        cancelar.setForeground(Color.DARK_GRAY);
+        cancelar.setFocusPainted(false);
+
+        construirDisenio(fuenteTitulo);
     }
 
-    private void construirDisenio() {
-        setLayout(new GridBagLayout());
+    private void construirDisenio(Font fuenteTitulo) {
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets  = new Insets(8, 10, 8, 10);
-        gbc.anchor  = GridBagConstraints.WEST;
-        gbc.fill    = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(12, 10, 12, 10);
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
 
         JLabel titulo = new JLabel("Crear / Modificar Habitación");
-        titulo.setFont(new Font("SansSerif", Font.BOLD, 18));
+        titulo.setFont(fuenteTitulo);
         titulo.setForeground(new Color(33, 150, 243));
 
         gbc.gridwidth = 2;
@@ -54,35 +60,35 @@ public class VistaCrearModificarHabitacion extends JPanel {
         add(titulo, gbc);
 
         gbc.gridwidth = 1;
-        gbc.gridy++;
-        add(new JLabel("Tipo:"), gbc);
 
+        gbc.gridy++;
+        gbc.gridx = 0;
+        add(new JLabel("Tipo:"), gbc);
         gbc.gridx = 1;
         add(tipo, gbc);
 
-        gbc.gridx = 0;
         gbc.gridy++;
+        gbc.gridx = 0;
         add(new JLabel("Estado:"), gbc);
-
         gbc.gridx = 1;
         add(estado, gbc);
 
-        gbc.gridx = 0;
         gbc.gridy++;
+        gbc.gridx = 0;
         add(new JLabel("Precio:"), gbc);
-
         gbc.gridx = 1;
         add(precio, gbc);
+
+        gbc.gridy++;
+        gbc.gridx = 0;
+        gbc.gridwidth = 2;
+        gbc.anchor = GridBagConstraints.EAST;
 
         JPanel botones = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 0));
         botones.setOpaque(false);
         botones.add(aceptar);
         botones.add(cancelar);
 
-        gbc.gridx = 0;
-        gbc.gridy++;
-        gbc.gridwidth = 2;
-        gbc.anchor = GridBagConstraints.EAST;
         add(botones, gbc);
     }
 
@@ -143,3 +149,4 @@ public class VistaCrearModificarHabitacion extends JPanel {
         cancelar.addActionListener(listener);
     }
 }
+

@@ -16,9 +16,9 @@ public class VistaCrearModificarHuesped extends JPanel {
 
     public VistaCrearModificarHuesped() {
         setBackground(new Color(250, 250, 250));
-        setBorder(BorderFactory.createEmptyBorder(20, 30, 20, 30));
+        setBorder(BorderFactory.createEmptyBorder(30, 40, 30, 40));
 
-        Font fuenteCampos = new Font("SansSerif", Font.PLAIN, 14);
+        Font fuenteCampos = new Font("SansSerif", Font.PLAIN, 15);
         Font fuenteBotones = new Font("SansSerif", Font.BOLD, 14);
 
         huespedId = new JTextField(20);
@@ -29,22 +29,26 @@ public class VistaCrearModificarHuesped extends JPanel {
         telefono  = new JTextField(20);
         documentoIdentidad = new JTextField(20);
 
-        aceptar = new JButton("Aceptar Huesped");
-        cancelar = new JButton("Cancelar Huesped");
+        aceptar = new JButton("Aceptar Huésped");
+        cancelar = new JButton("Cancelar Huésped");
 
-        huespedId.setFont(fuenteCampos);
-        nombres.setFont(fuenteCampos);
-        correo.setFont(fuenteCampos);
-        direccion.setFont(fuenteCampos);
-        telefono.setFont(fuenteCampos);
-        documentoIdentidad.setFont(fuenteCampos);
+        JTextField[] campos = {huespedId, nombres, correo, direccion, telefono, documentoIdentidad};
+        for (JTextField campo : campos) {
+            campo.setFont(fuenteCampos);
+            campo.setBorder(BorderFactory.createCompoundBorder(
+                    campo.getBorder(),
+                    BorderFactory.createEmptyBorder(5, 8, 5, 8)
+            ));
+        }
 
         aceptar.setFont(fuenteBotones);
         cancelar.setFont(fuenteBotones);
 
         aceptar.setBackground(new Color(76, 175, 80));
         aceptar.setForeground(Color.WHITE);
-        cancelar.setBackground(new Color(224, 224, 224));
+        aceptar.setFocusPainted(false);
+        cancelar.setBackground(new Color(240, 240, 240));
+        cancelar.setFocusPainted(false);
 
         construirDisenio();
     }
@@ -52,13 +56,13 @@ public class VistaCrearModificarHuesped extends JPanel {
     private void construirDisenio() {
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(8, 10, 8, 10);
+        gbc.insets = new Insets(10, 12, 10, 12);
         gbc.anchor = GridBagConstraints.WEST;
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
         JLabel titulo = new JLabel("Crear / Modificar Huésped");
-        titulo.setFont(new Font("SansSerif", Font.BOLD, 18));
-        titulo.setForeground(new Color(76, 175, 80));
+        titulo.setFont(new Font("SansSerif", Font.BOLD, 20));
+        titulo.setForeground(new Color(56, 142, 60));
 
         gbc.gridwidth = 2;
         gbc.gridx = 0;
@@ -67,43 +71,14 @@ public class VistaCrearModificarHuesped extends JPanel {
 
         gbc.gridwidth = 1;
 
-        gbc.gridy++;
-        gbc.gridx = 0;
-        add(new JLabel("ID Huésped:"), gbc);
-        gbc.gridx = 1;
-        add(huespedId, gbc);
+        agregarCampo(gbc, "ID Huésped:", huespedId, 1);
+        agregarCampo(gbc, "Nombres:", nombres, 2);
+        agregarCampo(gbc, "Correo electrónico:", correo, 3);
+        agregarCampo(gbc, "Dirección:", direccion, 4);
+        agregarCampo(gbc, "Teléfono:", telefono, 5);
+        agregarCampo(gbc, "Documento de identidad:", documentoIdentidad, 6);
 
-        gbc.gridy++;
-        gbc.gridx = 0;
-        add(new JLabel("Nombres:"), gbc);
-        gbc.gridx = 1;
-        add(nombres, gbc);
-
-        gbc.gridy++;
-        gbc.gridx = 0;
-        add(new JLabel("Correo electrónico:"), gbc);
-        gbc.gridx = 1;
-        add(correo, gbc);
-
-        gbc.gridy++;
-        gbc.gridx = 0;
-        add(new JLabel("Dirección:"), gbc);
-        gbc.gridx = 1;
-        add(direccion, gbc);
-
-        gbc.gridy++;
-        gbc.gridx = 0;
-        add(new JLabel("Teléfono:"), gbc);
-        gbc.gridx = 1;
-        add(telefono, gbc);
-
-        gbc.gridy++;
-        gbc.gridx = 0;
-        add(new JLabel("Documento de identidad:"), gbc);
-        gbc.gridx = 1;
-        add(documentoIdentidad, gbc);
-
-        JPanel botones = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 0));
+        JPanel botones = new JPanel(new FlowLayout(FlowLayout.RIGHT, 12, 0));
         botones.setOpaque(false);
         botones.add(aceptar);
         botones.add(cancelar);
@@ -113,6 +88,14 @@ public class VistaCrearModificarHuesped extends JPanel {
         gbc.gridwidth = 2;
         gbc.anchor = GridBagConstraints.EAST;
         add(botones, gbc);
+    }
+
+    private void agregarCampo(GridBagConstraints gbc, String label, JTextField field, int row) {
+        gbc.gridy = row;
+        gbc.gridx = 0;
+        add(new JLabel(label), gbc);
+        gbc.gridx = 1;
+        add(field, gbc);
     }
 
     public String getHuespedId() {
@@ -163,3 +146,4 @@ public class VistaCrearModificarHuesped extends JPanel {
         cancelar.addActionListener(listener);
     }
 }
+
