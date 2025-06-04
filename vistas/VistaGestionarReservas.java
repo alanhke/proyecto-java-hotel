@@ -6,11 +6,9 @@ import HotelProyectoFinal.modelos.ReservasTableModel;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.event.ActionListener;
-
-import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class VistaGestionarReservas extends JPanel {
     private final JButton limpiar;
@@ -18,6 +16,8 @@ public class VistaGestionarReservas extends JPanel {
     private final JButton modificar;
     private final JButton eliminar;
     private final JButton volver;
+    private final JButton checkIn;
+    private final JButton checkOut;
     private final JTable table;
     private final ReservasTableModel reservasTableModel;
     private final JScrollPane scrollPane;
@@ -49,11 +49,15 @@ public class VistaGestionarReservas extends JPanel {
         modificar = crearBoton("✏️ Modificar Reserva", new Color(255, 193, 7), Color.BLACK);
         eliminar = crearBoton("🗑️ Eliminar Reserva", new Color(244, 67, 54), Color.WHITE);
         volver = crearBoton("🔙 Volver", new Color(224, 224, 224), Color.BLACK);
+        checkIn = crearBoton("🟢 Check-in", new Color(0, 200, 83), Color.WHITE);
+        checkOut = crearBoton("🔴 Check-out", new Color(213, 0, 0), Color.WHITE);
 
         panelBotones.add(limpiar);
         panelBotones.add(crear);
         panelBotones.add(modificar);
         panelBotones.add(eliminar);
+        panelBotones.add(checkIn);
+        panelBotones.add(checkOut);
         panelBotones.add(volver);
 
         add(panelBotones, BorderLayout.SOUTH);
@@ -65,7 +69,7 @@ public class VistaGestionarReservas extends JPanel {
         boton.setBackground(fondo);
         boton.setForeground(textoColor);
         boton.setFont(new Font("SansSerif", Font.BOLD, 14));
-        boton.setPreferredSize(new Dimension(140, 35));
+        boton.setPreferredSize(new Dimension(160, 35));
         boton.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
         return boton;
     }
@@ -91,6 +95,8 @@ public class VistaGestionarReservas extends JPanel {
         eliminar.addActionListener(listener);
         volver.addActionListener(listener);
         crear.addActionListener(listener);
+        checkIn.addActionListener(listener);
+        checkOut.addActionListener(listener);
     }
 
     public ReservasTableModel getTable() {
@@ -100,5 +106,32 @@ public class VistaGestionarReservas extends JPanel {
     public JTable getTableView() {
         return table;
     }
-}
 
+    public JButton getCheckIn() {
+        return checkIn;
+    }
+
+    public JButton getCheckOut() {
+        return checkOut;
+    }
+
+    public JButton getCrear() {
+        return crear;
+    }
+
+    public JButton getModificar() {
+        return modificar;
+    }
+
+    public JButton getEliminar() {
+        return eliminar;
+    }
+
+    public JButton getVolver() {
+        return volver;
+    }
+
+    public JButton getLimpiar() {
+        return limpiar;
+    }
+}

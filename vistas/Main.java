@@ -9,17 +9,12 @@ import javax.swing.*;
 
 public class Main {
     public static void main(String[] args) {
-
         try {
             UIManager.setLookAndFeel(new FlatLightLaf());
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-
         FlatLightLaf.setup();
-
-        
-
         VistaRegistrarse vistaRegistrarse = new VistaRegistrarse();
         DatosUsuario modeloDatos = new DatosUsuario(vistaRegistrarse);
         VistaVerUsuarios vistaVerUsuarios = new VistaVerUsuarios();

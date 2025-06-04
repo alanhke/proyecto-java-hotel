@@ -242,7 +242,7 @@ public class ControlBotones implements ActionListener {
             mostrarVentanaVerPerfil();
         }else if (textoBotonPresionado.equals("⏻ Cerrar Sesión")) {
             volverAInicioDeSesion();
-        } else if (textoBotonPresionado.equals("Aplicar Cambios")) {
+        } else if (textoBotonPresionado.equals("✔️Aplicar Cambios")) {
             aplicarPersonalizacion();
         } else if (textoBotonPresionado.equals("Iniciar Sesión")) {
             mostrarVentanaPrincipal();
@@ -540,7 +540,7 @@ public class ControlBotones implements ActionListener {
 
     public void mostrarVentanaGestionar(){
         ventanaGestionarHabitaciones.add(vistaGestionarHabitaciones);
-        ventanaGestionarHabitaciones.setSize(1000,500);
+        ventanaGestionarHabitaciones.setExtendedState(JFrame.MAXIMIZED_BOTH);
         //ventanaGestionarHabitaciones.pack();
         ventanaGestionarHabitaciones.setLocationRelativeTo(null);
         //ventanaGestionarHabitaciones.setDefaultCloseOperation();
@@ -562,7 +562,7 @@ public class ControlBotones implements ActionListener {
             vistaCrearModificarHabitacion.setEstado(habitacionSeleccionada.getEstado());
             vistaCrearModificarHabitacion.setPrecio(String.valueOf(habitacionSeleccionada.getPrecio()));
         }
-        ventanaCrearModificarHabitacion.setSize(500,500);
+        ventanaCrearModificarHabitacion.setExtendedState(JFrame.MAXIMIZED_BOTH);
         ventanaCrearModificarHabitacion.add(vistaCrearModificarHabitacion);
         ventanaCrearModificarHabitacion.setLocationRelativeTo(null);
         ventanaCrearModificarHabitacion.setVisible(true);
@@ -572,7 +572,7 @@ public class ControlBotones implements ActionListener {
 
     public void mostrarVentanaReservas(){
         ventanaGestionarReservas.add(vistaGestionarReservas);
-        ventanaGestionarReservas.setSize(1000,500);
+        ventanaGestionarReservas.setExtendedState(JFrame.MAXIMIZED_BOTH);
         //ventanaGestionarReservas.pack();
         ventanaGestionarReservas.setLocationRelativeTo(null);
         ventanaGestionarReservas.setVisible(true);
@@ -596,7 +596,7 @@ public class ControlBotones implements ActionListener {
             vistaCrearModificarReserva.setFechaSalida(reservaSeleccionada.getFechaSalida());
         }
         ventanCrearModificarReservas.add(vistaCrearModificarReserva);
-        ventanCrearModificarReservas.setSize(1000,500);
+        ventanCrearModificarReservas.setExtendedState(JFrame.MAXIMIZED_BOTH);
         //ventanaGestionarHuespedes.pack();
         ventanCrearModificarReservas.setLocationRelativeTo(null);
         ventanCrearModificarReservas.setVisible(true);
@@ -606,7 +606,7 @@ public class ControlBotones implements ActionListener {
 
     public void mostrarVentanaHuespedes(){
         ventanaGestionarHuespedes.add(vistaGestionarHuespedes);
-        ventanaGestionarHuespedes.setSize(1000,500);
+        ventanaGestionarHuespedes.setExtendedState(JFrame.MAXIMIZED_BOTH);
         //ventanaGestionarHuespedes.pack();
         ventanaGestionarHuespedes.setLocationRelativeTo(null);
         ventanaGestionarHuespedes.setVisible(true);
@@ -631,7 +631,7 @@ public class ControlBotones implements ActionListener {
             vistaCrearModificarHuesped.setDocumentoIdentidad(huespedSeleccionado.getDocumentoIdentidad());
         }
         ventanaCrearModificarHuespedes.add(vistaCrearModificarHuesped);
-        ventanaCrearModificarHuespedes.setSize(1000,500);
+        ventanaCrearModificarHuespedes.setExtendedState(JFrame.MAXIMIZED_BOTH);
         //ventanaGestionarHuespedes.pack();
         ventanaCrearModificarHuespedes.setLocationRelativeTo(null);
         ventanaCrearModificarHuespedes.setVisible(true);
@@ -640,7 +640,7 @@ public class ControlBotones implements ActionListener {
     }
 
     public void mostrarVentanaReportes(){
-        ventanaReportes.setSize(1000,500);
+        ventanaReportes.setExtendedState(JFrame.MAXIMIZED_BOTH);
         ventanaReportes.add(vistaReportes);
         //ventanaReportes.pack();
         ventanaReportes.setLocationRelativeTo(null);
@@ -650,7 +650,7 @@ public class ControlBotones implements ActionListener {
     }
 
     public void mostrarVentanaPersonalizar(){
-        ventanaPersonalizar.setSize(1000,500);
+        ventanaPersonalizar.setExtendedState(JFrame.MAXIMIZED_BOTH);
         ventanaPersonalizar.add(vistaPersonalizar);
         //ventanaReportes.pack();
         ventanaPersonalizar.setLocationRelativeTo(null);
@@ -661,7 +661,7 @@ public class ControlBotones implements ActionListener {
 
     public void mostrarVentanaVerPerfil(){
         ventanaVerPerfil.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ventanaVerPerfil.setSize(800, 600);
+        ventanaVerPerfil.setExtendedState(JFrame.MAXIMIZED_BOTH);
         ventanaVerPerfil.setLocationRelativeTo(null);
         ventanaVerPerfil.add(vistaVerPerfil);
         ventanaVerPerfil.setVisible(true);
@@ -670,6 +670,7 @@ public class ControlBotones implements ActionListener {
     }
 
     public void volverAPaginaPrincipal(){
+        ventanaPrincipal.setExtendedState(JFrame.MAXIMIZED_BOTH);
         ventanaPrincipal.setVisible(true);
         ventanaActual.dispose();
     }
@@ -726,7 +727,7 @@ public class ControlBotones implements ActionListener {
     public void cargarVentanas(){
         ventanaInicioSesion = new JFrame("Inicio Sesion");
         ventanaInicioSesion.add(vistaInicioSesion);
-        ventanaInicioSesion.setSize(1000,500);
+        ventanaInicioSesion.setExtendedState(JFrame.MAXIMIZED_BOTH);
         //ventanaPrincipal.pack();
         ventanaInicioSesion.setLocationRelativeTo(null);
         ventanaInicioSesion.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -764,7 +765,7 @@ public class ControlBotones implements ActionListener {
         }
         vistaPaginaPrincipal.cargarGrafica(ocupadas, disponibles, enLimpieza);
         ventanaPrincipal.add(vistaPaginaPrincipal);
-        ventanaPrincipal.setSize(1000,500);
+        ventanaPrincipal.setExtendedState(JFrame.MAXIMIZED_BOTH);
         //ventanaPrincipal.pack();
         ventanaPrincipal.setLocationRelativeTo(null);
         ventanaPrincipal.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -778,7 +779,7 @@ public class ControlBotones implements ActionListener {
         vistaRegistrarse.setListeners(this);
 
         ventanaRegistro = new JFrame("Registro de Usuario");
-        ventanaRegistro.setSize(1000, 500);
+        ventanaRegistro.setExtendedState(JFrame.MAXIMIZED_BOTH);
         ventanaRegistro.setLocationRelativeTo(null);
         ventanaRegistro.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         ventanaRegistro.add(vistaRegistrarse);
