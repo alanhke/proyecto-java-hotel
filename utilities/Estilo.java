@@ -4,7 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Estilo {
-
     public static void aplicarEstiloComponente(Component comp, Font fuente, Color fondo, Color texto) {
         if (comp instanceof JPanel || comp instanceof JFrame) {
             comp.setBackground(fondo);
