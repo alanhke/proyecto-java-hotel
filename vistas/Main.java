@@ -19,7 +19,6 @@ public class Main {
         DatosUsuario modeloDatos = new DatosUsuario(vistaRegistrarse);
         VistaVerUsuarios vistaVerUsuarios = new VistaVerUsuarios();
         VistaModificarUsuario vistaModificarUsuario = new VistaModificarUsuario();
-
         VistaPaginaPrincipal vistaPaginaPrincipal = new VistaPaginaPrincipal();
         VistaGestionarHabitaciones gestionarHabitaciones = new VistaGestionarHabitaciones();
         VistaGestionarReservas vistaGestionarRes = new VistaGestionarReservas();
