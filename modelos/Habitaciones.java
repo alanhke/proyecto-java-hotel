@@ -91,6 +91,23 @@ public class Habitaciones {
         return habitaciones;
     }
 
+    public static Habitaciones obtenerHabitacion(int id) {
+        Habitaciones habitacionBuscada = null;
+        String consulta = "Select * from registro_habitaciones WHERE numeroHabitaciones = " + id;
+
+        try (Connection con = MySQLConnection.connect();
+             Statement st = (Statement)con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_READ_ONLY);
+             ResultSet rs = st.executeQuery(consulta);
+        ){
+            if (rs.next()) {
+                habitacionBuscada = new Habitaciones(rs.getInt(1),rs.getString("tipo"), rs.getString("estado"), rs.getDouble("precio"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return habitacionBuscada;
+    }
+
     public static ArrayList<Habitaciones> obtenerHabitacionesFiltradas(Integer numHabitacion, String tipo, String estado, Double precio) {
         ArrayList<Habitaciones> habitaciones = new ArrayList<>();
         StringBuilder query = new StringBuilder("SELECT * FROM registro_habitaciones WHERE 1=1");
