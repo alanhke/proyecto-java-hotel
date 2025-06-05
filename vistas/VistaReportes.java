@@ -125,14 +125,12 @@ public class VistaReportes extends JPanel {
         tipoReporteActual = "Reservas realizadas";
     }
 
-    public void mostrarGraficaOcupacion(ArrayList<Habitaciones> habitacionesOcupadas, ArrayList<Habitaciones> habitaciones) {
+    public void mostrarGraficaOcupacion(int ocupadas, int disponibles, int enLimpieza, int reservadas) {
         DefaultPieDataset dataset = new DefaultPieDataset();
-        int ocupadas = habitacionesOcupadas.size();
-        int total = habitaciones.size();
-        int libres = total - ocupadas;
-
         dataset.setValue("Ocupadas", ocupadas);
-        dataset.setValue("Libres", libres);
+        dataset.setValue("Disponibles", disponibles);
+        dataset.setValue("EnLimpieza", enLimpieza);
+        dataset.setValue("Reservadas", reservadas);
 
         JFreeChart chart = ChartFactory.createPieChart(
                 "Ocupación de Habitaciones",

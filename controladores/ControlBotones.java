@@ -227,7 +227,24 @@ public class ControlBotones implements ActionListener {
             if (tipo.equals("Reservas realizadas")) {
                 vistaReportes.mostrarTablaReservadasRealizadas(reservasRealizadas);
             } else if (tipo.equals("Ocupación de Habitaciones")) {
-                vistaReportes.mostrarGraficaOcupacion(habitacionesOcupadas, habitaciones);
+                habitaciones = Habitaciones.obtenerHabitaciones();
+                int ocupadas = 0;
+                int disponibles = 0;
+                int enLimpieza = 0;
+                int r = 0;
+                for (Habitaciones h : habitaciones) {
+                    String estado = h.getEstado();
+                    if (estado.equalsIgnoreCase("Ocupada")) {
+                        ocupadas++;
+                    } else if (estado.equalsIgnoreCase("disponible")) {
+                        disponibles++;
+                    } else if (estado.equalsIgnoreCase("enLimpieza")) {
+                        enLimpieza++;
+                    } else if (estado.equalsIgnoreCase("reservada")) {
+                        r++;
+                    }
+                }
+                vistaReportes.mostrarGraficaOcupacion(ocupadas, disponibles, enLimpieza, r);
             }else if (tipo.equals("Huespedes registrados")){
                 huespedes = Huespedes.obtenerHuespedes();
                 vistaReportes.mostrarTablaHuespedesRegistrados(huespedes);
@@ -599,7 +616,7 @@ public class ControlBotones implements ActionListener {
         ventanaGestionarHabitaciones.setExtendedState(JFrame.MAXIMIZED_BOTH);
         //ventanaGestionarHabitaciones.pack();
         ventanaGestionarHabitaciones.setLocationRelativeTo(null);
-        //ventanaGestionarHabitaciones.setDefaultCloseOperation();
+        ventanaGestionarHabitaciones.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         ventanaGestionarHabitaciones.setVisible(true);
         ventanaActual = ventanaGestionarHabitaciones;
         ventanaPrincipal.dispose();
@@ -621,6 +638,7 @@ public class ControlBotones implements ActionListener {
         ventanaCrearModificarHabitacion.setExtendedState(JFrame.MAXIMIZED_BOTH);
         ventanaCrearModificarHabitacion.add(vistaCrearModificarHabitacion);
         ventanaCrearModificarHabitacion.setLocationRelativeTo(null);
+        ventanaCrearModificarHabitacion.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         ventanaCrearModificarHabitacion.setVisible(true);
         //ventanaActual.dispose();
         ventanaActual = ventanaCrearModificarHabitacion;
@@ -631,6 +649,7 @@ public class ControlBotones implements ActionListener {
         ventanaGestionarReservas.setExtendedState(JFrame.MAXIMIZED_BOTH);
         //ventanaGestionarReservas.pack();
         ventanaGestionarReservas.setLocationRelativeTo(null);
+        ventanaGestionarReservas.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         ventanaGestionarReservas.setVisible(true);
         ventanaActual = ventanaGestionarReservas;
         ventanaPrincipal.dispose();
@@ -655,6 +674,7 @@ public class ControlBotones implements ActionListener {
         ventanCrearModificarReservas.setExtendedState(JFrame.MAXIMIZED_BOTH);
         //ventanaGestionarHuespedes.pack();
         ventanCrearModificarReservas.setLocationRelativeTo(null);
+        ventanCrearModificarReservas.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         ventanCrearModificarReservas.setVisible(true);
         ventanaGestionarReservas.dispose();
         ventanaActual = ventanCrearModificarReservas;
@@ -665,6 +685,7 @@ public class ControlBotones implements ActionListener {
         ventanaGestionarHuespedes.setExtendedState(JFrame.MAXIMIZED_BOTH);
         //ventanaGestionarHuespedes.pack();
         ventanaGestionarHuespedes.setLocationRelativeTo(null);
+        ventanaGestionarHuespedes.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         ventanaGestionarHuespedes.setVisible(true);
         ventanaActual = ventanaGestionarHuespedes;
         ventanaPrincipal.dispose();
@@ -690,6 +711,7 @@ public class ControlBotones implements ActionListener {
         ventanaCrearModificarHuespedes.setExtendedState(JFrame.MAXIMIZED_BOTH);
         //ventanaGestionarHuespedes.pack();
         ventanaCrearModificarHuespedes.setLocationRelativeTo(null);
+        ventanaCrearModificarHuespedes.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         ventanaCrearModificarHuespedes.setVisible(true);
         ventanaGestionarHuespedes.dispose();
         ventanaActual = ventanaCrearModificarHuespedes;
@@ -700,6 +722,7 @@ public class ControlBotones implements ActionListener {
         ventanaReportes.add(vistaReportes);
         //ventanaReportes.pack();
         ventanaReportes.setLocationRelativeTo(null);
+        ventanaReportes.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         ventanaReportes.setVisible(true);
         ventanaActual = ventanaReportes;
         ventanaPrincipal.dispose();
@@ -710,20 +733,19 @@ public class ControlBotones implements ActionListener {
         ventanaPersonalizar.add(vistaPersonalizar);
         //ventanaReportes.pack();
         ventanaPersonalizar.setLocationRelativeTo(null);
+        ventanaPersonalizar.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         ventanaPersonalizar.setVisible(true);
         ventanaActual = ventanaPersonalizar;
         ventanaPrincipal.dispose();
     }
 
     public void mostrarVentanaVerPerfil(){
-
         cargarDatosUsuarioActual();
         ventanaVerPerfil.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         ventanaVerPerfil.setExtendedState(JFrame.MAXIMIZED_BOTH);
         ventanaVerPerfil.setLocationRelativeTo(null);
         ventanaVerPerfil.add(vistaVerPerfil);
         ventanaVerPerfil.setVisible(true);
-
         ventanaActual = ventanaVerPerfil;
         ventanaPrincipal.dispose();
     }
@@ -746,22 +768,23 @@ public class ControlBotones implements ActionListener {
         int ocupadas = 0;
         int disponibles = 0;
         int enLimpieza = 0;
-        int reservadas = 0;
+        int r = 0;
         for (Habitaciones h : habitaciones) {
             String estado = h.getEstado();
-            if (estado.equalsIgnoreCase("ocupado")) {
+            if (estado.equalsIgnoreCase("Ocupada")) {
                 ocupadas++;
             } else if (estado.equalsIgnoreCase("disponible")) {
                 disponibles++;
             } else if (estado.equalsIgnoreCase("enLimpieza")) {
                 enLimpieza++;
-            } else if (estado.equalsIgnoreCase("reservadas")) {
-                reservadas++;
+            } else if (estado.equalsIgnoreCase("reservada")) {
+                r++;
             }
         }
-        vistaPaginaPrincipal.cargarGrafica(ocupadas, disponibles, enLimpieza, reservadas);
+        vistaPaginaPrincipal.cargarGrafica(ocupadas, disponibles, enLimpieza, r);
         ventanaPrincipal.add(vistaPaginaPrincipal);
         ventanaPrincipal.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        ventanaPrincipal.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         ventanaPrincipal.setVisible(true);
         ventanaActual.dispose();
         ventanaActual = ventanaPrincipal;
@@ -769,20 +792,24 @@ public class ControlBotones implements ActionListener {
     public void volverAInicioDeSesion(){
         vistaInicioSesion.setUsuario(null);
         vistaInicioSesion.setContrasena(null);
+        ventanaInicioSesion.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         ventanaInicioSesion.setVisible(true);
         ventanaActual.dispose();
     }
     public void volverAGestionarHabitaciones(){
+        ventanaGestionarHabitaciones.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         ventanaGestionarHabitaciones.setVisible(true);
         ventanaActual.dispose();
         cargarHabitaciones();
     }
     public void volverAGestionarReservas(){
+        ventanaGestionarReservas.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         ventanaGestionarReservas.setVisible(true);
         ventanCrearModificarReservas.dispose();
         cargarReservas();
     }
     public void volverAGestionarHuespedes(){
+        ventanaGestionarHuespedes.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         ventanaGestionarHuespedes.setVisible(true);
         ventanaActual.dispose();
         cargarHuespedes();
@@ -867,17 +894,17 @@ public class ControlBotones implements ActionListener {
         int ocupadas = 0;
         int disponibles = 0;
         int enLimpieza = 0;
-        int reservadas = 0;
+        int r = 0;
         for (Habitaciones h : habitaciones) {
             String estado = h.getEstado();
-            if (estado.equalsIgnoreCase("ocupado")) {
+            if (estado.equalsIgnoreCase("Ocupada")) {
                 ocupadas++;
             } else if (estado.equalsIgnoreCase("disponible")) {
                 disponibles++;
             } else if (estado.equalsIgnoreCase("enLimpieza")) {
                 enLimpieza++;
-            }else if (estado.equalsIgnoreCase("reservadas")) {
-                reservadas++;
+            }else if (estado.equalsIgnoreCase("reservada")) {
+                r++;
             }
         }
 
@@ -889,7 +916,7 @@ public class ControlBotones implements ActionListener {
                 break;
             }
         }
-        vistaPaginaPrincipal.cargarGrafica(ocupadas, disponibles, enLimpieza, reservadas);
+        vistaPaginaPrincipal.cargarGrafica(ocupadas, disponibles, enLimpieza, r);
         ventanaPrincipal.add(vistaPaginaPrincipal);
         ventanaPrincipal.setExtendedState(JFrame.MAXIMIZED_BOTH);
         ventanaPrincipal.setLocationRelativeTo(null);
@@ -900,7 +927,6 @@ public class ControlBotones implements ActionListener {
     }
 
     public void mostarVentanaRegistarse(){
-
         ventanaRegistro.setSize(1000,500);
         ventanaRegistro.setLocationRelativeTo(null);
         ventanaRegistro.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -1256,8 +1282,10 @@ public class ControlBotones implements ActionListener {
             return;
         }
         habitacionReservada.setEstado("Disponible");
+        Reservas.eliminarReserva(reservaSeleccionada.getId());
         Habitaciones.actualizarHabitaciones(habitacionReservada, habitacionReservada.getNumero());
         habitacionesOcupadas.remove(habitacionReservada);
+        cargarReservas();
         JOptionPane.showMessageDialog(vistaCrearModificarReserva, "Chek-Out realizado con éxito.", "Check-Out Realizado", JOptionPane.INFORMATION_MESSAGE);
     }
 
