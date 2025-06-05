@@ -9,6 +9,7 @@ import com.toedter.calendar.JDateChooser;
 public class VistaCrearModificarReserva extends JPanel {
     private final JTextField reservaId;
     private final JTextField idHuesped;
+    private final JTextField numeroHabitacion;
     private final JDateChooser fechaEntrada;
     private final JDateChooser fechaSalida;
     private final JButton aceptar;
@@ -24,6 +25,7 @@ public class VistaCrearModificarReserva extends JPanel {
 
         reservaId = crearCampoTexto(fuenteGeneral, false);
         idHuesped = crearCampoTexto(fuenteGeneral, true);
+        numeroHabitacion = crearCampoTexto(fuenteGeneral, true); // NUEVO
 
         fechaEntrada = crearDateChooser(fuenteGeneral);
         fechaSalida = crearDateChooser(fuenteGeneral);
@@ -82,8 +84,9 @@ public class VistaCrearModificarReserva extends JPanel {
         gbc.gridwidth = 1;
         agregarCampo(gbc, "ID Reserva:", reservaId, 1);
         agregarCampo(gbc, "ID Huésped:", idHuesped, 2);
-        agregarCampo(gbc, "Fecha de entrada:", fechaEntrada, 3);
-        agregarCampo(gbc, "Fecha de salida:", fechaSalida, 4);
+        agregarCampo(gbc, "N° Habitación:", numeroHabitacion, 3); // NUEVO
+        agregarCampo(gbc, "Fecha de entrada:", fechaEntrada, 4);
+        agregarCampo(gbc, "Fecha de salida:", fechaSalida, 5);
 
         JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.RIGHT, 12, 0));
         panelBotones.setOpaque(false);
@@ -104,8 +107,6 @@ public class VistaCrearModificarReserva extends JPanel {
         gbc.gridx = 1;
         add(campo, gbc);
     }
-
-    // ==== Métodos getters/setters actualizados ====
 
     public String getReservaId() {
         return reservaId.getText();
@@ -129,6 +130,18 @@ public class VistaCrearModificarReserva extends JPanel {
 
     public void setIdHuesped(String s) {
         idHuesped.setText(s);
+    }
+
+    public String getNumeroHabitacion() {
+        return numeroHabitacion.getText().trim();
+    }
+
+    public JTextField getNumeroHabitacionField() {
+        return numeroHabitacion;
+    }
+
+    public void setNumeroHabitacion(String numero) {
+        numeroHabitacion.setText(numero);
     }
 
     public Date getFechaEntradaDate() {
