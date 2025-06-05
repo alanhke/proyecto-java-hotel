@@ -79,6 +79,19 @@ public class VistaInicioSesion extends JPanel {
         return botonRegistrarse;
     }
 
+    public JTextField getCampoUsuario() {
+        return campoUsuario;
+    }
+    public JPasswordField getCampoContrasena() {
+        return campoContrasena;
+    }
+    public void setUsuario(String usuario) {
+        campoUsuario.setText(usuario);
+    }
+    public void setContrasena(String contrasena) {
+        campoContrasena.setText(contrasena);
+    }
+
     public void setListeners(java.awt.event.ActionListener listener) {
         botonIniciar.addActionListener(listener);
         botonRegistrarse.addActionListener(listener);

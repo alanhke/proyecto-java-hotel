@@ -88,6 +88,7 @@ public class ControlBotones implements ActionListener {
 
     int filaSeleccionada;
     private static final String RUTA_ARCHIVO = "ultimaRuta";
+    private DatosUsuario usuarioActual;
     public ControlBotones(VistaRegistrarse panel, DatosUsuario datos, VistaVerUsuarios panel2, VistaModificarUsuario panel3, VistaPaginaPrincipal paginaPrincipal, VistaGestionarHabitaciones vistaGestionarHabitaciones1, VistaGestionarReservas vistaGestionarReservas1, VistaGestionarHuespedes vistaGestionarHuespedes1, VistaReportes vistaReportes1, VistaPersonalizar vistaPersonalizar1, Estilo estilo1, VistaInicioSesion vistaInicioSesion1, VistaCrearModificarHabitacion vistaCrearModificarHabitacion1, VistaCrearModificarReserva vistaCrearModificarReserva1, VistaCrearModificarHuesped vistaCrearModificarHuesped1, VistaVerPerfil vistaVerPerfil1) {
         vistaRegistrarse = panel;
         vistaVerUsuarios = panel2;
@@ -156,6 +157,7 @@ public class ControlBotones implements ActionListener {
                 vistaRegistrarse.getTfName().setText("");
                 vistaRegistrarse.getTfLastName().setText("");
                 JOptionPane.showMessageDialog(vistaRegistrarse, "Los datos fueron enviados correctamente");
+                volverAInicioDeSesion();
             } else if (!contra.equals(finalPassword)) {
                 //throw new Errores("las contraseñas no son iguales");
                 JOptionPane.showMessageDialog(vistaRegistrarse, "Las contraseñas no son iguales", "Error", JOptionPane.WARNING_MESSAGE);
@@ -170,43 +172,42 @@ public class ControlBotones implements ActionListener {
             vistaRegistrarse.getTfFinalPassword().setText("");
             vistaRegistrarse.getTfName().setText("");
             vistaRegistrarse.getTfLastName().setText("");
-        } else if (textoBotonPresionado.equals("Ver guardados")) {
-            verDatos();
         } else if (textoBotonPresionado.equals("Limpiar")) {
             table.clear();
         } else if (textoBotonPresionado.equals("Exportar a PDF")) {
             generarPDF();
-        } else if (textoBotonPresionado.equals("Eliminar Usuario")) {
-            boolean eliminado = eliminarUsuario();
+        } else if (textoBotonPresionado.equals("🗑️ Eliminar perfil")) {
+            boolean eliminado = eliminarUsuario(usuarioActual);
             if (eliminado) {
                 JOptionPane.showMessageDialog(vistaRegistrarse, "El usuario se ha eliminado", "Usuario eliminado", JOptionPane.OK_OPTION);
+                volverAInicioDeSesion();
             } else {
                 JOptionPane.showMessageDialog(vistaRegistrarse, "El usuario no se ha eliminado", "Error", JOptionPane.WARNING_MESSAGE);
             }
-        } else if (textoBotonPresionado.equals("Modificar Usuario")) {
-            filaSeleccionada = vistaVerUsuarios.getTableView().getSelectedRow();
-            if (filaSeleccionada == -1) {
-                JOptionPane.showMessageDialog(vistaVerUsuarios, "Debes seleccionar un usuario de la tabla.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        } else if (textoBotonPresionado.equals("✏️ Editar")) {
+            if (usuarioActual == null) {
+                JOptionPane.showMessageDialog(vistaVerUsuarios, "No hay un usuario autenticado.", "Advertencia", JOptionPane.WARNING_MESSAGE);
                 return;
             }
 
-            DatosUsuario usuarioSeleccionado = datosGuardados.get(filaSeleccionada);
+            vistaModificarUsuario.setNombre(usuarioActual.getNombre());
+            vistaModificarUsuario.setApellido(usuarioActual.getApellido());
+            vistaModificarUsuario.setNombreUsuario(usuarioActual.getNombreUsuario());
+            vistaModificarUsuario.setPassword(usuarioActual.getContrasena());
+            vistaModificarUsuario.setFinalPassword(usuarioActual.getConfirmarContrasena());
+            vistaModificarUsuario.setBgGender(usuarioActual.getGenero1());
+            vistaModificarUsuario.setOpcion(usuarioActual.getTipo());
 
-            vistaModificarUsuario.setNombre(usuarioSeleccionado.getNombre());
-            vistaModificarUsuario.setApellido(usuarioSeleccionado.getApellido());
-            vistaModificarUsuario.setNombreUsuario(usuarioSeleccionado.getNombreUsuario());
-            vistaModificarUsuario.setPassword(usuarioSeleccionado.getContrasena());
-            vistaModificarUsuario.setFinalPassword(usuarioSeleccionado.getConfirmarContrasena());
-            vistaModificarUsuario.setBgGender(usuarioSeleccionado.getGenero1());
-            vistaModificarUsuario.setOpcion(usuarioSeleccionado.getTipo());
-
-            ventanaModificar.add(vistaModificarUsuario);
-            ventanaModificar.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            ventanaModificar.setLocationRelativeTo(null);
             ventanaModificar.setSize(500, 500);
+            ventanaModificar.setLocationRelativeTo(null);
+            ventanaModificar.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            ventanaModificar.add(vistaModificarUsuario);
             ventanaModificar.setVisible(true);
+
         } else if (textoBotonPresionado.equals("Aceptar")) {
             modificarUsuario();
+        } else if (textoBotonPresionado.equals("Cancelar")) {
+                ventanaModificar.dispose();
         } else if (textoBotonPresionado.equals("🛏 Gestionar Habitaciones")) {
             mostrarVentanaGestionar();
         } else if (textoBotonPresionado.equals("📅 Gestionar Reservas")) {
@@ -240,12 +241,14 @@ public class ControlBotones implements ActionListener {
             mostrarVentanaPersonalizar();
         }else if (textoBotonPresionado.equals("👤 Ver Perfil")) {
             mostrarVentanaVerPerfil();
-        }else if (textoBotonPresionado.equals("⏻ Cerrar Sesión")) {
+        }else if (textoBotonPresionado.equals("⏻ Cerrar Sesión") || textoBotonPresionado.equals("Regresar")) {
             volverAInicioDeSesion();
         } else if (textoBotonPresionado.equals("✔️Aplicar Cambios")) {
             aplicarPersonalizacion();
         } else if (textoBotonPresionado.equals("Iniciar Sesión")) {
-            mostrarVentanaPrincipal();
+            String username = vistaInicioSesion.getUsuario().trim();
+            String password = vistaInicioSesion.getContrasena().trim();
+            mostrarVentanaPrincipal(username, password);
         }//Botones vista habitaciones
         else if (textoBotonPresionado.equals("Dar de alta")) {
            mostarVentanaRegistarse();
@@ -333,7 +336,6 @@ public class ControlBotones implements ActionListener {
         ventanaMostrarDatos.setLocationRelativeTo(null);
         ventanaMostrarDatos.pack();
         ventanaMostrarDatos.setVisible(true);
-        ventanaActual = ventanaMostrarDatos;
         table.clear();
         for (DatosUsuario v : datosGuardados) {
             table.addRow(v);
@@ -486,55 +488,96 @@ public class ControlBotones implements ActionListener {
         }
     }
 
-    public boolean eliminarUsuario(){
-        filaSeleccionada = vistaVerUsuarios.getTableView().getSelectedRow();
+    public boolean eliminarUsuario(DatosUsuario usuarioActual) {
+        // Confirmar eliminación sin necesidad de seleccionar fila
+        int confirmacion = JOptionPane.showConfirmDialog(vistaVerUsuarios,
+                "¿Estás seguro de eliminar tu perfil \"" + usuarioActual.getNombreUsuario() + "\"? Esta acción es irreversible.",
+                "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
 
-        if (filaSeleccionada == -1) {
-            JOptionPane.showMessageDialog(vistaVerUsuarios, "Debes seleccionar un usuario para eliminar", "Error", JOptionPane.WARNING_MESSAGE);
-            return false;
-        }
-
-        DatosUsuario usuario = datosGuardados.get(filaSeleccionada);
-
-        int confirmacion = JOptionPane.showConfirmDialog(vistaVerUsuarios, "¿Estás seguro de eliminar a " + usuario.getNombreUsuario() + "?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
         if (confirmacion == JOptionPane.YES_OPTION) {
-            DatosUsuario.eliminarUsu(filaSeleccionada+1);
-            datosGuardados.remove(filaSeleccionada);
-            table.removeRow(filaSeleccionada);
-            return true;
+            // Intentar eliminar de la base de datos usando el id del usuario actual
+            boolean eliminado = DatosUsuario.eliminarUsu(usuarioActual.getId());
+
+            if (eliminado) {
+                // Si tienes lista de usuarios cargada, eliminar de esa lista y tabla para refrescar UI
+                // Opcional, si usas lista y tabla:
+                // int fila = datosGuardados.indexOf(usuarioActual);
+                // if (fila != -1) {
+                //     datosGuardados.remove(fila);
+                //     table.removeRow(fila);
+                // }
+
+                JOptionPane.showMessageDialog(vistaVerUsuarios, "Perfil eliminado correctamente.");
+                return true;
+            } else {
+                JOptionPane.showMessageDialog(vistaVerUsuarios, "Error al eliminar el perfil.");
+                return false;
+            }
         }
 
         return false;
     }
 
-    public void modificarUsuario(){
-        String nombre = vistaModificarUsuario.getNombreUsuario();
-        String contra = vistaModificarUsuario.getPassword().trim();
-        String finalPassword = vistaModificarUsuario.getFinalPassword().trim();
-        String firstName = vistaModificarUsuario.getNombre();
-        String lastName = vistaModificarUsuario.getApellido().trim();
-        String genero = vistaModificarUsuario.getGender().trim();
+    private void modificarUsuario() {
+        if (usuarioActual == null) {
+            JOptionPane.showMessageDialog(vistaModificarUsuario, "No hay un usuario autenticado.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        String nombre = vistaModificarUsuario.getNombre();
+        String apellido = vistaModificarUsuario.getApellido();
+        String nombreUsuario = vistaModificarUsuario.getNombreUsuario();
+        String password = vistaModificarUsuario.getPassword();
+        String confirmarPassword = vistaModificarUsuario.getFinalPassword();
+        String genero = vistaModificarUsuario.getGender();
         String tipo = vistaModificarUsuario.getOpcion();
-        boolean isGenderSelected = !vistaRegistrarse.getGender().isEmpty();
-        if (!nombre.isEmpty() && !contra.isEmpty() && !finalPassword.isEmpty() && !firstName.isEmpty() && isGenderSelected && contra.equals(finalPassword) && !lastName.isEmpty()) {
-            DatosUsuario rD = new DatosUsuario(vistaRegistrarse);
-            guardarDatos(rD);
-            vistaRegistrarse.getTfUserName().setText("");
-            vistaRegistrarse.getTfContra().setText("");
-            vistaRegistrarse.getTfFinalPassword().setText("");
-            vistaRegistrarse.getTfName().setText("");
-            vistaRegistrarse.getTfLastName().setText("");
-            ventanaMostrarDatos.dispose();
-            verDatos();
-            JOptionPane.showMessageDialog(vistaModificarUsuario, "Usuario actualizado con exito","Modificado",JOptionPane.OK_OPTION);
+
+        if (nombre.isEmpty() || apellido.isEmpty() || nombreUsuario.isEmpty() || password.isEmpty() || confirmarPassword.isEmpty() || genero.isEmpty()) {
+            JOptionPane.showMessageDialog(vistaModificarUsuario, "Todos los campos deben estar completos.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        if (!password.equals(confirmarPassword)) {
+            JOptionPane.showMessageDialog(vistaModificarUsuario, "Las contraseñas no coinciden.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Crear objeto con los datos nuevos
+        DatosUsuario nuevoUsuario = new DatosUsuario(
+                usuarioActual.getId(),
+                nombre,
+                apellido,
+                nombreUsuario,
+                password,
+                genero,
+                tipo
+        );
+
+        // Actualizar en la base de datos
+        boolean exito = DatosUsuario.actualizarUsuario(nuevoUsuario, usuarioActual.getId());
+
+        if (exito) {
+            // Actualizar el objeto actual en memoria
+            usuarioActual = nuevoUsuario;
+
+            // Actualizar en lista si la estás usando
+            for (int i = 0; i < datosGuardados.size(); i++) {
+                if (datosGuardados.get(i).getId() == usuarioActual.getId()) {
+                    datosGuardados.set(i, nuevoUsuario);
+                    break;
+                }
+            }
+
+            // Refrescar la tabla si es necesario
+            table.setDatos(datosGuardados);
+            table.fireTableDataChanged();
+
+            JOptionPane.showMessageDialog(vistaModificarUsuario, "Usuario modificado exitosamente.");
+
             ventanaModificar.dispose();
-        }else if (!contra.equals(finalPassword)) {
-            //throw new Errores("las contraseñas no son iguales");
-            JOptionPane.showMessageDialog(vistaModificarUsuario, "Las contraseñas no son iguales", "Error", JOptionPane.WARNING_MESSAGE);
-        }else {
-            String vacio = vistaModificarUsuario.getTextVacio(nombre,contra,finalPassword,firstName, lastName);
-            //throw new Errores("El campo " + vacio + " esta vacio.");
-            JOptionPane.showMessageDialog(vistaModificarUsuario, "El campo " + vacio + " esta vacio.", "Error", JOptionPane.WARNING_MESSAGE);
+            cargarDatosUsuarioActual();
+        } else {
+            JOptionPane.showMessageDialog(vistaModificarUsuario, "Error al modificar el usuario en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -660,23 +703,42 @@ public class ControlBotones implements ActionListener {
     }
 
     public void mostrarVentanaVerPerfil(){
+
+        cargarDatosUsuarioActual();
         ventanaVerPerfil.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         ventanaVerPerfil.setExtendedState(JFrame.MAXIMIZED_BOTH);
         ventanaVerPerfil.setLocationRelativeTo(null);
         ventanaVerPerfil.add(vistaVerPerfil);
         ventanaVerPerfil.setVisible(true);
+
         ventanaActual = ventanaVerPerfil;
         ventanaPrincipal.dispose();
+    }
+
+    public void cargarDatosUsuarioActual(){
+        if (usuarioActual != null) {
+            vistaVerPerfil.setDatos(
+                    usuarioActual.getNombre(),
+                    usuarioActual.getApellido(),
+                    usuarioActual.getNombreUsuario(),
+                    usuarioActual.getContrasena(),
+                    usuarioActual.getGenero1(),
+                    usuarioActual.getTipo()
+            );
+        }
     }
 
     public void volverAPaginaPrincipal(){
         ventanaPrincipal.setExtendedState(JFrame.MAXIMIZED_BOTH);
         ventanaPrincipal.setVisible(true);
         ventanaActual.dispose();
+        ventanaActual = ventanaPrincipal;
     }
     public void volverAInicioDeSesion(){
-        ventanaPrincipal.dispose();
+        vistaInicioSesion.setUsuario(null);
+        vistaInicioSesion.setContrasena(null);
         ventanaInicioSesion.setVisible(true);
+        ventanaActual.dispose();
     }
     public void volverAGestionarHabitaciones(){
         ventanaGestionarHabitaciones.setVisible(true);
@@ -746,9 +808,28 @@ public class ControlBotones implements ActionListener {
         ventanaCrearModificarHabitacion = new JFrame("Habitacion");
         ventanCrearModificarReservas = new JFrame("Reservas");
         ventanaCrearModificarHuespedes = new JFrame("Huespedes");
+        ventanaRegistro = new JFrame("Registro de Usuario");
     }
 
-    public void mostrarVentanaPrincipal(){
+    public void mostrarVentanaPrincipal(String username, String password) {
+        datosGuardados = DatosUsuario.obtenerUsuarios();
+        boolean credencialesValidas = false;
+        for (DatosUsuario usuario : datosGuardados) {
+            if (usuario.getNombreUsuario().equals(username) &&
+                    usuario.getContrasena().equals(password)) {
+                credencialesValidas = true;
+                break;
+            }
+        }
+
+        if (!credencialesValidas) {
+            JOptionPane.showMessageDialog(vistaInicioSesion,
+                    "Usuario o contraseña incorrectos.",
+                    "Error de autenticación",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
         habitaciones = Habitaciones.obtenerHabitaciones();
         int ocupadas = 0;
         int disponibles = 0;
@@ -757,33 +838,40 @@ public class ControlBotones implements ActionListener {
             String estado = h.getEstado();
             if (estado.equalsIgnoreCase("ocupado")) {
                 ocupadas++;
-            }else if (estado.equalsIgnoreCase("disponible")) {
+            } else if (estado.equalsIgnoreCase("disponible")) {
                 disponibles++;
-            }else if (estado.equalsIgnoreCase("enLimpieza")) {
+            } else if (estado.equalsIgnoreCase("enLimpieza")) {
                 enLimpieza++;
+            }
+        }
+
+        for (DatosUsuario usuario : datosGuardados) {
+            if (usuario.getNombreUsuario().equals(username) &&
+                    usuario.getContrasena().equals(password)) {
+                credencialesValidas = true;
+                usuarioActual = usuario;
+                break;
             }
         }
         vistaPaginaPrincipal.cargarGrafica(ocupadas, disponibles, enLimpieza);
         ventanaPrincipal.add(vistaPaginaPrincipal);
         ventanaPrincipal.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        //ventanaPrincipal.pack();
         ventanaPrincipal.setLocationRelativeTo(null);
         ventanaPrincipal.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         ventanaPrincipal.setVisible(true);
+        ventanaActual = ventanaPrincipal;
         ventanaInicioSesion.dispose();
-
     }
 
     public void mostarVentanaRegistarse(){
-        vistaRegistrarse = new VistaRegistrarse();
-        vistaRegistrarse.setListeners(this);
 
-        ventanaRegistro = new JFrame("Registro de Usuario");
-        ventanaRegistro.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        ventanaRegistro.setSize(1000,500);
         ventanaRegistro.setLocationRelativeTo(null);
         ventanaRegistro.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         ventanaRegistro.add(vistaRegistrarse);
         ventanaRegistro.setVisible(true);
+        ventanaActual = ventanaRegistro;
+
     }
 
     public void cargarHabitaciones(){
