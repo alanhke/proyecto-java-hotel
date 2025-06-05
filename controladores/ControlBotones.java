@@ -742,6 +742,25 @@ public class ControlBotones implements ActionListener {
     }
 
     public void volverAPaginaPrincipal(){
+        habitaciones = Habitaciones.obtenerHabitaciones();
+        int ocupadas = 0;
+        int disponibles = 0;
+        int enLimpieza = 0;
+        int reservadas = 0;
+        for (Habitaciones h : habitaciones) {
+            String estado = h.getEstado();
+            if (estado.equalsIgnoreCase("ocupado")) {
+                ocupadas++;
+            } else if (estado.equalsIgnoreCase("disponible")) {
+                disponibles++;
+            } else if (estado.equalsIgnoreCase("enLimpieza")) {
+                enLimpieza++;
+            } else if (estado.equalsIgnoreCase("reservadas")) {
+                reservadas++;
+            }
+        }
+        vistaPaginaPrincipal.cargarGrafica(ocupadas, disponibles, enLimpieza, reservadas);
+        ventanaPrincipal.add(vistaPaginaPrincipal);
         ventanaPrincipal.setExtendedState(JFrame.MAXIMIZED_BOTH);
         ventanaPrincipal.setVisible(true);
         ventanaActual.dispose();
@@ -848,6 +867,7 @@ public class ControlBotones implements ActionListener {
         int ocupadas = 0;
         int disponibles = 0;
         int enLimpieza = 0;
+        int reservadas = 0;
         for (Habitaciones h : habitaciones) {
             String estado = h.getEstado();
             if (estado.equalsIgnoreCase("ocupado")) {
@@ -856,6 +876,8 @@ public class ControlBotones implements ActionListener {
                 disponibles++;
             } else if (estado.equalsIgnoreCase("enLimpieza")) {
                 enLimpieza++;
+            }else if (estado.equalsIgnoreCase("reservadas")) {
+                reservadas++;
             }
         }
 
@@ -867,7 +889,7 @@ public class ControlBotones implements ActionListener {
                 break;
             }
         }
-        vistaPaginaPrincipal.cargarGrafica(ocupadas, disponibles, enLimpieza);
+        vistaPaginaPrincipal.cargarGrafica(ocupadas, disponibles, enLimpieza, reservadas);
         ventanaPrincipal.add(vistaPaginaPrincipal);
         ventanaPrincipal.setExtendedState(JFrame.MAXIMIZED_BOTH);
         ventanaPrincipal.setLocationRelativeTo(null);
