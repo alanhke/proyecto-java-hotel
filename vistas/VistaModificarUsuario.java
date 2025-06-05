@@ -4,10 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionListener;
-
 public class VistaModificarUsuario extends JPanel {
     private final JTextField tfUserName;
     private final JTextField tfName;
@@ -52,7 +48,7 @@ public class VistaModificarUsuario extends JPanel {
         bgGender.add(rbGender3);
 
         // ComboBox
-        opciones = new JComboBox<>(new String[]{"Personal", "Empresa"});
+        opciones = new JComboBox<>(new String[]{"Administrador", "Recepcionista"});
 
         // Agregamos componentes
         addField(formulario, gbc, 0, "Nombre(s):", tfName);

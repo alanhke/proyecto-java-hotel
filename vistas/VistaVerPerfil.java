@@ -6,27 +6,33 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionListener;
+
 public class VistaVerPerfil extends JPanel {
 
     private JLabel imagenPerfil;
     private JLabel lblNombre, lblApellidos, lblUsuario, lblContrasena, lblGenero, lblTipo;
     private JLabel valorNombre, valorApellidos, valorUsuario, valorContrasena, valorGenero, valorTipo;
     private JButton botonVolver;
+    private JButton botonEditar;
+    private JButton botonEliminar;
 
     public VistaVerPerfil() {
         setLayout(new BorderLayout());
 
         PanelConFondo fondo = new PanelConFondo("/hotelNoche.png");
-        fondo.setLayout(new GridBagLayout()); // Para centrar cuadro principal
+        fondo.setLayout(new GridBagLayout());
         add(fondo, BorderLayout.CENTER);
 
         RoundedPanel panelPrincipal = new RoundedPanel(30);
-        panelPrincipal.setPreferredSize(new Dimension(420, 530));
+        // Aquí se aumenta la altura para que quepa el botón eliminar
+        panelPrincipal.setPreferredSize(new Dimension(420, 700));
         panelPrincipal.setBackground(new Color(255, 255, 255, 230));
         panelPrincipal.setLayout(new BorderLayout());
         panelPrincipal.setBorder(BorderFactory.createEmptyBorder(20, 30, 20, 30));
 
-        // Imagen usuario arriba
         imagenPerfil = new JLabel();
         imagenPerfil.setHorizontalAlignment(SwingConstants.CENTER);
         imagenPerfil.setPreferredSize(new Dimension(150, 150));
@@ -36,7 +42,6 @@ public class VistaVerPerfil extends JPanel {
         imagenPerfil.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
         panelPrincipal.add(imagenPerfil, BorderLayout.NORTH);
 
-        // Panel datos con GridLayout 6 filas x 2 columnas
         JPanel panelDatos = new JPanel(new GridLayout(6, 2, 10, 10));
         panelDatos.setOpaque(false);
 
@@ -69,35 +74,46 @@ public class VistaVerPerfil extends JPanel {
             valor.setForeground(new Color(80, 80, 80));
         }
 
-        panelDatos.add(lblNombre);
-        panelDatos.add(valorNombre);
-        panelDatos.add(lblApellidos);
-        panelDatos.add(valorApellidos);
-        panelDatos.add(lblUsuario);
-        panelDatos.add(valorUsuario);
-        panelDatos.add(lblContrasena);
-        panelDatos.add(valorContrasena);
-        panelDatos.add(lblGenero);
-        panelDatos.add(valorGenero);
-        panelDatos.add(lblTipo);
-        panelDatos.add(valorTipo);
+        panelDatos.add(lblNombre); panelDatos.add(valorNombre);
+        panelDatos.add(lblApellidos); panelDatos.add(valorApellidos);
+        panelDatos.add(lblUsuario); panelDatos.add(valorUsuario);
+        panelDatos.add(lblContrasena); panelDatos.add(valorContrasena);
+        panelDatos.add(lblGenero); panelDatos.add(valorGenero);
+        panelDatos.add(lblTipo); panelDatos.add(valorTipo);
 
         panelPrincipal.add(panelDatos, BorderLayout.CENTER);
 
-        // Botón volver abajo
+        botonEditar = new JButton("✏️ Editar");
+        botonEditar.setPreferredSize(new Dimension(120, 40));
+        botonEditar.setFont(new Font("SansSerif", Font.BOLD, 14));
+        botonEditar.setBackground(new Color(46, 204, 113));
+        botonEditar.setForeground(Color.WHITE);
+        botonEditar.setFocusPainted(false);
+
         botonVolver = new JButton("🔙 Volver");
-        botonVolver.setPreferredSize(new Dimension(100, 40));
+        botonVolver.setPreferredSize(new Dimension(120, 40));
         botonVolver.setFont(new Font("SansSerif", Font.BOLD, 14));
         botonVolver.setBackground(new Color(52, 152, 219));
         botonVolver.setForeground(Color.WHITE);
         botonVolver.setFocusPainted(false);
-        botonVolver.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        JPanel panelBoton = new JPanel();
-        panelBoton.setOpaque(false);
-        panelBoton.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0));
-        panelBoton.add(botonVolver);
-        panelPrincipal.add(panelBoton, BorderLayout.SOUTH);
+        botonEliminar = new JButton("🗑️ Eliminar perfil");
+        botonEliminar.setPreferredSize(new Dimension(180, 40));
+        botonEliminar.setFont(new Font("SansSerif", Font.BOLD, 14));
+        botonEliminar.setBackground(new Color(231, 76, 60));
+        botonEliminar.setForeground(Color.WHITE);
+        botonEliminar.setFocusPainted(false);
+
+        JPanel panelBotones = new JPanel();
+        panelBotones.setOpaque(false);
+        panelBotones.setBorder(BorderFactory.createEmptyBorder(50, 0, 50, 0)); // Más espacio abajo
+        panelBotones.add(botonEditar);
+        panelBotones.add(Box.createRigidArea(new Dimension(15, 0)));
+        panelBotones.add(botonVolver);
+        panelBotones.add(Box.createRigidArea(new Dimension(15, 0)));
+        panelBotones.add(botonEliminar);
+
+        panelPrincipal.add(panelBotones, BorderLayout.SOUTH);
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(40, 20, 40, 20);
@@ -117,9 +133,22 @@ public class VistaVerPerfil extends JPanel {
         return botonVolver;
     }
 
+    public JButton getBotonEditar() {
+        return botonEditar;
+    }
+
+    public JButton getBotonEliminar() {
+        return botonEliminar;
+    }
+
     public void setListeners(ActionListener listener) {
         botonVolver.addActionListener(listener);
+        botonEditar.addActionListener(listener);
+        botonEliminar.addActionListener(listener);
     }
 }
+
+
+
 
 

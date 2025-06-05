@@ -113,4 +113,8 @@ public class DatosUsuarioTableModel extends AbstractTableModel {
             fireTableRowsDeleted(fila, fila);
         }
     }
+    public void setDatos(ArrayList<DatosUsuario> nuevosDatos) {
+        this.datos = nuevosDatos;
+        fireTableDataChanged(); // Notifica a la tabla que los datos han cambiado
+    }
 }

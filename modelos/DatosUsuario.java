@@ -189,4 +189,28 @@ public class DatosUsuario {
         }
         return actualizados > 0;
     }
+    public static DatosUsuario buscarUsuario(String nombreUsuario) {
+        String query = "SELECT * FROM registro_usuarios WHERE nombreUsuario = ?";
+        try (Connection conexion = MySQLConnection.connect();
+             PreparedStatement pst = conexion.prepareStatement(query)) {
+            pst.setString(1, nombreUsuario);
+            try (ResultSet rs = pst.executeQuery()) {
+                if (rs.next()) {
+                    return new DatosUsuario(
+                            rs.getInt("idusuarios"),
+                            rs.getString("nombres"),
+                            rs.getString("apellidos"),
+                            rs.getString("nombreUsuario"),
+                            rs.getString("contrasena"),
+                            rs.getString("genero"),
+                            rs.getString("tipo")
+                    );
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

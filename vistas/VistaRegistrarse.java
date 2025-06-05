@@ -4,22 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionListener;
-
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionListener;
-
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionListener;
-
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionListener;
-
 public class VistaRegistrarse extends JPanel {
     JTextField tfUserName;
     JTextField tfName;
@@ -29,7 +13,7 @@ public class VistaRegistrarse extends JPanel {
     ButtonGroup bgGender;
     JButton btnOk;
     JButton btnCancel;
-    JButton verGuardados;
+    JButton btnRegresar; // ← NUEVO
     JRadioButton rbGender1;
     JRadioButton rbGender2;
     JRadioButton rbGender3;
@@ -132,19 +116,19 @@ public class VistaRegistrarse extends JPanel {
         btnCancel = new JButton("Limpiar");
         btnCancel.setBackground(new Color(208, 2, 27));
         btnCancel.setForeground(Color.WHITE);
-        verGuardados = new JButton("Ver guardados");
-        verGuardados.setBackground(new Color(100, 100, 100));
-        verGuardados.setForeground(Color.WHITE);
+        btnRegresar = new JButton("Regresar"); // ← NUEVO
+        btnRegresar.setBackground(new Color(150, 150, 150));
+        btnRegresar.setForeground(Color.WHITE);
 
         Font fontBoton = new Font("SansSerif", Font.BOLD, 14);
         btnOk.setFont(fontBoton);
         btnCancel.setFont(fontBoton);
-        verGuardados.setFont(fontBoton);
+        btnRegresar.setFont(fontBoton); // ← NUEVO
 
         panelBotones.setOpaque(false);
         panelBotones.add(btnOk);
         panelBotones.add(btnCancel);
-        panelBotones.add(verGuardados);
+        panelBotones.add(btnRegresar); // ← NUEVO
         panelFormulario.add(panelBotones, gbc);
 
         // Añadir al panel principal con inversión
@@ -156,13 +140,13 @@ public class VistaRegistrarse extends JPanel {
     public void setListeners(ActionListener listener) {
         btnOk.addActionListener(listener);
         btnCancel.addActionListener(listener);
-        verGuardados.addActionListener(listener);
+        btnRegresar.addActionListener(listener); // ← NUEVO
     }
 
     public String getBotonPresionado(JButton boton) {
         if (boton == btnOk) return "ok";
         if (boton == btnCancel) return "cancel";
-        if (boton == verGuardados) return "verGuardados";
+        if (boton == btnRegresar) return "regresar"; // ← NUEVO
         return null;
     }
 
@@ -196,6 +180,7 @@ public class VistaRegistrarse extends JPanel {
         return null;
     }
 }
+
 
 
 
