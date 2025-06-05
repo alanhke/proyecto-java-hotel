@@ -9,7 +9,7 @@ import java.util.Date;
 public class ReservasTableModel extends AbstractTableModel {
     private ArrayList<Reservas> reservas = new ArrayList<Reservas>();
     private String nombresColumnas[] =
-            {"Id", "Huesped", "Fecha entrada", "Fecha salida"};
+            {"Id", "Huesped", "Habitacion","Fecha entrada", "Fecha salida"};
 
     @Override
     public int getRowCount() {
@@ -28,11 +28,9 @@ public class ReservasTableModel extends AbstractTableModel {
 
     @Override
     public Class<?> getColumnClass(int columnIndex){
-        if (columnIndex == 0){
+        if (columnIndex == 0 || columnIndex == 1 || columnIndex == 2){
             return Integer.class;
-        } else if (columnIndex == 1) {
-            return Integer.class;
-        } else if (columnIndex == 2 || columnIndex == 3) {
+        }else if (columnIndex == 3 || columnIndex == 4) {
             return String.class;
         }
         return Object.class;
@@ -40,17 +38,15 @@ public class ReservasTableModel extends AbstractTableModel {
 
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-        if(columnIndex == 2 || columnIndex == 1) {
+        if(columnIndex == 3 || columnIndex == 4) {
             return true;
         }
-
         return false;
     }
 
     @Override
     public void setValueAt(Object value, int rowIndex, int columnIndex) {
         Reservas reserva = reservas.get(rowIndex);
-
         try {
             switch(columnIndex) {
                 case 0:
@@ -60,9 +56,12 @@ public class ReservasTableModel extends AbstractTableModel {
                     reserva.setHuespedId(Integer.parseInt(value.toString()));
                     break;
                 case 2:
-                    reserva.setFechaEntrada((Date) value);
+                    reserva.setHabitacionId(Integer.parseInt(value.toString()));
                     break;
                 case 3:
+                    reserva.setFechaEntrada((Date) value);
+                    break;
+                case 4:
                     reserva.setFechaSalida((Date) value);
                     break;
             }
@@ -82,13 +81,14 @@ public class ReservasTableModel extends AbstractTableModel {
             case 1:
                 return reserva.getHuespedId();
             case 2:
-                return formatoFecha.format(reserva.getFechaEntrada());
+                return reserva.getHabitacionId();
             case 3:
+                return formatoFecha.format(reserva.getFechaEntrada());
+            case 4:
                 return formatoFecha.format(reserva.getFechaSalida());
         }
         return null;
     }
-
 
     public void addRow(Reservas reserva) {
         reservas.add(reserva);

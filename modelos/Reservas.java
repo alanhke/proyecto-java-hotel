@@ -12,18 +12,21 @@ import java.util.Date;
 public class Reservas {
     int id;
     int huespedId;
+    int habitacionId;
     Date fechaEntrada;
     Date fechaSalida;
 
-    public Reservas(int id, int huespedid,Date fechaEntrada, Date fechaSalida) {
+    public Reservas(int id, int huespedid,int habitacionId1,Date fechaEntrada, Date fechaSalida) {
         this.id = id;
         this.huespedId = huespedid;
+        this.habitacionId = habitacionId1;
         this.fechaEntrada = fechaEntrada;
         this.fechaSalida = fechaSalida;
     }
-    public Reservas(int id, int idHuesped, String fechaentrada, String fechasalida) {
+    public Reservas(int id, int idHuesped, int habitacionId1,String fechaentrada, String fechasalida) {
         this.id = id;
         this.huespedId = idHuesped;
+        this.habitacionId = habitacionId1;
         SimpleDateFormat formato = new SimpleDateFormat("yyyy/MM/dd");
         try {
             fechaEntrada = formato.parse(fechaentrada);
@@ -37,6 +40,11 @@ public class Reservas {
         //id = Integer.parseInt(vistaCrearModificarReserva.getReservaId());
         try{
             huespedId = Integer.parseInt(vistaCrearModificarReserva.getIdHuesped());
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        try{
+            habitacionId = Integer.parseInt(vistaCrearModificarReserva.getNumeroHabitacion());
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -78,6 +86,13 @@ public class Reservas {
         return fechaSalida;
     }
 
+    public int getHabitacionId() {
+        return habitacionId;
+    }
+    public void setHabitacionId(int habitacionId) {
+        this.habitacionId = habitacionId;
+    }
+
     public void setFechaSalida(Date fechaSalida) {
         this.fechaSalida = fechaSalida;
     }
@@ -96,11 +111,12 @@ public class Reservas {
             while (rs.next()) {
                 int id = rs.getInt(1);
                 int idHuesped = rs.getInt("idHuesped");
+                int idHabitacion = rs.getInt("idHabitacion");
                 Date fechaEntrada = rs.getDate("fechaEntrada");
                 Date fechaSalida = rs.getDate("fechaSalida");
                 String fechaEntradaFormateada = formatoFecha.format(fechaEntrada);
                 String fechaSalidaFormateada = formatoFecha.format(fechaSalida);
-                reservas.add(new Reservas(id, idHuesped, fechaEntradaFormateada, fechaSalidaFormateada));
+                reservas.add(new Reservas(id, idHuesped, idHabitacion,fechaEntradaFormateada, fechaSalidaFormateada));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -111,7 +127,6 @@ public class Reservas {
     public static boolean eliminarReserva(int id){
         String consulta = "Delete from registro_reservas where idreservas = " + id;
         int eliminados = 0;
-
         try (Connection con = MySQLConnection.connect();
              Statement st = (Statement) con.createStatement();
         ){
@@ -124,14 +139,15 @@ public class Reservas {
     }
 
     public static boolean agregarReserva(Reservas reserva){
-        String query = "INSERT INTO registro_reservas " + "(idHuesped, fechaEntrada, fechaSalida) " + "VALUES(?, ?, ?)";
+        String query = "INSERT INTO registro_reservas " + "(idHuesped, idHabitacion,fechaEntrada, fechaSalida) " + "VALUES(?, ?, ?, ?)";
         int creados = 0;
         try (Connection conexion = MySQLConnection.connect();
              PreparedStatement pst = conexion.prepareStatement(query);
         ){
             pst.setInt(1, reserva.getHuespedId());
-            pst.setDate(2, new java.sql.Date(reserva.getFechaEntrada().getTime()));
-            pst.setDate(3, new java.sql.Date(reserva.getFechaSalida().getTime()));
+            pst.setInt(2, reserva.getHabitacionId());
+            pst.setDate(3, new java.sql.Date(reserva.getFechaEntrada().getTime()));
+            pst.setDate(4, new java.sql.Date(reserva.getFechaSalida().getTime()));
             creados = pst.executeUpdate();
         }catch (SQLException e) {
             e.printStackTrace();
@@ -140,15 +156,16 @@ public class Reservas {
     }
 
     public static boolean actualizarReserva(Reservas reserva, int id){
-        String query = "UPDATE registro_reservas SET idHuesped = ?, fechaEntrada = ?, fechaSalida = ? WHERE idreservas = " + id;
+        String query = "UPDATE registro_reservas SET idHuesped = ?, idHabitacion = ?, fechaEntrada = ?, fechaSalida = ? WHERE idreservas = " + id;
         int actualizados = 0;
         try (
                 Connection conexion = MySQLConnection.connect();
                 PreparedStatement pst = conexion.prepareStatement(query);
         ){
             pst.setInt(1, reserva.getHuespedId());
-            pst.setDate(2, new java.sql.Date(reserva.getFechaEntrada().getTime()));
-            pst.setDate(3, new java.sql.Date(reserva.getFechaSalida().getTime()));
+            pst.setInt(2, reserva.getHabitacionId());
+            pst.setDate(3, new java.sql.Date(reserva.getFechaEntrada().getTime()));
+            pst.setDate(4, new java.sql.Date(reserva.getFechaSalida().getTime()));
             actualizados = pst.executeUpdate();
         }catch (SQLException e) {
             e.printStackTrace();
