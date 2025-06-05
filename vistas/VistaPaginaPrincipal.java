@@ -141,9 +141,10 @@ public class VistaPaginaPrincipal extends JPanel {
         return null;
     }
 
-    public void cargarGrafica(int ocupadas, int disponibles, int enLimpieza) {
+    public void cargarGrafica(int ocupadas, int disponibles, int enLimpieza, int reservadas) {
         graficaPie.setValue("Ocupadas", ocupadas);
         graficaPie.setValue("Disponibles", disponibles);
         graficaPie.setValue("En Limpieza", enLimpieza);
+        graficaPie.setValue("Reservas", reservadas);
     }
 }
