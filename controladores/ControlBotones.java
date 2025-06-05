@@ -165,21 +165,13 @@ public class ControlBotones implements ActionListener {
                 JOptionPane.showMessageDialog(vistaRegistrarse, "Los datos fueron enviados correctamente");
                 volverAInicioDeSesion();
             } else if (!contra.equals(finalPassword)) {
-                //throw new Errores("las contraseñas no son iguales");
                 JOptionPane.showMessageDialog(vistaRegistrarse, "Las contraseñas no son iguales", "Error", JOptionPane.WARNING_MESSAGE);
             } else {
                 String vacio = vistaRegistrarse.getTextVacio(nombre, contra, finalPassword, firstName, lastName);
-                //throw new Errores("El campo " + vacio + " esta vacio.");
                 JOptionPane.showMessageDialog(vistaRegistrarse, "El campo " + vacio + " esta vacio.", "Error", JOptionPane.WARNING_MESSAGE);
             }
-        } else if (textoBotonPresionado.equals("limpiar")) {
-            vistaRegistrarse.getTfUserName().setText("");
-            vistaRegistrarse.getTfContra().setText("");
-            vistaRegistrarse.getTfFinalPassword().setText("");
-            vistaRegistrarse.getTfName().setText("");
-            vistaRegistrarse.getTfLastName().setText("");
         } else if (textoBotonPresionado.equals("Limpiar")) {
-            table.clear();
+            limpiarRegistro();
         } else if (textoBotonPresionado.equals("Exportar a PDF")) {
             generarPDF();
         } else if (textoBotonPresionado.equals("🗑️ Eliminar perfil")) {
@@ -269,20 +261,20 @@ public class ControlBotones implements ActionListener {
             mostrarVentanaVerPerfil();
         }else if (textoBotonPresionado.equals("⏻ Cerrar Sesión") || textoBotonPresionado.equals("Regresar")) {
             volverAInicioDeSesion();
+            limpiarRegistro();
         } else if (textoBotonPresionado.equals("✔️Aplicar Cambios")) {
             aplicarPersonalizacion();
         } else if (textoBotonPresionado.equals("Iniciar Sesión")) {
             String username = vistaInicioSesion.getUsuario().trim();
             String password = vistaInicioSesion.getContrasena().trim();
             mostrarVentanaPrincipal(username, password);
-        }//Botones vista habitaciones
+        }
         else if (textoBotonPresionado.equals("Dar de alta")) {
            mostarVentanaRegistarse();
         }
         else if (textoBotonPresionado.equals("🧹 Limpiar Tabla Habitaciones")) {
             habitacionesTableModel.clear();
         } else if (textoBotonPresionado.equals("✏️ Modificar Habitacion")) {
-            //filaSeleccionada = vistaGestionarHabitaciones.getTableView().getSelectedRow();
             crearOModificar = "Modificar";
             mostrarVentanaCrearModificarHabitacion();
         } else if (textoBotonPresionado.equals("🗑️ Eliminar Habitacion")) {
@@ -294,7 +286,6 @@ public class ControlBotones implements ActionListener {
         } else if (textoBotonPresionado.equals("🔎 Buscar")) {
             buscarHabitacion();
         }
-        //Botones vista crear modificar habitacion
         else if (textoBotonPresionado.equals("✔️Aceptar habitación")) {
             if (crearOModificar.equalsIgnoreCase("Crear")) {
                 guardarHabitacion();
@@ -303,7 +294,7 @@ public class ControlBotones implements ActionListener {
             }
         } else if (textoBotonPresionado.equals("❌ Cancelar habitación")) {
             volverAGestionarHabitaciones();
-        }//Botones vista reservas
+        }
         else if (textoBotonPresionado.equals("🧹 Limpiar tabla reservas")) {
             reservasTableModel.clear();
         } else if (textoBotonPresionado.equals("➕ Crear Reserva")) {
@@ -318,7 +309,7 @@ public class ControlBotones implements ActionListener {
             hacerCheckIn();
         } else if (textoBotonPresionado.equals("🔴 Check-out")) {
             hacerCheckOut();
-        }//botones vista crear modificar reservas
+        }
         else if (textoBotonPresionado.equals("✔️Aceptar reserva")) {
             if (crearOModificar.equalsIgnoreCase("Crear")) {
                 guardarReserva();
@@ -328,7 +319,6 @@ public class ControlBotones implements ActionListener {
         } else if (textoBotonPresionado.equals("❌ Cancelar reserva")) {
             volverAGestionarReservas();
         }
-        //botones vista huespedes
         else if (textoBotonPresionado.equals("🧹 Limpiar tabla huéspedes")) {
             huespedesTableModel.clear();
         } else if (textoBotonPresionado.equals("➕ Crear Huésped")) {
@@ -339,7 +329,7 @@ public class ControlBotones implements ActionListener {
             mostrarVentanaCrearModificarHuesped();
         }else if (textoBotonPresionado.equals("🗑️ Eliminar Huésped")) {
             eliminarHuesped();
-        }//Botones vista crear modificar huesped
+        }
         else if (textoBotonPresionado.equals("✔️Aceptar Huésped")) {
             if (crearOModificar.equalsIgnoreCase("Crear")) {
                 guardarHuesped();
@@ -373,10 +363,8 @@ public class ControlBotones implements ActionListener {
     }
 
     public void generarPDF(){
-        // Personalizar el texto del botón "Cancelar"
         UIManager.put("FileChooser.cancelButtonText", "Cancelar");
 
-        // Abrir un selector de archivos para guardar el PDF
         JFileChooser fileChooser = new JFileChooser("/Users/alan-urias/Documents/Escuela/programacion/JavaVisual/Unidad4/src/ejercicio1");
         fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
         fileChooser.setAcceptAllFileFilterUsed(false);
@@ -391,19 +379,17 @@ public class ControlBotones implements ActionListener {
             return;
         }
 
-        // Crear el documento PDF
         try (
                 PdfDocument pdfDoc = new PdfDocument(new PdfWriter(fileChooser.getSelectedFile()));
-                Document doc = new Document(pdfDoc, PageSize.LETTER); // .rotate() Página en horizontal
+                Document doc = new Document(pdfDoc, PageSize.LETTER);
         ){
-            // Agregar una imagen
             InputStream is = getClass().getClassLoader().getResourceAsStream("ejercicio1/resources/uabcs-logo.png");
             System.out.println(is);
             if (is != null) {
                 ImageData data = ImageDataFactory.create(is.readAllBytes());
-                Image img = new Image(data).scaleAbsolute(50, 50); // Escalar la imagen
+                Image img = new Image(data).scaleAbsolute(50, 50);
 
-                float altoPagina = PageSize.LETTER.getHeight(); //.rotate()
+                float altoPagina = PageSize.LETTER.getHeight();
                 float margen = 40;
                 img.setFixedPosition(margen, altoPagina - margen - 50);
 
@@ -413,10 +399,10 @@ public class ControlBotones implements ActionListener {
             System.out.println(is);
             if (is != null) {
                 ImageData data = ImageDataFactory.create(is.readAllBytes());
-                Image img = new Image(data).scaleAbsolute(50, 50); // Escalar la imagen
+                Image img = new Image(data).scaleAbsolute(50, 50);
 
                 float anchoPagina = PageSize.LETTER.getWidth();
-                float altoPagina = PageSize.LETTER.getHeight(); //.rotate()
+                float altoPagina = PageSize.LETTER.getHeight();
                 float margen = 40;
                 float anchoImagen = 50;
                 img.setFixedPosition(anchoPagina - margen - anchoImagen, altoPagina - margen - 50);
@@ -424,9 +410,8 @@ public class ControlBotones implements ActionListener {
                 doc.add(img);
             }
 
-            // Se añade un título al documento
             doc.add(new Paragraph("Registro de usuarios UABCS").setBold().setFontSize(18).setTextAlignment(TextAlignment.CENTER).setMarginBottom(20));
-            doc.add(new Paragraph("").setMarginTop(30)); // Se añade un espacio debajo
+            doc.add(new Paragraph("").setMarginTop(30));
 
             LocalDate fechaActual = LocalDate.now();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -436,15 +421,11 @@ public class ControlBotones implements ActionListener {
             doc.add(new Paragraph("").setMarginTop(10));
             doc.add(new LineSeparator(new SolidLine()).setMarginBottom(20));
 
-            /* CREACIÓN DE LA TABLA*/
-
-            // Definir el ancho de las columnas
             float[] anchoColumnas = {1,2,2,3,4,2};
             Table tabla = new Table(UnitValue.createPercentArray(anchoColumnas)).useAllAvailableWidth();
 
             PdfFont font = PdfFontFactory.createFont(StandardFonts.HELVETICA);
 
-            // Encabezado principal del documento
             Cell cell = new Cell(1, 7)
                     .add(new Paragraph("Usuarios UABCS"))
                     .setFont(font)
@@ -454,7 +435,6 @@ public class ControlBotones implements ActionListener {
                     .setTextAlignment(TextAlignment.CENTER);
             tabla.addHeaderCell(cell);
 
-            // Crear encabezado y pie de tabla
             for(int i = 0; i < 2; i++) {
                 Cell[] headerFooter = new Cell[] {
                         new Cell().setTextAlignment(TextAlignment.CENTER).setBorderTop(new SolidBorder(1f)).setBackgroundColor(new DeviceGray(0.80f)).add(new Paragraph("Nombre")),
@@ -468,13 +448,10 @@ public class ControlBotones implements ActionListener {
                 for(Cell celda : headerFooter) {
                     if(i == 0) {
                         tabla.addHeaderCell(celda);
-                    }/*else {
-                        tabla.addFooterCell(celda);
-                    }*/
+                    }
                 }
             }
 
-            // Llenar la tabla con los datos de ventas
             int indice = 1;
             double total = 0;
 
@@ -490,7 +467,7 @@ public class ControlBotones implements ActionListener {
                 alternarColor = !alternarColor;
             }
 
-            doc.add(tabla); // Añadir la tabla al documento
+            doc.add(tabla);
             doc.add(new Paragraph("").setMarginTop(30));
 
             doc.add(new Paragraph("Informacion de contacto:").setBold().setFontSize(12).setTextAlignment(TextAlignment.LEFT));
@@ -503,12 +480,10 @@ public class ControlBotones implements ActionListener {
             doc.add(new Paragraph("Documento generado automáticamente por el sistema UABCS").setFontSize(10).setTextAlignment(TextAlignment.CENTER).setFontColor(DeviceGray.GRAY));
 
 
-            // Intentar abrir el PDF automáticamente al finalizar
             if(Desktop.isDesktopSupported()) {
                 try {
                     Desktop.getDesktop().open(fileChooser.getSelectedFile());
                 }catch(IOException ex) {
-                    //JOptionPane.showMessageDialog(this, "No se pudo abrir el archivo");
                 }
             }
 
@@ -519,23 +494,14 @@ public class ControlBotones implements ActionListener {
     }
 
     public boolean eliminarUsuario(DatosUsuario usuarioActual) {
-        // Confirmar eliminación sin necesidad de seleccionar fila
         int confirmacion = JOptionPane.showConfirmDialog(vistaVerUsuarios,
                 "¿Estás seguro de eliminar tu perfil \"" + usuarioActual.getNombreUsuario() + "\"? Esta acción es irreversible.",
                 "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
 
         if (confirmacion == JOptionPane.YES_OPTION) {
-            // Intentar eliminar de la base de datos usando el id del usuario actual
             boolean eliminado = DatosUsuario.eliminarUsu(usuarioActual.getId());
 
             if (eliminado) {
-                // Si tienes lista de usuarios cargada, eliminar de esa lista y tabla para refrescar UI
-                // Opcional, si usas lista y tabla:
-                // int fila = datosGuardados.indexOf(usuarioActual);
-                // if (fila != -1) {
-                //     datosGuardados.remove(fila);
-                //     table.removeRow(fila);
-                // }
 
                 JOptionPane.showMessageDialog(vistaVerUsuarios, "Perfil eliminado correctamente.");
                 return true;
@@ -572,7 +538,6 @@ public class ControlBotones implements ActionListener {
             return;
         }
 
-        // Crear objeto con los datos nuevos
         DatosUsuario nuevoUsuario = new DatosUsuario(
                 usuarioActual.getId(),
                 nombre,
@@ -583,14 +548,11 @@ public class ControlBotones implements ActionListener {
                 tipo
         );
 
-        // Actualizar en la base de datos
         boolean exito = DatosUsuario.actualizarUsuario(nuevoUsuario, usuarioActual.getId());
 
         if (exito) {
-            // Actualizar el objeto actual en memoria
             usuarioActual = nuevoUsuario;
 
-            // Actualizar en lista si la estás usando
             for (int i = 0; i < datosGuardados.size(); i++) {
                 if (datosGuardados.get(i).getId() == usuarioActual.getId()) {
                     datosGuardados.set(i, nuevoUsuario);
@@ -598,7 +560,6 @@ public class ControlBotones implements ActionListener {
                 }
             }
 
-            // Refrescar la tabla si es necesario
             table.setDatos(datosGuardados);
             table.fireTableDataChanged();
 
@@ -614,7 +575,6 @@ public class ControlBotones implements ActionListener {
     public void mostrarVentanaGestionar(){
         ventanaGestionarHabitaciones.add(vistaGestionarHabitaciones);
         ventanaGestionarHabitaciones.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        //ventanaGestionarHabitaciones.pack();
         ventanaGestionarHabitaciones.setLocationRelativeTo(null);
         ventanaGestionarHabitaciones.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         ventanaGestionarHabitaciones.setVisible(true);
@@ -640,14 +600,12 @@ public class ControlBotones implements ActionListener {
         ventanaCrearModificarHabitacion.setLocationRelativeTo(null);
         ventanaCrearModificarHabitacion.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         ventanaCrearModificarHabitacion.setVisible(true);
-        //ventanaActual.dispose();
         ventanaActual = ventanaCrearModificarHabitacion;
     }
 
     public void mostrarVentanaReservas(){
         ventanaGestionarReservas.add(vistaGestionarReservas);
         ventanaGestionarReservas.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        //ventanaGestionarReservas.pack();
         ventanaGestionarReservas.setLocationRelativeTo(null);
         ventanaGestionarReservas.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         ventanaGestionarReservas.setVisible(true);
@@ -672,7 +630,6 @@ public class ControlBotones implements ActionListener {
         }
         ventanCrearModificarReservas.add(vistaCrearModificarReserva);
         ventanCrearModificarReservas.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        //ventanaGestionarHuespedes.pack();
         ventanCrearModificarReservas.setLocationRelativeTo(null);
         ventanCrearModificarReservas.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         ventanCrearModificarReservas.setVisible(true);
@@ -683,7 +640,6 @@ public class ControlBotones implements ActionListener {
     public void mostrarVentanaHuespedes(){
         ventanaGestionarHuespedes.add(vistaGestionarHuespedes);
         ventanaGestionarHuespedes.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        //ventanaGestionarHuespedes.pack();
         ventanaGestionarHuespedes.setLocationRelativeTo(null);
         ventanaGestionarHuespedes.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         ventanaGestionarHuespedes.setVisible(true);
@@ -709,7 +665,6 @@ public class ControlBotones implements ActionListener {
         }
         ventanaCrearModificarHuespedes.add(vistaCrearModificarHuesped);
         ventanaCrearModificarHuespedes.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        //ventanaGestionarHuespedes.pack();
         ventanaCrearModificarHuespedes.setLocationRelativeTo(null);
         ventanaCrearModificarHuespedes.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         ventanaCrearModificarHuespedes.setVisible(true);
@@ -720,7 +675,6 @@ public class ControlBotones implements ActionListener {
     public void mostrarVentanaReportes(){
         ventanaReportes.setExtendedState(JFrame.MAXIMIZED_BOTH);
         ventanaReportes.add(vistaReportes);
-        //ventanaReportes.pack();
         ventanaReportes.setLocationRelativeTo(null);
         ventanaReportes.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         ventanaReportes.setVisible(true);
@@ -731,7 +685,6 @@ public class ControlBotones implements ActionListener {
     public void mostrarVentanaPersonalizar(){
         ventanaPersonalizar.setExtendedState(JFrame.MAXIMIZED_BOTH);
         ventanaPersonalizar.add(vistaPersonalizar);
-        //ventanaReportes.pack();
         ventanaPersonalizar.setLocationRelativeTo(null);
         ventanaPersonalizar.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         ventanaPersonalizar.setVisible(true);
@@ -849,12 +802,10 @@ public class ControlBotones implements ActionListener {
         ventanaInicioSesion = new JFrame("Inicio Sesion");
         ventanaInicioSesion.add(vistaInicioSesion);
         ventanaInicioSesion.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        //ventanaPrincipal.pack();
         ventanaInicioSesion.setLocationRelativeTo(null);
         ventanaInicioSesion.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         ventanaInicioSesion.setVisible(true);
 
-        //Demas ventanas
         ventanaPrincipal = new JFrame("Hotel Proyecto");
         ventanaVerPerfil = new JFrame("Perfil del Usuario");
         ventanaGestionarHabitaciones = new JFrame("Gestionar Habitaciones");
@@ -936,6 +887,15 @@ public class ControlBotones implements ActionListener {
 
     }
 
+    public void limpiarRegistro(){
+        vistaRegistrarse.getTfUserName().setText("");
+        vistaRegistrarse.getTfName().setText("");
+        vistaRegistrarse.getTfLastName().setText("");
+        vistaRegistrarse.getTfContra().setText("");
+        vistaRegistrarse.getTfFinalPassword().setText("");
+        vistaRegistrarse.getBgGender().clearSelection();
+        vistaRegistrarse.getComboRol().setSelectedIndex(0);
+    }
     public void cargarHabitaciones(){
         habitaciones = Habitaciones.obtenerHabitaciones();
         habitacionesTableModel.clear();

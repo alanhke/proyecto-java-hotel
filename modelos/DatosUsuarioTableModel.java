@@ -115,6 +115,6 @@ public class DatosUsuarioTableModel extends AbstractTableModel {
     }
     public void setDatos(ArrayList<DatosUsuario> nuevosDatos) {
         this.datos = nuevosDatos;
-        fireTableDataChanged(); // Notifica a la tabla que los datos han cambiado
+        fireTableDataChanged();
     }
 }

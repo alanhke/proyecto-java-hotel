@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.table.DefaultTableModel;
 
-import HotelProyectoFinal.modelos.Habitaciones;
 import HotelProyectoFinal.modelos.Huespedes;
 import HotelProyectoFinal.modelos.Reservas;
 import com.itextpdf.layout.properties.TextAlignment;
@@ -29,12 +28,7 @@ import com.itextpdf.layout.element.Table;
 import com.itextpdf.kernel.colors.DeviceRgb;
 import com.itextpdf.layout.borders.SolidBorder;
 import com.itextpdf.layout.element.Cell;
-import com.itextpdf.layout.properties.TextAlignment;
-import com.itextpdf.layout.properties.VerticalAlignment;
 import com.itextpdf.layout.properties.UnitValue;
-import com.itextpdf.layout.element.Table;
-import com.itextpdf.layout.element.Paragraph;
-import com.itextpdf.layout.element.Image;
 
 
 public class VistaReportes extends JPanel {

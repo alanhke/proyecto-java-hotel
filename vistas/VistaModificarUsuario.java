@@ -31,14 +31,12 @@ public class VistaModificarUsuario extends JPanel {
         gbc.insets = new Insets(8, 8, 8, 8);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        // Campos
         tfUserName = new JTextField(15);
         tfName = new JTextField(15);
         tfLastName = new JTextField(15);
         tfContra = new JPasswordField(15);
         tfFinalPassword = new JPasswordField(15);
 
-        // Género
         rbGender1 = new JRadioButton("Mujer");
         rbGender2 = new JRadioButton("Hombre");
         rbGender3 = new JRadioButton("Otro");
@@ -47,17 +45,14 @@ public class VistaModificarUsuario extends JPanel {
         bgGender.add(rbGender2);
         bgGender.add(rbGender3);
 
-        // ComboBox
         opciones = new JComboBox<>(new String[]{"Administrador", "Recepcionista"});
 
-        // Agregamos componentes
         addField(formulario, gbc, 0, "Nombre(s):", tfName);
         addField(formulario, gbc, 1, "Apellido(s):", tfLastName);
         addField(formulario, gbc, 2, "Nombre de usuario:", tfUserName);
         addField(formulario, gbc, 3, "Contraseña:", tfContra);
         addField(formulario, gbc, 4, "Confirmar contraseña:", tfFinalPassword);
 
-        // Género
         gbc.gridx = 0;
         gbc.gridy = 5;
         formulario.add(new JLabel("Género:"), gbc);
@@ -69,7 +64,6 @@ public class VistaModificarUsuario extends JPanel {
         gbc.gridx = 1;
         formulario.add(panelGenero, gbc);
 
-        // Opción tipo
         gbc.gridx = 0;
         gbc.gridy = 6;
         formulario.add(new JLabel("Tipo:"), gbc);
@@ -78,7 +72,6 @@ public class VistaModificarUsuario extends JPanel {
 
         add(formulario, BorderLayout.CENTER);
 
-        // Botones
         btnOk = crearBoton("Aceptar", new Color(76, 175, 80), Color.WHITE);
         btnCancel = crearBoton("Cancelar", new Color(244, 67, 54), Color.WHITE);
 
@@ -108,15 +101,9 @@ public class VistaModificarUsuario extends JPanel {
         return boton;
     }
 
-    // Setters y Getters
-
     public void setListeners(ActionListener listener){
         btnOk.addActionListener(listener);
         btnCancel.addActionListener(listener);
-    }
-
-    public String getBotonPresionado(JButton boton) {
-        return (boton == btnOk) ? "Aceptar" : (boton == btnCancel) ? "Cancelar" : null;
     }
 
     public String getNombre() { return tfName.getText(); }
@@ -134,16 +121,6 @@ public class VistaModificarUsuario extends JPanel {
 
     public String getOpcion() {
         return (String) opciones.getSelectedItem();
-    }
-
-    public String getTextVacio(String nombre, String contra, String finalPassword, String firstName, String lastName) {
-        if (nombre.isBlank()) return "Nombre de usuario";
-        if (contra.isBlank()) return "Contra";
-        if (finalPassword.isBlank()) return "Confirmar contraseña";
-        if (firstName.isBlank()) return "Nombres";
-        if (lastName.isBlank()) return "Apellidos";
-        if (!rbGender1.isSelected() && !rbGender2.isSelected() && !rbGender3.isSelected()) return "Género";
-        return null;
     }
 
     public void setNombreUsuario(String nombre) { tfUserName.setText(nombre); }

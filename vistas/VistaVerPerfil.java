@@ -6,10 +6,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionListener;
-
 public class VistaVerPerfil extends JPanel {
 
     private JLabel imagenPerfil;
@@ -27,7 +23,6 @@ public class VistaVerPerfil extends JPanel {
         add(fondo, BorderLayout.CENTER);
 
         RoundedPanel panelPrincipal = new RoundedPanel(30);
-        // Aquí se aumenta la altura para que quepa el botón eliminar
         panelPrincipal.setPreferredSize(new Dimension(420, 700));
         panelPrincipal.setBackground(new Color(255, 255, 255, 230));
         panelPrincipal.setLayout(new BorderLayout());

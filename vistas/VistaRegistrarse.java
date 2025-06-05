@@ -140,7 +140,7 @@ public class VistaRegistrarse extends JPanel {
     public void setListeners(ActionListener listener) {
         btnOk.addActionListener(listener);
         btnCancel.addActionListener(listener);
-        btnRegresar.addActionListener(listener); // ← NUEVO
+        btnRegresar.addActionListener(listener);// ← NUEVO
     }
 
     public String getBotonPresionado(JButton boton) {
@@ -165,6 +165,13 @@ public class VistaRegistrarse extends JPanel {
         if (rbGender2.isSelected()) return "Hombre";
         if (rbGender3.isSelected()) return "Otro";
         return "";
+    }
+    public ButtonGroup getBgGender() {
+        return bgGender;
+    }
+
+    public JComboBox<String> getComboRol() {
+        return Opciones;
     }
     public String getOpcion() {
         return (String) Opciones.getSelectedItem();

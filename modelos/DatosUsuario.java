@@ -35,15 +35,6 @@ public class DatosUsuario {
         tipo = vistaModificarUsuario.getOpcion();
     }
 
-    /*public DatosUsuario(JsonNode obj) {
-        this.nombre = obj.get("nombre").asText();
-        this.apellido = obj.get("apellido").asText();
-        this.nombreUsuario = obj.get("nombreUsuario").asText();
-        this.contrasena = obj.get("contrasena").asText();
-        this.confirmarContrasena = obj.get("confirmarContrasena").asText();
-        this.genero1 = obj.get("genero1").asText();
-        this.tipo = obj.get("tipo").asText();
-    }*/
 
     public DatosUsuario(int id, String nombre, String apellido, String nombreUsuario, String contrasena, String genero, String tipo) {
         this.id = id;
@@ -117,8 +108,6 @@ public class DatosUsuario {
 
     public static ArrayList<DatosUsuario> obtenerUsuarios() {
         ArrayList<DatosUsuario> usuarios = new ArrayList<>();
-        //Statement st = null;
-        //ResultSet rs = null;
         String consulta = "Select * from registro_usuarios";
 
         try (Connection con = MySQLConnection.connect();

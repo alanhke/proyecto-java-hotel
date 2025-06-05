@@ -4,10 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionListener;
-
 public class VistaPersonalizar extends JPanel {
     private JComboBox<String> comboTema;
     private JComboBox<String> comboFuente;

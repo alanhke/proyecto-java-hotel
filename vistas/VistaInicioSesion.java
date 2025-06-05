@@ -4,7 +4,6 @@ import HotelProyectoFinal.utilities.RoundedPanel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
 
 public class VistaInicioSesion extends JPanel {
     private JTextField campoUsuario;
@@ -45,17 +44,17 @@ public class VistaInicioSesion extends JPanel {
 
         botonIniciar = new JButton("Iniciar Sesión");
         botonIniciar.setBounds(130, 170, 200, 30);
-        botonIniciar.setBackground(new Color(46, 204, 113)); // Verde suave
-        botonIniciar.setForeground(Color.WHITE);             // Texto blanco
-        botonIniciar.setFocusPainted(false);                 // Sin borde de enfoque
+        botonIniciar.setBackground(new Color(46, 204, 113));
+        botonIniciar.setForeground(Color.WHITE);
+        botonIniciar.setFocusPainted(false);
         botonIniciar.setFont(new Font("SansSerif", Font.BOLD, 14));
         loginPanel.add(botonIniciar);
 
         botonRegistrarse = new JButton("Dar de alta");
         botonRegistrarse.setBounds(130, 210, 200, 30);
-        botonRegistrarse.setBackground(new Color(52, 152, 219)); // Azul suave
-        botonRegistrarse.setForeground(Color.WHITE);             // Texto blanco
-        botonRegistrarse.setFocusPainted(false);                 // Sin borde de enfoque
+        botonRegistrarse.setBackground(new Color(52, 152, 219));
+        botonRegistrarse.setForeground(Color.WHITE);
+        botonRegistrarse.setFocusPainted(false);
         botonRegistrarse.setFont(new Font("SansSerif", Font.BOLD, 14));
         loginPanel.add(botonRegistrarse);
 
@@ -107,7 +106,7 @@ class PanelConFondo extends JPanel {
         } catch (Exception e) {
             System.err.println("No se encontró la imagen: " + rutaImagen);
         }
-        setLayout(new GridBagLayout()); // para centrar el panel login
+        setLayout(new GridBagLayout());
     }
 
     @Override

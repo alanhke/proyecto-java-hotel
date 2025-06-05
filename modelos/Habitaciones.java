@@ -72,8 +72,6 @@ public class Habitaciones {
 
     public static ArrayList<Habitaciones> obtenerHabitaciones() {
         ArrayList<Habitaciones> habitaciones = new ArrayList<>();
-        //Statement st = null;
-        //ResultSet rs = null;
         String consulta = "Select * from registro_habitaciones";
 
         try (Connection con = MySQLConnection.connect();

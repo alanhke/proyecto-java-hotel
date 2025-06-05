@@ -37,7 +37,6 @@ public class Reservas {
         }
     }
     public Reservas(VistaCrearModificarReserva vistaCrearModificarReserva){
-        //id = Integer.parseInt(vistaCrearModificarReserva.getReservaId());
         try{
             huespedId = Integer.parseInt(vistaCrearModificarReserva.getIdHuesped());
         } catch (Exception e){

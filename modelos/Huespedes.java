@@ -86,8 +86,6 @@ public class Huespedes {
 
     public static ArrayList<Huespedes> obtenerHuespedes() {
         ArrayList<Huespedes> huespedes = new ArrayList<>();
-        //Statement st = null;
-        //ResultSet rs = null;
         String consulta = "Select * from registro_huespedes";
 
         try (Connection con = MySQLConnection.connect();
