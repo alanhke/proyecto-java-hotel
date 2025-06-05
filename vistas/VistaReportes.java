@@ -199,15 +199,8 @@ public class VistaReportes extends JPanel {
             Document document = new Document(pdfDoc);
             DeviceRgb azulMarino = new DeviceRgb(25, 42, 86);
             String fecha = LocalDate.now().toString();
-            Paragraph titulo = new Paragraph("Reporte de " + tipoReporteActual)
-                    .setFontSize(20)
-                    .setBold()
-                    .setFontColor(azulMarino)
-                    .setTextAlignment(TextAlignment.CENTER);
-            Paragraph fechaTexto = new Paragraph("Fecha de generación: " + fecha)
-                    .setFontSize(11)
-                    .setFontColor(ColorConstants.DARK_GRAY)
-                    .setTextAlignment(TextAlignment.CENTER);
+            Paragraph titulo = new Paragraph("Reporte de " + tipoReporteActual).setFontSize(20).setBold().setFontColor(azulMarino).setTextAlignment(TextAlignment.CENTER);
+            Paragraph fechaTexto = new Paragraph("Fecha de generación: " + fecha).setFontSize(11).setFontColor(ColorConstants.DARK_GRAY).setTextAlignment(TextAlignment.CENTER);
             document.add(titulo);
             document.add(fechaTexto);
             document.add(new Paragraph("\n"));
@@ -224,23 +217,12 @@ public class VistaReportes extends JPanel {
                 Table pdfTable = new Table(tablaDatos.getColumnCount());
                 pdfTable.setWidth(UnitValue.createPercentValue(100));
                 for (int i = 0; i < tablaDatos.getColumnCount(); i++) {
-                    Cell header = new Cell()
-                            .add(new Paragraph(tablaDatos.getColumnName(i)))
-                            .setBackgroundColor(azulMarino)
-                            .setFontColor(ColorConstants.WHITE)
-                            .setBold()
-                            .setTextAlignment(TextAlignment.CENTER)
-                            .setBorder(new SolidBorder(ColorConstants.LIGHT_GRAY, 0.5f));
-                    pdfTable.addHeaderCell(header);
+                    Cell header = new Cell().add(new Paragraph(tablaDatos.getColumnName(i))).setBackgroundColor(azulMarino).setFontColor(ColorConstants.WHITE).setBold().setTextAlignment(TextAlignment.CENTER).setBorder(new SolidBorder(ColorConstants.LIGHT_GRAY, 0.5f));pdfTable.addHeaderCell(header);
                 }
                 for (int fila = 0; fila < tablaDatos.getRowCount(); fila++) {
                     for (int col = 0; col < tablaDatos.getColumnCount(); col++) {
                         Object valor = tablaDatos.getValueAt(fila, col);
-                        Cell cell = new Cell()
-                                .add(new Paragraph(valor != null ? valor.toString() : ""))
-                                .setTextAlignment(TextAlignment.CENTER)
-                                .setBorder(new SolidBorder(ColorConstants.LIGHT_GRAY, 0.5f));
-                        pdfTable.addCell(cell);
+                        Cell cell = new Cell().add(new Paragraph(valor != null ? valor.toString() : "")).setTextAlignment(TextAlignment.CENTER).setBorder(new SolidBorder(ColorConstants.LIGHT_GRAY, 0.5f));pdfTable.addCell(cell);
                     }
                 }
                 document.add(pdfTable);
@@ -250,10 +232,7 @@ public class VistaReportes extends JPanel {
                 return;
             }
             document.add(new Paragraph("\n"));
-            Paragraph pie = new Paragraph("Hotel Management System © 2025. Todos los derechos reservados.")
-                    .setFontSize(9)
-                    .setFontColor(ColorConstants.GRAY)
-                    .setTextAlignment(TextAlignment.CENTER);
+            Paragraph pie = new Paragraph("Hotel Management System © 2025. Todos los derechos reservados.").setFontSize(9).setFontColor(ColorConstants.GRAY).setTextAlignment(TextAlignment.CENTER);
             document.add(pie);
             document.close();
             JOptionPane.showMessageDialog(this, "Reporte exportado exitosamente a: " + rutaArchivo);
