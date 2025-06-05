@@ -227,7 +227,24 @@ public class ControlBotones implements ActionListener {
             if (tipo.equals("Reservas realizadas")) {
                 vistaReportes.mostrarTablaReservadasRealizadas(reservasRealizadas);
             } else if (tipo.equals("Ocupación de Habitaciones")) {
-                vistaReportes.mostrarGraficaOcupacion(habitacionesOcupadas, habitaciones);
+                habitaciones = Habitaciones.obtenerHabitaciones();
+                int ocupadas = 0;
+                int disponibles = 0;
+                int enLimpieza = 0;
+                int r = 0;
+                for (Habitaciones h : habitaciones) {
+                    String estado = h.getEstado();
+                    if (estado.equalsIgnoreCase("Ocupada")) {
+                        ocupadas++;
+                    } else if (estado.equalsIgnoreCase("disponible")) {
+                        disponibles++;
+                    } else if (estado.equalsIgnoreCase("enLimpieza")) {
+                        enLimpieza++;
+                    } else if (estado.equalsIgnoreCase("reservada")) {
+                        r++;
+                    }
+                }
+                vistaReportes.mostrarGraficaOcupacion(ocupadas, disponibles, enLimpieza, r);
             }else if (tipo.equals("Huespedes registrados")){
                 huespedes = Huespedes.obtenerHuespedes();
                 vistaReportes.mostrarTablaHuespedesRegistrados(huespedes);
@@ -746,20 +763,20 @@ public class ControlBotones implements ActionListener {
         int ocupadas = 0;
         int disponibles = 0;
         int enLimpieza = 0;
-        int reservadas = 0;
+        int r = 0;
         for (Habitaciones h : habitaciones) {
             String estado = h.getEstado();
-            if (estado.equalsIgnoreCase("ocupado")) {
+            if (estado.equalsIgnoreCase("Ocupada")) {
                 ocupadas++;
             } else if (estado.equalsIgnoreCase("disponible")) {
                 disponibles++;
             } else if (estado.equalsIgnoreCase("enLimpieza")) {
                 enLimpieza++;
-            } else if (estado.equalsIgnoreCase("reservadas")) {
-                reservadas++;
+            } else if (estado.equalsIgnoreCase("reservada")) {
+                r++;
             }
         }
-        vistaPaginaPrincipal.cargarGrafica(ocupadas, disponibles, enLimpieza, reservadas);
+        vistaPaginaPrincipal.cargarGrafica(ocupadas, disponibles, enLimpieza, r);
         ventanaPrincipal.add(vistaPaginaPrincipal);
         ventanaPrincipal.setExtendedState(JFrame.MAXIMIZED_BOTH);
         ventanaPrincipal.setVisible(true);
@@ -867,17 +884,17 @@ public class ControlBotones implements ActionListener {
         int ocupadas = 0;
         int disponibles = 0;
         int enLimpieza = 0;
-        int reservadas = 0;
+        int r = 0;
         for (Habitaciones h : habitaciones) {
             String estado = h.getEstado();
-            if (estado.equalsIgnoreCase("ocupado")) {
+            if (estado.equalsIgnoreCase("Ocupada")) {
                 ocupadas++;
             } else if (estado.equalsIgnoreCase("disponible")) {
                 disponibles++;
             } else if (estado.equalsIgnoreCase("enLimpieza")) {
                 enLimpieza++;
-            }else if (estado.equalsIgnoreCase("reservadas")) {
-                reservadas++;
+            }else if (estado.equalsIgnoreCase("reservada")) {
+                r++;
             }
         }
 
@@ -889,7 +906,7 @@ public class ControlBotones implements ActionListener {
                 break;
             }
         }
-        vistaPaginaPrincipal.cargarGrafica(ocupadas, disponibles, enLimpieza, reservadas);
+        vistaPaginaPrincipal.cargarGrafica(ocupadas, disponibles, enLimpieza, r);
         ventanaPrincipal.add(vistaPaginaPrincipal);
         ventanaPrincipal.setExtendedState(JFrame.MAXIMIZED_BOTH);
         ventanaPrincipal.setLocationRelativeTo(null);
@@ -1256,8 +1273,10 @@ public class ControlBotones implements ActionListener {
             return;
         }
         habitacionReservada.setEstado("Disponible");
+        Reservas.eliminarReserva(reservaSeleccionada.getId());
         Habitaciones.actualizarHabitaciones(habitacionReservada, habitacionReservada.getNumero());
         habitacionesOcupadas.remove(habitacionReservada);
+        cargarReservas();
         JOptionPane.showMessageDialog(vistaCrearModificarReserva, "Chek-Out realizado con éxito.", "Check-Out Realizado", JOptionPane.INFORMATION_MESSAGE);
     }
 
