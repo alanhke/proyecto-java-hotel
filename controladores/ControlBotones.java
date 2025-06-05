@@ -760,7 +760,7 @@ public class ControlBotones implements ActionListener {
     }
     public void volverAGestionarReservas(){
         ventanaGestionarReservas.setVisible(true);
-        ventanaActual.dispose();
+        ventanCrearModificarReservas.dispose();
         cargarReservas();
     }
     public void volverAGestionarHuespedes(){
