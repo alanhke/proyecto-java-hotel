@@ -38,7 +38,6 @@ public class VistaPaginaPrincipal extends JPanel {
         Color azulPrimario = new Color(30, 136, 229);
         Color verdeSecundario = new Color(76, 175, 80);
         Color blanco = Color.WHITE;
-
         btnPersonalizar = new JButton("🎨 Personalizar");
         btnPerfil = new JButton("👤 Ver Perfil");
         btnCerrarSesion = new JButton("⏻ Cerrar Sesión");
@@ -46,7 +45,6 @@ public class VistaPaginaPrincipal extends JPanel {
         configurarBoton(btnPerfil, verdeSecundario, blanco);
         configurarBoton(btnCerrarSesion, rojoImportante, blanco);
         btnCerrarSesion.setAlignmentX(Component.CENTER_ALIGNMENT);
-
         panelIzquierdo.add(Box.createVerticalStrut(10));
         panelIzquierdo.add(btnPersonalizar);
         panelIzquierdo.add(Box.createVerticalStrut(10));
@@ -54,7 +52,6 @@ public class VistaPaginaPrincipal extends JPanel {
         panelIzquierdo.add(Box.createVerticalGlue());
         panelIzquierdo.add(btnCerrarSesion);
         panelCentro.add(panelIzquierdo, BorderLayout.WEST);
-
         JPanel panelDerecho = new JPanel();
         panelDerecho.setLayout(new BoxLayout(panelDerecho, BoxLayout.Y_AXIS));
         panelDerecho.setBorder(BorderFactory.createEmptyBorder(20, 10, 20, 20));
@@ -64,12 +61,10 @@ public class VistaPaginaPrincipal extends JPanel {
         btnReservas = new JButton("📅 Gestionar Reservas");
         btnHuespedes = new JButton("🧳 Gestión de Huéspedes");
         btnReportes = new JButton("📊 Ver Reportes");
-
         configurarBoton(btnGestionar, azulPrimario, blanco);
         configurarBoton(btnReservas, azulPrimario, blanco);
         configurarBoton(btnHuespedes, azulPrimario, blanco);
         configurarBoton(btnReportes, azulPrimario, blanco);
-
         panelDerecho.add(btnGestionar);
         panelDerecho.add(Box.createVerticalStrut(10));
         panelDerecho.add(btnReservas);
@@ -77,7 +72,6 @@ public class VistaPaginaPrincipal extends JPanel {
         panelDerecho.add(btnHuespedes);
         panelDerecho.add(Box.createVerticalStrut(10));
         panelDerecho.add(btnReportes);
-
         panelCentro.add(panelDerecho, BorderLayout.EAST);
 
         graficaPie = new DefaultPieDataset();

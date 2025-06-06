@@ -13,7 +13,7 @@ public class VistaRegistrarse extends JPanel {
     ButtonGroup bgGender;
     JButton btnOk;
     JButton btnCancel;
-    JButton btnRegresar; // ← NUEVO
+    JButton btnRegresar;
     JRadioButton rbGender1;
     JRadioButton rbGender2;
     JRadioButton rbGender3;
@@ -22,19 +22,15 @@ public class VistaRegistrarse extends JPanel {
     public VistaRegistrarse() {
         setLayout(new BorderLayout());
         setBackground(new Color(255, 255, 255, 230));
-
-        // Panel izquierdo (imagen + mensaje)
         JPanel panelIzquierdo = new JPanel();
         panelIzquierdo.setLayout(new BoxLayout(panelIzquierdo, BoxLayout.Y_AXIS));
         panelIzquierdo.setBackground(new Color(240, 244, 248));
         panelIzquierdo.setPreferredSize(new Dimension(300, 330));
-
         JLabel lblBienvenido = new JLabel("<html><center>¡Bienvenido!<br>Regístrate para continuar</center></html>", JLabel.CENTER);
         lblBienvenido.setFont(new Font("SansSerif", Font.BOLD, 18));
         lblBienvenido.setForeground(new Color(51, 51, 51));
         lblBienvenido.setAlignmentX(Component.CENTER_ALIGNMENT);
         lblBienvenido.setBorder(BorderFactory.createEmptyBorder(20, 10, 20, 10));
-
         panelIzquierdo.add(lblBienvenido);
 
         try {
@@ -48,7 +44,6 @@ public class VistaRegistrarse extends JPanel {
             panelIzquierdo.add(error);
         }
 
-        // Panel derecho con formulario
         JPanel panelFormulario = new JPanel(new GridBagLayout());
         panelFormulario.setBackground(new Color(255, 255, 255, 230));
         GridBagConstraints gbc = new GridBagConstraints();
@@ -119,34 +114,29 @@ public class VistaRegistrarse extends JPanel {
         btnRegresar = new JButton("Regresar"); // ← NUEVO
         btnRegresar.setBackground(new Color(150, 150, 150));
         btnRegresar.setForeground(Color.WHITE);
-
         Font fontBoton = new Font("SansSerif", Font.BOLD, 14);
         btnOk.setFont(fontBoton);
         btnCancel.setFont(fontBoton);
-        btnRegresar.setFont(fontBoton); // ← NUEVO
-
+        btnRegresar.setFont(fontBoton);
         panelBotones.setOpaque(false);
         panelBotones.add(btnOk);
         panelBotones.add(btnCancel);
-        panelBotones.add(btnRegresar); // ← NUEVO
+        panelBotones.add(btnRegresar);
         panelFormulario.add(panelBotones, gbc);
-
-        // Añadir al panel principal con inversión
         add(panelIzquierdo, BorderLayout.WEST);
         add(panelFormulario, BorderLayout.CENTER);
     }
 
-    // Métodos públicos para acceso externo
     public void setListeners(ActionListener listener) {
         btnOk.addActionListener(listener);
         btnCancel.addActionListener(listener);
-        btnRegresar.addActionListener(listener);// ← NUEVO
+        btnRegresar.addActionListener(listener);
     }
 
     public String getBotonPresionado(JButton boton) {
         if (boton == btnOk) return "ok";
         if (boton == btnCancel) return "cancel";
-        if (boton == btnRegresar) return "regresar"; // ← NUEVO
+        if (boton == btnRegresar) return "regresar";
         return null;
     }
 

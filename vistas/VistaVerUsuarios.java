@@ -16,7 +16,7 @@ public class VistaVerUsuarios extends JPanel {
 
     public VistaVerUsuarios() {
         setLayout(new BorderLayout(10, 10));
-        setBackground(new Color(245, 247, 250)); // Fondo suave
+        setBackground(new Color(245, 247, 250));
 
         registrosTableModel = new DatosUsuarioTableModel();
         table = new JTable(registrosTableModel);
