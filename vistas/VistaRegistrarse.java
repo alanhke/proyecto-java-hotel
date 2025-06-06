@@ -111,7 +111,7 @@ public class VistaRegistrarse extends JPanel {
         btnCancel = new JButton("Limpiar");
         btnCancel.setBackground(new Color(208, 2, 27));
         btnCancel.setForeground(Color.WHITE);
-        btnRegresar = new JButton("Regresar"); // ← NUEVO
+        btnRegresar = new JButton("Regresar");
         btnRegresar.setBackground(new Color(150, 150, 150));
         btnRegresar.setForeground(Color.WHITE);
         Font fontBoton = new Font("SansSerif", Font.BOLD, 14);
