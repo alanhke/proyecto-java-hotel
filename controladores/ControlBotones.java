@@ -342,6 +342,15 @@ public class ControlBotones implements ActionListener {
     }
 
     public void guardarDatos(DatosUsuario registroDatos2) {
+        datosGuardados = DatosUsuario.obtenerUsuarios();
+        int esta = 0;
+        for(DatosUsuario valor : datosGuardados){
+            if (valor == registroDatos2){
+                esta = 1;
+                JOptionPane.showMessageDialog(vistaRegistrarse,"El usuario ya existe", "Usuario ya existe",JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+        }
         DatosUsuario.agregarUsuario(registroDatos2);
     }
 
@@ -785,6 +794,7 @@ public class ControlBotones implements ActionListener {
         vistas.add(vistaCrearModificarHabitacion);
         vistas.add(vistaCrearModificarReserva);
         vistas.add(vistaCrearModificarHuesped);
+        vistas.add(vistaVerPerfil);
         for (Component vist : vistas) {
             Estilo.aplicarEstiloGlobal(vist, fuente, tamano, tema);
         }

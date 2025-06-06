@@ -9,8 +9,7 @@ public class Estilo {
             comp.setBackground(fondo);
         }
         comp.setFont(fuente);
-        if (comp instanceof JLabel || comp instanceof JTextField ||
-                comp instanceof JPasswordField || comp instanceof JComboBox) {
+        if (comp instanceof JLabel || comp instanceof JTextField || comp instanceof JPasswordField || comp instanceof JComboBox) {
             comp.setForeground(texto);
             comp.setBackground(fondo);
         }
@@ -24,7 +23,6 @@ public class Estilo {
         Font nuevaFuente = new Font(fuente, Font.PLAIN, tamano);
         Color fondo = tema.equals("Oscuro") ? new Color(40, 40, 40) : new Color(250, 250, 255);
         Color texto = tema.equals("Oscuro") ? Color.WHITE : Color.BLACK;
-
         aplicarEstiloComponente(vista, nuevaFuente, fondo, texto);
     }
 }

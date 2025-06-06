@@ -13,9 +13,7 @@ public class VistaInicioSesion extends JPanel {
 
     public VistaInicioSesion() {
         setLayout(new BorderLayout());
-
         PanelConFondo background = new PanelConFondo("/hotel.png");
-
         RoundedPanel loginPanel = new RoundedPanel(30);
         loginPanel.setPreferredSize(new Dimension(380, 320));
         loginPanel.setBackground(new Color(255, 255, 255, 220));
